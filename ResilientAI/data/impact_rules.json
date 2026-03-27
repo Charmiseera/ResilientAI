@@ -1,0 +1,98 @@
+{
+  "commodity_chains": {
+    "LPG": {
+      "transport_multiplier": 0.6,
+      "product_cost_multiplier": 0.08,
+      "demand_elasticity": -0.05,
+      "affects": ["transport", "product_margin", "demand"]
+    },
+    "crude_oil": {
+      "transport_multiplier": 0.75,
+      "product_cost_multiplier": 0.10,
+      "demand_elasticity": -0.04,
+      "affects": ["transport", "product_margin", "demand"]
+    },
+    "diesel": {
+      "transport_multiplier": 0.80,
+      "product_cost_multiplier": 0.09,
+      "demand_elasticity": -0.03,
+      "affects": ["transport", "product_margin"]
+    },
+    "wheat": {
+      "transport_multiplier": 0.0,
+      "product_cost_multiplier": 0.25,
+      "demand_elasticity": -0.02,
+      "affects": ["product_margin", "demand"]
+    },
+    "flour": {
+      "transport_multiplier": 0.0,
+      "product_cost_multiplier": 0.28,
+      "demand_elasticity": -0.03,
+      "affects": ["product_margin", "demand"]
+    },
+    "edible_oil": {
+      "transport_multiplier": 0.0,
+      "product_cost_multiplier": 0.15,
+      "demand_elasticity": -0.06,
+      "affects": ["product_margin", "demand"]
+    },
+    "FMCG": {
+      "transport_multiplier": 0.2,
+      "product_cost_multiplier": 0.12,
+      "demand_elasticity": -0.04,
+      "affects": ["product_margin", "transport", "demand"]
+    },
+    "transport": {
+      "transport_multiplier": 1.0,
+      "product_cost_multiplier": 0.05,
+      "demand_elasticity": -0.02,
+      "affects": ["transport"]
+    },
+    "electronics": {
+      "transport_multiplier": 0.1,
+      "product_cost_multiplier": 0.08,
+      "demand_elasticity": -0.01,
+      "affects": ["product_margin"]
+    }
+  },
+  "risk_amplifiers": {
+    "HIGH":   1.0,
+    "MEDIUM": 0.5,
+    "LOW":    0.1
+  },
+  "business_type_sensitivity": {
+    "kirana": {
+      "LPG": 1.2,
+      "crude_oil": 1.1,
+      "diesel": 1.3,
+      "wheat": 0.9,
+      "flour": 0.8,
+      "edible_oil": 1.0,
+      "FMCG": 1.1,
+      "transport": 1.2,
+      "electronics": 0.2
+    },
+    "restaurant": {
+      "LPG": 1.8,
+      "crude_oil": 0.8,
+      "diesel": 1.2,
+      "wheat": 1.5,
+      "flour": 1.8,
+      "edible_oil": 1.6,
+      "FMCG": 0.6,
+      "transport": 1.0,
+      "electronics": 0.1
+    },
+    "pharma": {
+      "LPG": 0.5,
+      "crude_oil": 0.6,
+      "diesel": 1.4,
+      "wheat": 0.2,
+      "flour": 0.1,
+      "edible_oil": 0.1,
+      "FMCG": 0.3,
+      "transport": 1.5,
+      "electronics": 0.4
+    }
+  }
+}

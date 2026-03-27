@@ -1,0 +1,147 @@
+[
+  {
+    "commodity": "LPG",
+    "suppliers": [
+      {
+        "name": "Hindustan Petroleum (HP Gas)",
+        "type": "national",
+        "contact": "1800-233-3555",
+        "website": "https://www.hindustanpetroleum.com",
+        "avg_price_per_cylinder": 903,
+        "availability": "high",
+        "lead_time_days": 1,
+        "note": "Govt regulated — price stable during disruptions"
+      },
+      {
+        "name": "Bharat Gas",
+        "type": "national",
+        "contact": "1800-22-4344",
+        "website": "https://www.ebharatgas.com",
+        "avg_price_per_cylinder": 899,
+        "availability": "high",
+        "lead_time_days": 1,
+        "note": "Largest LPG distributor in India"
+      },
+      {
+        "name": "Indane Gas (Indian Oil)",
+        "type": "national",
+        "contact": "1800-233-3555",
+        "website": "https://www.indane.co.in",
+        "avg_price_per_cylinder": 895,
+        "availability": "medium",
+        "lead_time_days": 2,
+        "note": "Check piped gas connection as backup"
+      },
+      {
+        "name": "Local Bulk LPG Dealer",
+        "type": "local",
+        "contact": "Search on JustDial",
+        "website": "",
+        "avg_price_per_cylinder": 920,
+        "availability": "variable",
+        "lead_time_days": 1,
+        "note": "Negotiate bulk rates for 10+ cylinders"
+      }
+    ]
+  },
+  {
+    "commodity": "wheat",
+    "suppliers": [
+      {
+        "name": "NAFED (National Cooperative)",
+        "type": "government",
+        "contact": "1800-270-0239",
+        "website": "https://www.nafed-india.com",
+        "avg_price_per_quintal": 2015,
+        "availability": "high",
+        "lead_time_days": 3,
+        "note": "Government buffer stock — price controlled"
+      },
+      {
+        "name": "ITC Atta (Aashirvaad)",
+        "type": "corporate",
+        "contact": "1800-345-6789",
+        "website": "https://www.itcportal.com",
+        "avg_price_per_quintal": 2200,
+        "availability": "high",
+        "lead_time_days": 2,
+        "note": "Premium quality, B2B bulk orders available"
+      },
+      {
+        "name": "Local Flour Mills (Chakki)",
+        "type": "local",
+        "contact": "Search local directory",
+        "website": "",
+        "avg_price_per_quintal": 1900,
+        "availability": "medium",
+        "lead_time_days": 1,
+        "note": "Best for restaurant/kirana — negotiate 50kg weekly contract"
+      }
+    ]
+  },
+  {
+    "commodity": "edible_oil",
+    "suppliers": [
+      {
+        "name": "Adani Wilmar (Fortune)",
+        "type": "corporate",
+        "contact": "1800-103-9393",
+        "website": "https://www.adaniwilmar.in",
+        "avg_price_per_litre": 105,
+        "availability": "high",
+        "lead_time_days": 2,
+        "note": "Largest edible oil brand — good bulk pricing"
+      },
+      {
+        "name": "Ruchi Soya (Nutrela)",
+        "type": "corporate",
+        "contact": "1800-120-2220",
+        "website": "https://www.ruchisoya.com",
+        "avg_price_per_litre": 102,
+        "availability": "medium",
+        "lead_time_days": 3,
+        "note": "Consider palm oil substitute — 18% cheaper"
+      }
+    ]
+  },
+  {
+    "commodity": "diesel",
+    "suppliers": [
+      {
+        "name": "Indian Oil (IOCL) Bulk Desk",
+        "type": "national",
+        "contact": "1800-233-3555",
+        "website": "https://www.iocl.com",
+        "avg_price_per_litre": 87.5,
+        "availability": "high",
+        "lead_time_days": 1,
+        "note": "For delivery vehicles — lock in bulk price before disruption peaks"
+      },
+      {
+        "name": "Switch to Electric Delivery (Mahindra Treo)",
+        "type": "alternative",
+        "contact": "1800-209-6006",
+        "website": "https://www.mahindraelectric.com",
+        "avg_price_per_litre": 0,
+        "availability": "high",
+        "lead_time_days": 30,
+        "note": "Long-term: zero fuel cost. Short-term: hire EV delivery partner"
+      }
+    ]
+  },
+  {
+    "commodity": "crude_oil",
+    "suppliers": [
+      {
+        "name": "Switch to piped CNG (Mahanagar Gas)",
+        "type": "alternative",
+        "contact": "1800-266-9944",
+        "website": "https://www.mahanagargas.com",
+        "avg_price_per_unit": 48,
+        "availability": "high",
+        "lead_time_days": 7,
+        "note": "CNG is 40% cheaper than LPG — viable for restaurants"
+      }
+    ]
+  }
+]

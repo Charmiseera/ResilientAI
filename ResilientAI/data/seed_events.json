@@ -1,0 +1,35 @@
+[
+  {
+    "id": "evt_001",
+    "headline": "Strait of Hormuz closure threatens global LPG and crude oil supply",
+    "source": "Reuters",
+    "published_at": "2026-03-27T10:00:00Z",
+    "risk_level": "HIGH",
+    "confidence": 0.92,
+    "commodities_affected": ["LPG", "crude_oil", "diesel", "transport"],
+    "region": "Middle East",
+    "scenario_key": "hormuz_disruption"
+  },
+  {
+    "id": "evt_002",
+    "headline": "Ukraine wheat export ban extended — global grain prices rise 15%",
+    "source": "Bloomberg",
+    "published_at": "2026-03-26T08:30:00Z",
+    "risk_level": "HIGH",
+    "confidence": 0.88,
+    "commodities_affected": ["wheat", "flour", "edible_oil", "FMCG"],
+    "region": "Eastern Europe",
+    "scenario_key": "ukraine_grain_crisis"
+  },
+  {
+    "id": "evt_003",
+    "headline": "Taiwan Strait blockade halts semiconductor and electronics exports globally",
+    "source": "Financial Times",
+    "published_at": "2026-03-27T11:45:00Z",
+    "risk_level": "HIGH",
+    "confidence": 0.95,
+    "commodities_affected": ["electronics", "transport"],
+    "region": "East Asia",
+    "scenario_key": "taiwan_blockade"
+  }
+]
