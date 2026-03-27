@@ -538,11 +538,19 @@ def tab_intelligence(biz_type, min_risk, lang):
     if b2.button("📱 WhatsApp Alert", use_container_width=True):
         phone = st.session_state.get("phone", "")
         if phone:
-            results = broadcast_alert(active, rec.get("recommended_action",""),
-                                      rec.get("profit_impact_inr",0), [phone], lang)
-            st.success(f"📱 Alert sent ({results[0].get('mode','simulation')} mode)")
+            with st.spinner("📤 Sending WhatsApp alert..."):
+                results = broadcast_alert(active, rec.get("recommended_action",""),
+                                          rec.get("profit_impact_inr",0), [phone], lang)
+            result = results[0]
+            mode = result.get("mode", "simulation")
+            if mode == "live" and result.get("success"):
+                st.success(f"✅ WhatsApp alert sent to `{phone}` · Message ID: `{result.get('id','')}`")
+            elif mode == "simulation":
+                st.info("🔵 Alert sent in **simulation mode** — add WHATSAPP_TOKEN to .env for real sends")
+            else:
+                st.error(f"❌ WhatsApp send failed: {result.get('error', 'Unknown error')}")
         else:
-            st.warning("⚠️ Set your phone in **🏪 My Profile** tab first")
+            st.warning("⚠️ Set your phone number in **🏪 My Profile** tab first")
 
     if b3.button("❌ Dismiss", use_container_width=True):
         st.session_state.demo_loaded = False
@@ -599,15 +607,15 @@ def tab_simulator():
     col1, col2 = st.columns(2)
     with col1:
         st.markdown("**📊 Business Parameters**")
-        weekly_rev = st.number_input("Weekly Revenue (₹)", 10_000, 5_00_000, 50_000, step=5_000)
+        weekly_rev = st.number_input("Weekly Revenue (₹)", 10_000, 5_00_000, 50_000, step=5_000, key="sim_weekly_rev")
         current_margin_pct = st.slider("Current Margin %", 5, 40, 15)
         commodity_shock_pct = st.slider("Expected Commodity Cost Shock %", 0, 50, 20)
 
     with col2:
         st.markdown("**⚙️ Strategy Parameters**")
-        price_delta = st.number_input("Price increase per unit (₹)", 0.0, 50.0, 2.0, step=0.5)
-        extra_units = st.number_input("Extra units to stock up", 0, 500, 10, step=5)
-        avg_unit_price = st.number_input("Avg unit selling price (₹)", 10, 500, 50, step=5)
+        price_delta = st.number_input("Price increase per unit (₹)", 0.0, 50.0, 2.0, step=0.5, key="sim_price_delta")
+        extra_units = st.number_input("Extra units to stock up", 0, 500, 10, step=5, key="sim_extra_units")
+        avg_unit_price = st.number_input("Avg unit selling price (₹)", 10, 500, 50, step=5, key="sim_avg_unit_price")
 
     # Calculations
     margin = current_margin_pct / 100
@@ -670,7 +678,7 @@ def tab_profile():
         c3, c4 = st.columns(2)
         biz_type = c3.selectbox("Business Type *", ["kirana", "restaurant", "pharma"])
         city = c4.text_input("City *", placeholder="Nagpur, Maharashtra")
-        weekly_rev = st.number_input("Approx Weekly Revenue (₹)", 5_000, 10_00_000, 50_000, step=5_000)
+        weekly_rev = st.number_input("Approx Weekly Revenue (₹)", 5_000, 10_00_000, 50_000, step=5_000, key="profile_weekly_rev")
 
         st.markdown("**Step 3 — Alert Preferences**")
         alert_lvl = st.select_slider("Alert me when risk is at least",
@@ -795,7 +803,7 @@ def tab_city_comparison():
             max_selections=6,
         )
     with col2:
-        weekly_rev = st.number_input("Weekly Revenue (₹)", 10_000, 5_00_000, 50_000, step=5_000)
+        weekly_rev = st.number_input("Weekly Revenue (₹)", 10_000, 5_00_000, 50_000, step=5_000, key="city_weekly_rev")
 
     if not selected:
         st.info("Select at least one city above.")

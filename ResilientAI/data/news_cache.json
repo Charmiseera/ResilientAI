@@ -1,0 +1,127 @@
+{
+  "cached_at": "2026-03-27T18:25:03.865502+00:00",
+  "articles": [
+    {
+      "id": "live_9d2a5d3e",
+      "headline": "Increase in fertiliser sales indicates panic buying, says CM Devendra Fadnavis; warns against hoarding",
+      "source": "The Times of India",
+      "published_at": "2026-03-26T18:22:18Z",
+      "risk_level": "HIGH",
+      "confidence": 0.85,
+      "commodities_affected": [
+        "diesel"
+      ],
+      "url": "https://economictimes.indiatimes.com/industry/indl-goods/svs/chem-/-fertilisers/increase-in-fertiliser-sales-indicates-panic-buying-says-cm-devendra-fadnavis-warns-against-hoarding/articleshow/129832352.cms"
+    },
+    {
+      "id": "live_a835ef97",
+      "headline": "World Bank steps up to help countries navigate Middle East crisis",
+      "source": "The Times of India",
+      "published_at": "2026-03-26T18:18:03Z",
+      "risk_level": "HIGH",
+      "confidence": 0.85,
+      "commodities_affected": [
+        "general"
+      ],
+      "url": "https://economictimes.indiatimes.com/news/international/global-trends/world-bank-steps-up-to-help-countries-navigate-middle-east-crisis/articleshow/129832194.cms"
+    },
+    {
+      "id": "live_1865d477",
+      "headline": "What happened to Straits of Hormuz shipping? #world",
+      "source": "Alltoc.com",
+      "published_at": "2026-03-26T18:04:46Z",
+      "risk_level": "MEDIUM",
+      "confidence": 0.7,
+      "commodities_affected": [
+        "crude_oil",
+        "transport"
+      ],
+      "url": "https://alltoc.com/world/what-happened-to-straits-of-hormuz-shipping"
+    },
+    {
+      "id": "live_bbf85885",
+      "headline": "Analysis:Trump officials tout US energy dominance as global oil execs warn of supply crisis",
+      "source": "CNA",
+      "published_at": "2026-03-26T17:55:02Z",
+      "risk_level": "HIGH",
+      "confidence": 0.85,
+      "commodities_affected": [
+        "crude_oil",
+        "diesel"
+      ],
+      "url": "https://www.channelnewsasia.com/business/analysistrump-officials-tout-us-energy-dominance-global-oil-execs-warn-supply-crisis-6019486"
+    },
+    {
+      "id": "live_5ed7b787",
+      "headline": "The US-Israeli War on Iran Is Incentivizing Nuclear Proliferation",
+      "source": "Truthout",
+      "published_at": "2026-03-26T17:53:25Z",
+      "risk_level": "HIGH",
+      "confidence": 0.85,
+      "commodities_affected": [
+        "general"
+      ],
+      "url": "https://truthout.org/articles/the-us-israeli-war-on-iran-is-incentivizing-nuclear-proliferation/"
+    },
+    {
+      "id": "live_d2b407ac",
+      "headline": "How the war in Iran is already affecting UK farmers and food production",
+      "source": "The Conversation Africa",
+      "published_at": "2026-03-26T17:51:50Z",
+      "risk_level": "HIGH",
+      "confidence": 0.85,
+      "commodities_affected": [
+        "general"
+      ],
+      "url": "https://theconversation.com/how-the-war-in-iran-is-already-affecting-uk-farmers-and-food-production-279032"
+    },
+    {
+      "id": "live_9199ba12",
+      "headline": "Could this energy crisis be worse for the global economy than COVID?",
+      "source": "The Conversation Africa",
+      "published_at": "2026-03-26T17:51:09Z",
+      "risk_level": "HIGH",
+      "confidence": 0.85,
+      "commodities_affected": [
+        "crude_oil"
+      ],
+      "url": "https://theconversation.com/could-this-energy-crisis-be-worse-for-the-global-economy-than-covid-279284"
+    },
+    {
+      "id": "live_b3113d20",
+      "headline": "What happens if the US launches an invasion of Iran’s Kharg Island?",
+      "source": "TheJournal.ie",
+      "published_at": "2026-03-26T17:44:32Z",
+      "risk_level": "LOW",
+      "confidence": 0.55,
+      "commodities_affected": [
+        "general"
+      ],
+      "url": "https://www.thejournal.ie/what-happens-if-the-us-launches-a-ground-invasion-of-irans-kharg-island-6995572-Mar2026/"
+    },
+    {
+      "id": "live_88ac3769",
+      "headline": "Thank you, Iran!",
+      "source": "Globalresearch.ca",
+      "published_at": "2026-03-26T17:38:45Z",
+      "risk_level": "LOW",
+      "confidence": 0.55,
+      "commodities_affected": [
+        "general"
+      ],
+      "url": "https://www.globalresearch.ca/thank-you-iran/5920268"
+    },
+    {
+      "id": "live_f82179b6",
+      "headline": "Worthington Steel Q3 Earnings Call Highlights",
+      "source": "MarketBeat",
+      "published_at": "2026-03-26T17:36:54Z",
+      "risk_level": "LOW",
+      "confidence": 0.55,
+      "commodities_affected": [
+        "general"
+      ],
+      "url": "https://www.marketbeat.com/instant-alerts/worthington-steel-q3-earnings-call-highlights-2026-03-26/?utm_source=yahoofinance&amp;utm_medium=yahoofinance"
+    }
+  ]
+}

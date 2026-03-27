@@ -1,22 +1,22 @@
 """
-WhatsApp Alert Integration via Twilio.
+WhatsApp Alert Integration via Meta Cloud API.
 Sends supply disruption alerts to registered MSME users.
 """
 from __future__ import annotations
 import os
 import logging
 from dataclasses import dataclass
+from dotenv import load_dotenv
+
+# Load .env so credentials are available even when run via Streamlit
+load_dotenv()
 
 logger = logging.getLogger(__name__)
-
-_TWILIO_SID = os.getenv("TWILIO_ACCOUNT_SID", "")
-_TWILIO_TOKEN = os.getenv("TWILIO_AUTH_TOKEN", "")
-_TWILIO_WHATSAPP_FROM = os.getenv("TWILIO_WHATSAPP_FROM", "whatsapp:+14155238886")
 
 
 @dataclass
 class AlertMessage:
-    to_number: str         # E.164 format e.g. "+919876543210"
+    to_number: str         # E.164 format e.g. "919876543210" (no + for Meta)
     event_headline: str
     risk_level: str
     recommendation: str
@@ -44,35 +44,92 @@ def _format_message(alert: AlertMessage) -> str:
 
 def send_whatsapp_alert(alert: AlertMessage) -> dict:
     """
-    Send a WhatsApp alert via Twilio.
-    Returns {"success": bool, "sid": str, "error": str}.
-    Falls back to simulation if Twilio credentials not set.
+    Send a WhatsApp alert via Meta Cloud API.
+    Returns {"success": bool, "id": str, "error": str}.
+    Falls back to simulation if Meta credentials not set.
     """
+    # Read credentials at call-time so load_dotenv() is always applied
+    meta_token = os.getenv("WHATSAPP_TOKEN", "")
+    phone_id = os.getenv("WHATSAPP_PHONE_NUMBER_ID", "")
+
     message_body = _format_message(alert)
 
     # Simulation mode — no real API call
-    if not _TWILIO_SID or not _TWILIO_TOKEN:
+    if not meta_token or not phone_id:
         logger.info("[WhatsApp SIMULATED] To: %s\n%s", alert.to_number, message_body)
         return {
             "success": True,
-            "sid": "SIMULATED_SID_001",
+            "id": "SIMULATED_ID_001",
             "message": message_body,
             "mode": "simulation",
         }
 
     try:
-        from twilio.rest import Client
-        client = Client(_TWILIO_SID, _TWILIO_TOKEN)
-        msg = client.messages.create(
-            body=message_body,
-            from_=_TWILIO_WHATSAPP_FROM,
-            to=f"whatsapp:{alert.to_number}",
-        )
-        logger.info("WhatsApp sent: SID=%s", msg.sid)
-        return {"success": True, "sid": msg.sid, "mode": "live"}
+        import httpx
+        url = f"https://graph.facebook.com/v19.0/{phone_id}/messages"
+        headers = {
+            "Authorization": f"Bearer {meta_token}",
+            "Content-Type": "application/json",
+        }
+        # Meta expects the number without leading '+' or spaces
+        clean_number = alert.to_number.replace("+", "").replace(" ", "")
+
+        # Try free-text first (works when recipient has messaged in last 24h)
+        payload = {
+            "messaging_product": "whatsapp",
+            "to": clean_number,
+            "type": "text",
+            "text": {"body": message_body},
+        }
+
+        with httpx.Client(timeout=10.0) as client:
+            response = client.post(url, headers=headers, json=payload)
+            response_data = response.json()
+
+        if response.status_code == 200:
+            msg_id = response_data.get("messages", [{}])[0].get("id", "")
+            logger.info("WhatsApp sent via Meta (free-text): ID=%s", msg_id)
+            return {"success": True, "id": msg_id, "mode": "live"}
+
+        # Error 131026 = outside 24h session window → fall back to template
+        error_code = response_data.get("error", {}).get("code", 0)
+        error_msg = response_data.get("error", {}).get("message", "Unknown error")
+
+        if error_code == 131030:
+            custom_error = "Number not verified. Add this phone number to 'To' list in Meta Developer Console."
+            logger.error("Meta WhatsApp send failed: %s", custom_error)
+            return {"success": False, "id": "", "error": custom_error, "mode": "failed"}
+
+        if error_code in (131026, 131047):
+            logger.info("24h window closed — falling back to hello_world template")
+            template_payload = {
+                "messaging_product": "whatsapp",
+                "to": clean_number,
+                "type": "template",
+                "template": {
+                    "name": "hello_world",
+                    "language": {"code": "en_US"},
+                },
+            }
+            with httpx.Client(timeout=10.0) as client:
+                t_response = client.post(url, headers=headers, json=template_payload)
+                t_data = t_response.json()
+
+            if t_response.status_code == 200:
+                msg_id = t_data.get("messages", [{}])[0].get("id", "")
+                logger.info("WhatsApp template sent: ID=%s", msg_id)
+                return {"success": True, "id": msg_id, "mode": "live_template"}
+            else:
+                t_err = t_data.get("error", {}).get("message", "Template send failed")
+                logger.error("Template fallback failed: %s", t_err)
+                return {"success": False, "id": "", "error": t_err, "mode": "failed"}
+
+        logger.error("Meta WhatsApp send failed: %s", error_msg)
+        return {"success": False, "id": "", "error": error_msg, "mode": "failed"}
+
     except Exception as exc:
-        logger.error("WhatsApp send failed: %s", exc)
-        return {"success": False, "sid": "", "error": str(exc)}
+        logger.error("WhatsApp Exception: %s", exc)
+        return {"success": False, "id": "", "error": str(exc), "mode": "failed"}
 
 
 def broadcast_alert(
