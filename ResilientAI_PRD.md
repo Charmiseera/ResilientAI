@@ -34,7 +34,7 @@
 ## 1. Executive Summary
 
 ResilientAI is a decision intelligence platform that converts global supply chain disruptions into real-time, actionable recommendations for small and micro businesses (MSMEs). The system monitors global events, predicts local business impact, and recommends optimal decisions using Agentic AI and quantum-inspired optimization — all surfaced through a simple dashboard that any kirana store owner can use in under 60 seconds.
-
+wwhha
 **Built for:** 36-hour hackathon sprint → production hardening over 4 weeks
 **Core Stack:** Python · LangChain / CrewAI · Qiskit · Streamlit · FastAPI
 **Target Users:** Kirana stores, small retailers, pharmacies, restaurants
