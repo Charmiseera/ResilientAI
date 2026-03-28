@@ -392,35 +392,117 @@ def sidebar():
             st.caption("🟢 Demo mode — using seed data")
         st.divider()
 
-        # Voice
-        st.subheader("🎤 Voice Query")
-        query = st.text_input("Ask anything", placeholder="Gas price badhega kya?")
-        if st.button("🎙️ Ask", use_container_width=True) and query:
-            RESP = {
-                "en": {"gas": "LPG to rise 20% due to Hormuz. Stock 10 units & raise price ₹2.",
-                       "price": "Raise price ₹2 → +₹1,200/week profit.",
-                       "stock": "Buy 10 extra units now before prices rise.",
-                       "risk": "HIGH risk — Hormuz disruption affecting LPG & transport.",
-                       "default": "HIGH risk disruption detected. Check dashboard."},
-                "hi": {"gas": "Gas 20% badhega. 10 unit extra rakho, ₹2 price badhaao.",
-                       "price": "₹2 price badhaao → +₹1,200 haftewar profit.",
-                       "stock": "Abhi 10 unit kharido, baad mein mehenga hoga.",
-                       "risk": "HIGH risk — LPG aur transport mai badhaav aayega.",
-                       "default": "HIGH risk disruption hai. Dashboard dekho."},
-            }
-            rm = RESP.get(lang, RESP["en"])
-            q = query.lower()
-            reply = next((v for k, v in rm.items() if k in q), rm["default"])
-            st.success(reply)
+        # ── Voice / Text Query (Kimi/Gemini-powered, live news grounded) ────────
+        st.subheader("🎤 AI Voice Assistant")
+        st.caption("Speak or type — AI answers instantly from real supply news")
+
+        # ── Shared AI call helper ─────────────────────────────────────────────
+        def _run_voice_ai(query_text: str):
+            """Call AI API, show styled reply card, auto-play audio. No button needed."""
+            with st.spinner("🧠 AI is reading live news and thinking…"):
+                reply = ""
+                audio_b64 = ""
+                try:
+                    import requests as _req
+                    api_host = os.environ.get("API_HOST", "http://localhost:8000")
+                    resp = _req.post(
+                        f"{api_host}/api/v1/voice",
+                        json={"query": query_text.strip(), "lang": lang},
+                        timeout=20,
+                    )
+                    resp.raise_for_status()
+                    data = resp.json()
+                    reply = data.get("text_response", "")
+                    audio_b64 = data.get("audio_base64", "")
+                except Exception as api_err:
+                    st.warning(f"API unreachable ({api_err}), calling AI directly…")
+                    try:
+                        import google.generativeai as genai
+                        from agents.news_fetcher import fetch_live_news
+                        from agents.risk_agent import load_seed_events
+                        news_events = fetch_live_news() or load_seed_events()
+                        news_ctx = "\n".join(
+                            f"- [{e['risk_level']}] {e['headline']}"
+                            for e in news_events[:6]
+                        )
+                        lang_instr = (
+                            "Reply in simple Hindi/Hinglish under 3 sentences."
+                            if lang == "hi"
+                            else "Reply in simple English under 3 sentences."
+                        )
+                        prompt = (
+                            f"You are ResilientAI, supply chain advisor for Indian MSMEs.\n"
+                            f"{lang_instr}\n\nLatest news:\n{news_ctx}\n\n"
+                            f"User asks: {query_text}\n\nGive a grounded, practical answer."
+                        )
+                        gemini_key = os.environ.get("GEMINI_API_KEY", "")
+                        genai.configure(api_key=gemini_key)
+                        model = genai.GenerativeModel("gemini-1.5-flash")
+                        reply = model.generate_content(prompt).text.strip()
+                    except Exception as gem_err:
+                        reply = f"AI unavailable: {gem_err}"
+
+            if reply:
+                # Styled response card
+                st.markdown(f"""
+                <div style="background:rgba(0,210,255,0.08);border:1px solid rgba(0,210,255,0.25);
+                            border-radius:12px;padding:16px;margin-top:8px;">
+                    <div style="font-size:12px;color:#8E8E93;margin-bottom:6px">🤖 ResilientAI Answer</div>
+                    <div style="font-size:15px;color:#EBEBF5;line-height:1.6">{reply}</div>
+                </div>
+                """, unsafe_allow_html=True)
+
+                # Play audio response
+                if audio_b64:
+                    import base64 as _b64
+                    st.audio(_b64.b64decode(audio_b64), format="audio/mp3")
+                else:
+                    try:
+                        from gtts import gTTS
+                        import io as _io
+                        buf = _io.BytesIO()
+                        gTTS(text=reply, lang=lang).write_to_fp(buf)
+                        buf.seek(0)
+                        st.audio(buf.read(), format="audio/mp3")
+                    except Exception:
+                        st.caption("🔇 Audio unavailable (check internet connection)")
+
+        # ── MIC: Speak button — fully hands-free ──────────────────────────────
+        mic_col, status_col = st.columns([1, 3])
+        with mic_col:
+            use_mic = st.button("🎙️ Speak", use_container_width=True,
+                                help="Click → speak → AI answers automatically")
+
+        recognized_text = ""
+        if use_mic:
             try:
-                from gtts import gTTS
-                import io
-                buf = io.BytesIO()
-                gTTS(text=reply, lang=lang).write_to_fp(buf)
-                buf.seek(0)
-                st.audio(buf.read(), format="audio/mp3")
-            except Exception:
-                pass
+                import speech_recognition as sr
+                recognizer = sr.Recognizer()
+                with status_col:
+                    st.info("🔴 Listening… speak now")
+                with sr.Microphone() as source:
+                    recognizer.adjust_for_ambient_noise(source, duration=0.5)
+                    audio_data = recognizer.listen(source, timeout=6, phrase_time_limit=10)
+                sr_lang = "hi-IN" if lang == "hi" else "en-IN"
+                recognized_text = recognizer.recognize_google(audio_data, language=sr_lang)
+                with status_col:
+                    st.success(f"📝 Heard: *{recognized_text}*")
+                # ✅ AUTO-SUBMIT: no button click needed after mic capture
+                _run_voice_ai(recognized_text)
+            except Exception as mic_err:
+                with status_col:
+                    st.warning(f"⚠️ Mic error: {mic_err}. Type below instead.")
+
+        # ── TEXT INPUT: manual fallback with Ask AI button ────────────────────
+        st.divider()
+        query = st.text_input(
+            "Or type your question:",
+            placeholder="e.g. Will LPG prices rise? / Gas price badhega kya?",
+            key="voice_query_input",
+        )
+
+        if st.button("💬 Ask AI", use_container_width=True, type="primary") and query.strip():
+            _run_voice_ai(query)
         st.divider()
         st.caption("🇮🇳 Built for 63M MSMEs · v1.0")
     return biz_type, min_risk, lang

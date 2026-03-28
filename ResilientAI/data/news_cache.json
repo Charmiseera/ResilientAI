@@ -1,127 +1,131 @@
 {
-  "cached_at": "2026-03-27T18:25:03.865502+00:00",
+  "cached_at": "2026-03-28T08:31:28.023033+00:00",
   "articles": [
     {
-      "id": "live_9d2a5d3e",
-      "headline": "Increase in fertiliser sales indicates panic buying, says CM Devendra Fadnavis; warns against hoarding",
-      "source": "The Times of India",
-      "published_at": "2026-03-26T18:22:18Z",
-      "risk_level": "HIGH",
-      "confidence": 0.85,
-      "commodities_affected": [
-        "diesel"
-      ],
-      "url": "https://economictimes.indiatimes.com/industry/indl-goods/svs/chem-/-fertilisers/increase-in-fertiliser-sales-indicates-panic-buying-says-cm-devendra-fadnavis-warns-against-hoarding/articleshow/129832352.cms"
-    },
-    {
-      "id": "live_a835ef97",
-      "headline": "World Bank steps up to help countries navigate Middle East crisis",
-      "source": "The Times of India",
-      "published_at": "2026-03-26T18:18:03Z",
-      "risk_level": "HIGH",
-      "confidence": 0.85,
-      "commodities_affected": [
-        "general"
-      ],
-      "url": "https://economictimes.indiatimes.com/news/international/global-trends/world-bank-steps-up-to-help-countries-navigate-middle-east-crisis/articleshow/129832194.cms"
-    },
-    {
-      "id": "live_1865d477",
-      "headline": "What happened to Straits of Hormuz shipping? #world",
-      "source": "Alltoc.com",
-      "published_at": "2026-03-26T18:04:46Z",
-      "risk_level": "MEDIUM",
-      "confidence": 0.7,
-      "commodities_affected": [
-        "crude_oil",
-        "transport"
-      ],
-      "url": "https://alltoc.com/world/what-happened-to-straits-of-hormuz-shipping"
-    },
-    {
-      "id": "live_bbf85885",
-      "headline": "Analysis:Trump officials tout US energy dominance as global oil execs warn of supply crisis",
-      "source": "CNA",
-      "published_at": "2026-03-26T17:55:02Z",
-      "risk_level": "HIGH",
-      "confidence": 0.85,
-      "commodities_affected": [
-        "crude_oil",
-        "diesel"
-      ],
-      "url": "https://www.channelnewsasia.com/business/analysistrump-officials-tout-us-energy-dominance-global-oil-execs-warn-supply-crisis-6019486"
-    },
-    {
-      "id": "live_5ed7b787",
-      "headline": "The US-Israeli War on Iran Is Incentivizing Nuclear Proliferation",
-      "source": "Truthout",
-      "published_at": "2026-03-26T17:53:25Z",
-      "risk_level": "HIGH",
-      "confidence": 0.85,
-      "commodities_affected": [
-        "general"
-      ],
-      "url": "https://truthout.org/articles/the-us-israeli-war-on-iran-is-incentivizing-nuclear-proliferation/"
-    },
-    {
-      "id": "live_d2b407ac",
-      "headline": "How the war in Iran is already affecting UK farmers and food production",
-      "source": "The Conversation Africa",
-      "published_at": "2026-03-26T17:51:50Z",
-      "risk_level": "HIGH",
-      "confidence": 0.85,
-      "commodities_affected": [
-        "general"
-      ],
-      "url": "https://theconversation.com/how-the-war-in-iran-is-already-affecting-uk-farmers-and-food-production-279032"
-    },
-    {
-      "id": "live_9199ba12",
-      "headline": "Could this energy crisis be worse for the global economy than COVID?",
-      "source": "The Conversation Africa",
-      "published_at": "2026-03-26T17:51:09Z",
+      "id": "live_373107ef",
+      "headline": "Trump’s jawboning helps keep oil prices in check—but markets may test it soon",
+      "source": "Livemint",
+      "published_at": "2026-03-27T08:31:10Z",
       "risk_level": "HIGH",
       "confidence": 0.85,
       "commodities_affected": [
         "crude_oil"
       ],
-      "url": "https://theconversation.com/could-this-energy-crisis-be-worse-for-the-global-economy-than-covid-279284"
+      "url": "https://www.livemint.com/opinion/online-views/trump-jawboning-oil-prices-markets-test-gulf-war-white-house-stock-brent-crude-futures-11774559448448.html"
     },
     {
-      "id": "live_b3113d20",
-      "headline": "What happens if the US launches an invasion of Iran’s Kharg Island?",
-      "source": "TheJournal.ie",
-      "published_at": "2026-03-26T17:44:32Z",
+      "id": "live_eca62c97",
+      "headline": "India an ‘oasis’ of energy security amid global crisis, says Hardeep Singh Puri",
+      "source": "India Today",
+      "published_at": "2026-03-27T08:30:57Z",
+      "risk_level": "HIGH",
+      "confidence": 0.85,
+      "commodities_affected": [
+        "diesel"
+      ],
+      "url": "https://www.indiatoday.in/business/story/india-energy-security-global-crisis-hardeep-singh-puri-lpg-allocation-70-percent-2887826-2026-03-27"
+    },
+    {
+      "id": "live_580abe42",
+      "headline": "California’s fossil fuel phaseout has left it vulnerable to the Iran oil shock",
+      "source": "Grist",
+      "published_at": "2026-03-27T08:30:00Z",
+      "risk_level": "HIGH",
+      "confidence": 0.85,
+      "commodities_affected": [
+        "crude_oil",
+        "diesel"
+      ],
+      "url": "https://grist.org/energy/trump-iran-california-oil-sable/"
+    },
+    {
+      "id": "live_9d2e4e5d",
+      "headline": "‘No lockdown, only relief’: Hardeep Puri, Nirmala Sitharaman counter Opposition over fuel crisis",
+      "source": "The Indian Express",
+      "published_at": "2026-03-27T08:28:27Z",
+      "risk_level": "HIGH",
+      "confidence": 0.85,
+      "commodities_affected": [
+        "crude_oil",
+        "diesel",
+        "transport"
+      ],
+      "url": "https://indianexpress.com/article/india/lockdown-relief-hardeep-puri-nirmala-sitharaman-counter-opposition-10604272/"
+    },
+    {
+      "id": "live_b01762b7",
+      "headline": "Govt allocates additional 20% LPG for steel, automobile, textiles",
+      "source": "BusinessLine",
+      "published_at": "2026-03-27T08:27:19Z",
+      "risk_level": "LOW",
+      "confidence": 0.55,
+      "commodities_affected": [
+        "LPG",
+        "crude_oil"
+      ],
+      "url": "https://www.thehindubusinessline.com/economy/govt-allocates-additional-20-lpg-for-steel-automobile-textiles/article70791778.ece"
+    },
+    {
+      "id": "live_23a0576c",
+      "headline": "Australia and Germany to closely cooperate on guided weapons components",
+      "source": "Globalsecurity.org",
+      "published_at": "2026-03-27T08:26:51Z",
+      "risk_level": "HIGH",
+      "confidence": 0.85,
+      "commodities_affected": [
+        "transport"
+      ],
+      "url": "https://www.globalsecurity.org/wmd/library/news/australia/2026/australia-260327-audod01.htm"
+    },
+    {
+      "id": "live_59415157",
+      "headline": "Prime Minister Carney announces Canada has achieved the NATO 2% defence spending target",
+      "source": "Globalsecurity.org",
+      "published_at": "2026-03-27T08:26:51Z",
       "risk_level": "LOW",
       "confidence": 0.55,
       "commodities_affected": [
         "general"
       ],
-      "url": "https://www.thejournal.ie/what-happens-if-the-us-launches-a-ground-invasion-of-irans-kharg-island-6995572-Mar2026/"
+      "url": "https://www.globalsecurity.org/wmd/library/news/canada/2026/canada-260326-canadapm02.htm"
     },
     {
-      "id": "live_88ac3769",
-      "headline": "Thank you, Iran!",
-      "source": "Globalresearch.ca",
-      "published_at": "2026-03-26T17:38:45Z",
-      "risk_level": "LOW",
-      "confidence": 0.55,
+      "id": "live_1728bd25",
+      "headline": "Ukrainian Strikes Cause 'Most Serious Threat' To Russian Oil Exports Since War Began",
+      "source": "Globalsecurity.org",
+      "published_at": "2026-03-27T08:26:42Z",
+      "risk_level": "HIGH",
+      "confidence": 0.85,
       "commodities_affected": [
-        "general"
+        "crude_oil",
+        "transport"
       ],
-      "url": "https://www.globalresearch.ca/thank-you-iran/5920268"
+      "url": "https://www.globalsecurity.org/wmd/library/news/ukraine/2026/03/ukraine-260326-rferl02.htm"
     },
     {
-      "id": "live_f82179b6",
-      "headline": "Worthington Steel Q3 Earnings Call Highlights",
-      "source": "MarketBeat",
-      "published_at": "2026-03-26T17:36:54Z",
-      "risk_level": "LOW",
-      "confidence": 0.55,
+      "id": "live_1bb894d1",
+      "headline": "World News in Brief, Cuba blockade hits healthcare, Haiti's 'vortex of violence', deadly Djibouti shipwreck",
+      "source": "Globalsecurity.org",
+      "published_at": "2026-03-27T08:26:42Z",
+      "risk_level": "HIGH",
+      "confidence": 0.85,
       "commodities_affected": [
-        "general"
+        "crude_oil"
       ],
-      "url": "https://www.marketbeat.com/instant-alerts/worthington-steel-q3-earnings-call-highlights-2026-03-26/?utm_source=yahoofinance&amp;utm_medium=yahoofinance"
+      "url": "https://www.globalsecurity.org/military/library/news/2026/03/mil-260326-unnews02.htm"
+    },
+    {
+      "id": "live_dc0ee88e",
+      "headline": "UNICEF Chief calls for urgent global support as children in Somalia face worsening malnutrition",
+      "source": "Globalsecurity.org",
+      "published_at": "2026-03-27T08:26:27Z",
+      "risk_level": "HIGH",
+      "confidence": 0.85,
+      "commodities_affected": [
+        "diesel",
+        "transport"
+      ],
+      "url": "https://www.globalsecurity.org/military/library/news/2026/03/mil-260326-unicef01.htm"
     }
   ]
 }

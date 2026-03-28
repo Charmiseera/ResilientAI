@@ -25,12 +25,12 @@
     "id": "deaa86ed",
     "name": "charmi",
     "business_type": "kirana",
-    "city": "vizag,ap",
+    "city": "visakhpatnam",
     "phone": "+917075333579",
     "lang": "en",
     "weekly_revenue_inr": 50000,
     "created_at": "2026-03-27T18:46:29.507612+00:00",
-    "updated_at": "2026-03-27T18:50:36.151287+00:00"
+    "updated_at": "2026-03-28T08:31:31.747098+00:00"
   },
   {
     "id": "ef832b90",
@@ -42,5 +42,16 @@
     "weekly_revenue_inr": 50000,
     "created_at": "2026-03-27T18:51:20.003240+00:00",
     "updated_at": "2026-03-27T18:51:20.003240+00:00"
+  },
+  {
+    "id": "ee42a797",
+    "name": "charmi",
+    "business_type": "kirana",
+    "city": "vizag",
+    "phone": "7075333579",
+    "lang": "en",
+    "weekly_revenue_inr": 50000,
+    "created_at": "2026-03-28T07:21:01.631154+00:00",
+    "updated_at": "2026-03-28T07:21:01.631154+00:00"
   }
 ]
