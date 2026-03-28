@@ -912,52 +912,112 @@ def tab_suppliers():
         st.divider()
 
 
-# ══════════════════ TAB 8: AI CHAT ═══════════════════════════════════════════
+# ====================== TAB 8: AI CHAT =======================
 def tab_ai_chat(lang: str):
     st.subheader("💬 Supply Chain AI Assistant")
     st.caption("Ask specific questions about the ongoing disruptions and local strategies.")
     st.divider()
-    
-    if "messages" not in st.session_state:
-        st.session_state.messages = [
-            {"role": "assistant", "content": "Hello! I am ResilientAI. How can I help you navigate the current supply chain disruptions?" if lang == "en" else "नमस्ते! मैं ResilientAI हूँ। मैं आपूर्ति श्रृंखला में चल रही समस्याओं से निपटने में आपकी कैसे मदद कर सकता हूँ?"}
-        ]
 
-    # Display chat messages from history on app rerun
+    if "messages" not in st.session_state:
+        greeting = (
+            "Hello! I am ResilientAI. How can I help you navigate supply chain disruptions?"
+            if lang == "en" else
+            "Namaste! Main ResilientAI hoon. Supply chain disruptions mein aapki madad kaise kar sakta hoon?"
+        )
+        st.session_state.messages = [{"role": "assistant", "content": greeting}]
+
+    import google.generativeai as genai
+    from dotenv import load_dotenv
+    import os
+
+    load_dotenv()
+    google_api_key = os.getenv("GOOGLE_API_KEY")
+
+    # Try models in priority order
+    MODELS_TO_TRY = ["gemini-2.0-flash", "gemini-2.5-flash", "gemini-flash-latest"]
+
+    def try_generate(prompt_text):
+        """Try each model; return text on success, None if all fail."""
+        if not google_api_key:
+            return None
+        genai.configure(api_key=google_api_key)
+        for model_name in MODELS_TO_TRY:
+            try:
+                m = genai.GenerativeModel(model_name)
+                resp = m.generate_content(prompt_text)
+                return resp.text
+            except Exception:
+                continue
+        return None
+
+    def smart_fallback(user_prompt):
+        """Rich context-aware fallback when all API calls fail."""
+        q = user_prompt.lower()
+        EN = {
+            "lpg": "**LPG Alert:** The Hormuz disruption projects a 20% LPG price hike. Stock at least 10 extra cylinders now, and pass Rs.2-5 cost to customers to protect margins.",
+            "gas": "**Gas/LPG Alert:** Expect 15-20% price increase due to Strait of Hormuz closure. Stock up immediately and lock in current supplier rates.",
+            "wheat": "**Wheat/Flour Alert:** Global wheat up ~15%. Negotiate a bulk contract with NAFED or local mills. Hold 2-3 weeks of extra stock.",
+            "oil": "**Edible Oil Alert:** Oil prices volatile. Buy in bulk from local wholesalers. Switch to domestic brands to cut import risk.",
+            "price": "**Pricing Strategy:** For Rs.50K/week revenue, every Rs.2 increase adds ~Rs.1,200/week profit. Raise prices by 5-8% to offset supply costs.",
+            "stock": "**Inventory Strategy:** Stock critical items for 2-3 weeks. Prioritize LPG, edible oil, and imported goods. Use FIFO rotation.",
+            "supplier": "**Supplier Tip:** Always have 2-3 backup suppliers. Check the Alternative Suppliers tab for verified options near you.",
+            "profit": "**Profit Protection:** Price+Stock combined strategy recovers ~74% of disruption losses. Raise prices AND stock key items.",
+            "risk": "**Risk Level:** Current scenario is HIGH risk. Acting now saves ~Rs.1,800/week per store vs doing nothing.",
+            "transport": "**Transport Alert:** Expect 5-7 day delays on imports. Order 1 week early. Notify customers proactively.",
+            "delivery": "**Delivery Delays:** Plan for 5-7 day delays. Shift to local alternatives where possible.",
+            "default": "**ResilientAI Analysis:** For the current disruption: (1) Stock up critical commodities, (2) Raise prices 5-8%, (3) Identify alternative suppliers. See the Intelligence tab for personalized recommendations for your business.",
+        }
+        HI = {
+            "lpg": "**LPG Alert:** Hormuz sankat se LPG mein 20% badhottari hogi. 10+ cylinder stock karein aur Rs.2-5 customers se lein.",
+            "gas": "**Gas Alert:** LPG mein 15-20% badhottari ki sambhavna hai. Turant stock karein aur supplier se rate lock karein.",
+            "wheat": "**Gehun Alert:** Gehun ki keemat ~15% badhi hai. NAFED ya local mill se bulk contract karein.",
+            "price": "**Keemat Strategy:** Rs.50K/hafta mein har Rs.2 se ~Rs.1,200 munafa badega. 5-8% keemat badhayen.",
+            "stock": "**Stock Strategy:** Zaroori saman ka 2-3 hafte ka stock rakhein. LPG, tel, aayatit vastuon ko prathamikta dein.",
+            "profit": "**Munafa Suraksha:** Keemat + stock strategy se nuksan ka ~74% vasool hota hai.",
+            "risk": "**Jokhim:** Abhi HIGH jokhim hai. Proactive action se Rs.1,800/hafta bachaya ja sakta hai.",
+            "default": "**ResilientAI Analysis:** Maujuda sankat mein: (1) Zaroori saman stock karein, (2) Keemat 5-8% badhayen, (3) Vaikalpik supplier dhundein. Intelligence tab mein personal sifarishein dekhein.",
+        }
+        resp_map = HI if lang == "hi" else EN
+        return next((v for k, v in resp_map.items() if k in q), resp_map["default"])
+
+    # Display chat history
     for message in st.session_state.messages:
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
 
-    # React to user input
-    if prompt := st.chat_input("Ask ResilientAI..." if lang == "en" else "ResilientAI से पूछें..."):
-        # Display user message in chat message container
+    # Handle new input
+    if prompt := st.chat_input("Ask ResilientAI..." if lang == "en" else "ResilientAI se poochhen..."):
         st.chat_message("user").markdown(prompt)
-        # Add user message to chat history
         st.session_state.messages.append({"role": "user", "content": prompt})
-        
-        RESP = {
-            "en": {
-                "lpg": "The Hormuz disruption is severely impacting LPG. Expect a 20% price hike. Our recommendation is to stock up on at least 10 extra cylinders now.",
-                "wheat": "Due to the Ukraine conflict, global wheat prices are up 15%. I suggest negotiating a bulk contract with NAFED or local mills immediately.",
-                "delivery": "Delivery times for imported goods will be delayed by 5-7 days. Notify your customers in advance to manage expectations.",
-                "default": "I'm analyzing the latest global events. Based on current data, focus on securing alternative suppliers and adjusting your pricing to protect margins."
-            },
-            "hi": {
-                "lpg": "होर्मुज संकट का LPG पर भारी असर पड़ रहा है। 20% कीमत बढ़ने की उम्मीद है। हमारी सलाह है कि अभी कम से कम 10 एक्स्ट्रा सिलेंडर स्टॉक कर लें।",
-                "wheat": "यूक्रेन विवाद के कारण गेहूं की कीमतें 15% बढ़ गई हैं। मैं NAFED या स्थानीय मिलों के साथ थोक अनुबंध करने का सुझाव देता हूँ।",
-                "delivery": "आयातित माल की डिलीवरी में 5-7 दिन की देरी होगी। उम्मीदों का प्रबंधन करने के लिए अपने ग्राहकों को पहले ही सूचित करें।",
-                "default": "मैं नवीनतम वैश्विक घटनाओं का विश्लेषण कर रहा हूँ। मौजूदा डेटा के आधार पर, वैकल्पिक आपूर्तिकर्ताओं को सुरक्षित करने और अपने मार्जिन को बचाने के लिए अपनी कीमतों को समायोजित करने पर ध्यान दें।"
-            }
-        }
-        
-        reply_dict = RESP.get(lang, RESP["en"])
-        q = prompt.lower()
-        response_text = next((v for k, v in reply_dict.items() if k in q), reply_dict["default"])
-        
-        # Display assistant response in chat message container
+
+        # Build event context
+        event_context = ""
+        active_event_id = st.session_state.get("active_event_id")
+        if active_event_id:
+            from agents.risk_agent import get_event_by_id
+            event = get_event_by_id(active_event_id)
+            if event and event.get("commodities_affected"):
+                event_context = (
+                    f"\nActive disruption: {event.get('headline', '')} "
+                    f"| Risk: {event.get('risk_level', 'Unknown')} "
+                    f"| Commodities: {', '.join(event.get('commodities_affected', []))}"
+                )
+
+        system_instruction = (
+            "You are ResilientAI, a helpful AI assistant for small business owners in India "
+            "dealing with supply chain disruptions. Give practical, actionable advice."
+            if lang == "en" else
+            "Aap ResilientAI hain, India mein chhote vyavasay maalik ki supply chain samasyaon mein madad karne wale AI hain."
+        )
+
         with st.chat_message("assistant"):
-            st.markdown(response_text)
-        # Add assistant response to chat history
+            with st.spinner("Thinking..." if lang == "en" else "Soch raha hoon..."):
+                full_prompt = f"{system_instruction}{event_context}\nUser: {prompt}"
+                response_text = try_generate(full_prompt)
+                if response_text is None:
+                    response_text = smart_fallback(prompt)
+                st.markdown(response_text)
+
         st.session_state.messages.append({"role": "assistant", "content": response_text})
 
 

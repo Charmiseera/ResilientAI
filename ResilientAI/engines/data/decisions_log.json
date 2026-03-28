@@ -1,0 +1,12 @@
+[
+  {
+    "id": "718fa291",
+    "user_id": "demo",
+    "event_id": "evt_001",
+    "business_type": "kirana",
+    "action_taken": "Increase price only",
+    "profit_impact_inr": 9207.0,
+    "engine": "quantum",
+    "timestamp": "2026-03-28T05:30:26.581193+00:00"
+  }
+]
