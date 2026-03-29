@@ -86,8 +86,8 @@ async function fetchLiveNews(): Promise<string[]> {
     _newsCache = { articles: lines, at: Date.now() };
     console.log(`[Voice] Fetched ${lines.length} live news articles from NewsAPI.`);
     return lines;
-  } catch (err: any) {
-    console.warn("[Voice] NewsAPI fetch failed:", err.message, "— using seed fallback.");
+  } catch (err) {
+    console.warn("[Voice] NewsAPI fetch failed:", (err as Error).message, "— using seed fallback.");
     return SEED_NEWS;
   }
 }
@@ -157,8 +157,8 @@ export async function POST(req: NextRequest) {
         });
         reply = completion.choices[0]?.message?.content?.trim() ?? "";
         console.log("[Voice] Kimi responded:", reply.slice(0, 80));
-      } catch (kimiErr: any) {
-        console.warn("[Voice] Kimi failed:", kimiErr.message);
+      } catch (kimiErr) {
+        console.warn("[Voice] Kimi failed:", (kimiErr as Error).message);
       }
     }
 
@@ -166,7 +166,7 @@ export async function POST(req: NextRequest) {
     if (!reply) {
       const q = query.toLowerCase();
       const relevantNews = newsLines.filter(n =>
-        q.split(/\s+/).some(word => n.toLowerCase().includes(word))
+        q.split(/\s+/).some((word: string) => n.toLowerCase().includes(word))
       );
       const context = relevantNews.length ? relevantNews[0] : newsLines[0];
 
@@ -183,10 +183,10 @@ export async function POST(req: NextRequest) {
       news_source:    newsLines === SEED_NEWS ? "seed_fallback" : "live_newsapi",
     });
 
-  } catch (err: any) {
+  } catch (err) {
     console.error("[Voice Route Error]", err);
     return NextResponse.json(
-      { error: err.message, text_response: "Sorry, I couldn't process your request right now." },
+      { error: (err as Error).message, text_response: "Sorry, I couldn't process your request right now." },
       { status: 500 }
     );
   }

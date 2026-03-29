@@ -1,116 +1,129 @@
 {
-  "cached_at": "2026-03-28T23:08:19.253374+00:00",
+  "cached_at": "2026-03-29T02:53:18.539180+00:00",
   "articles": [
     {
-      "id": "live_89446edd",
-      "headline": "Breitbart Business Digest: Healthy Americans Drag Down Productivity While the Fed Plots Rate Hikes Over $4 Gas",
-      "source": "Breitbart News",
-      "published_at": "2026-03-27T23:01:23Z",
+      "id": "live_e23025ad",
+      "headline": "Steam Machine should undercut PlayStation 5 price hike",
+      "source": "Notebookcheck.net",
+      "published_at": "2026-03-28T02:44:00Z",
       "risk_level": "LOW",
       "confidence": 0.55,
       "commodities_affected": [
-        "LPG",
-        "crude_oil"
-      ],
-      "url": "https://www.breitbart.com/economy/2026/03/27/breitbart-business-digest-healthy-americans-drag-down-productivity-while-the-fed-plots-rate-hikes-over-4-gas/"
-    },
-    {
-      "id": "live_86cf71b3",
-      "headline": "Fusion Fuel Highlights Royal Uranium’s 2% NSR on Two Mineral Claims held by the Shea Creek Joint Venture, One of Canada’",
-      "source": "GlobeNewswire",
-      "published_at": "2026-03-27T22:58:00Z",
-      "risk_level": "LOW",
-      "confidence": 0.55,
-      "commodities_affected": [
-        "diesel"
-      ],
-      "url": "https://www.globenewswire.com/news-release/2026/03/27/3264145/0/en/Fusion-Fuel-Highlights-Royal-Uranium-s-2-NSR-on-Two-Mineral-Claims-held-by-the-Shea-Creek-Joint-Venture-One-of-Canada-s-Largest-Undeveloped-Uranium-Projects-in-the-Athabasca-Basin.html"
-    },
-    {
-      "id": "live_e826ad96",
-      "headline": "Pentagon May Send 10,000 More Ground Troops To Middle East, Suggests Seizing Iranian Islands",
-      "source": "Shtfplan.com",
-      "published_at": "2026-03-27T22:30:01Z",
-      "risk_level": "HIGH",
-      "confidence": 0.85,
-      "commodities_affected": [
         "general"
       ],
-      "url": "https://www.shtfplan.com/war/pentagon-may-send-10000-more-ground-troops-to-middle-east-suggests-seizing-iranian-islands"
+      "url": "https://www.notebookcheck.net/Steam-Machine-should-undercut-PlayStation-5-price-hike.1261187.0.html"
     },
     {
-      "id": "live_132f0698",
-      "headline": "Sony temporarily suspends memory card sales due to shortages",
-      "source": "The Verge",
-      "published_at": "2026-03-27T22:21:11Z",
-      "risk_level": "MEDIUM",
-      "confidence": 0.7,
-      "commodities_affected": [
-        "general"
-      ],
-      "url": "https://www.theverge.com/tech/902828/sony-sd-cfexpress-memory-card-shortage"
-    },
-    {
-      "id": "live_585853c1",
-      "headline": "After 5-yr wait, jobs for kin of C’nagar oxygen-shortage victims",
+      "id": "live_7d79398c",
+      "headline": "Fuel crisis deepens as Queensland fast-tracks ‘Singapore-sized’ Taroom Trough oil reserve; over 100 service stations run",
       "source": "The Times of India",
-      "published_at": "2026-03-27T22:12:00Z",
-      "risk_level": "HIGH",
-      "confidence": 0.85,
-      "commodities_affected": [
-        "general"
-      ],
-      "url": "https://timesofindia.indiatimes.com/city/bengaluru/after-5-yr-wait-jobs-for-kin-of-cnagar-oxygen-shortage-victims/articleshow/129853737.cms"
-    },
-    {
-      "id": "live_82ae7cdd",
-      "headline": "Commercial LPG allocation to states increased by 20%",
-      "source": "The Times of India",
-      "published_at": "2026-03-27T22:02:26Z",
-      "risk_level": "LOW",
-      "confidence": 0.55,
-      "commodities_affected": [
-        "LPG",
-        "crude_oil"
-      ],
-      "url": "https://timesofindia.indiatimes.com/india/commercial-lpg-allocation-to-states-increased-by-20/articleshow/129854679.cms"
-    },
-    {
-      "id": "live_50878cb3",
-      "headline": "The Cushion Is Gone and the Oil Market Is Now Exposed",
-      "source": "OilPrice.com",
-      "published_at": "2026-03-27T22:00:00Z",
-      "risk_level": "MEDIUM",
-      "confidence": 0.7,
-      "commodities_affected": [
-        "crude_oil"
-      ],
-      "url": "https://oilprice.com/Energy/Energy-General/The-Cushion-Is-Gone-and-the-Oil-Market-Is-Now-Exposed.html"
-    },
-    {
-      "id": "live_da8de478",
-      "headline": "3 Reasons Why Sony Has Increased PS5 Prices by 30% Since Last Year",
-      "source": "ComicBook.com",
-      "published_at": "2026-03-27T22:00:00Z",
-      "risk_level": "LOW",
-      "confidence": 0.55,
-      "commodities_affected": [
-        "general"
-      ],
-      "url": "http://comicbook.com/gaming/feature/3-reasons-why-sony-has-increased-ps5-prices-by-30-since-last-year/"
-    },
-    {
-      "id": "live_7caf61e3",
-      "headline": "Lockdown reports‘harmful, baseless’, says govt, allays fear",
-      "source": "The Times of India",
-      "published_at": "2026-03-27T21:55:10Z",
+      "published_at": "2026-03-28T02:14:59Z",
       "risk_level": "HIGH",
       "confidence": 0.85,
       "commodities_affected": [
         "crude_oil",
+        "diesel"
+      ],
+      "url": "https://economictimes.indiatimes.com/news/international/australia/fuel-crisis-deepens-as-queensland-fast-tracks-singapore-sized-taroom-trough-oil-reserve-over-100-service-stations-run-dry/articleshow/129857520.cms"
+    },
+    {
+      "id": "live_a560c513",
+      "headline": "PM announces new powers to boost fuel supply amid Middle East tensions",
+      "source": "ABC News (AU)",
+      "published_at": "2026-03-28T02:14:19Z",
+      "risk_level": "HIGH",
+      "confidence": 0.85,
+      "commodities_affected": [
+        "diesel"
+      ],
+      "url": "https://www.abc.net.au/news/2026-03-28/government-backs-delivery-of-extra-fuel-cargoes/106506536"
+    },
+    {
+      "id": "live_59d4f54e",
+      "headline": "US-Iran war, Day 29:  Trump signals progress in talks, Iran denies negotiations amid escalating conflict",
+      "source": "The Indian Express",
+      "published_at": "2026-03-28T02:00:56Z",
+      "risk_level": "HIGH",
+      "confidence": 0.85,
+      "commodities_affected": [
+        "general"
+      ],
+      "url": "https://indianexpress.com/article/world/us-news/us-iran-war-day-29-trump-pause-energy-strikes-negotiation-denial-10603788/"
+    },
+    {
+      "id": "live_15d0f874",
+      "headline": "Three Transport Groups in Japan Warn of Diesel Hoarding",
+      "source": "Newsonjapan.com",
+      "published_at": "2026-03-28T01:44:57Z",
+      "risk_level": "HIGH",
+      "confidence": 0.85,
+      "commodities_affected": [
+        "diesel",
         "transport"
       ],
-      "url": "https://timesofindia.indiatimes.com/india/lockdown-reportsharmful-baseless-says-govt-allays-fear/articleshow/129854647.cms"
+      "url": "https://newsonjapan.com/article/148746.php"
+    },
+    {
+      "id": "live_89678c01",
+      "headline": "Trump and Modi had a call about the Iran war. Elon Musk joined them",
+      "source": "The Times of India",
+      "published_at": "2026-03-28T01:39:16Z",
+      "risk_level": "HIGH",
+      "confidence": 0.85,
+      "commodities_affected": [
+        "general"
+      ],
+      "url": "https://economictimes.indiatimes.com/news/india/trump-and-modi-had-a-call-about-the-iran-war-elon-musk-joined-them/articleshow/129857342.cms"
+    },
+    {
+      "id": "live_d813fb8b",
+      "headline": "Yen Weakens Past 160 Per Dollar",
+      "source": "Newsonjapan.com",
+      "published_at": "2026-03-28T01:37:48Z",
+      "risk_level": "LOW",
+      "confidence": 0.55,
+      "commodities_affected": [
+        "general"
+      ],
+      "url": "https://newsonjapan.com/article/148745.php"
+    },
+    {
+      "id": "live_9d38b7a5",
+      "headline": "India signals openness to extending tariff-free deal on ecommerce, two diplomats say",
+      "source": "The Times of India",
+      "published_at": "2026-03-28T01:30:50Z",
+      "risk_level": "HIGH",
+      "confidence": 0.85,
+      "commodities_affected": [
+        "general"
+      ],
+      "url": "https://economictimes.indiatimes.com/tech/technology/india-signals-openness-to-extending-tariff-free-deal-on-ecommerce-two-diplomats-say/articleshow/129857308.cms"
+    },
+    {
+      "id": "live_100dccea",
+      "headline": "India signals shift on ecommerce tariff moratorium, balks at US push for permanent extension",
+      "source": "The Times of India",
+      "published_at": "2026-03-28T01:30:50Z",
+      "risk_level": "HIGH",
+      "confidence": 0.85,
+      "commodities_affected": [
+        "general"
+      ],
+      "url": "https://economictimes.indiatimes.com/tech/technology/india-signals-shift-on-ecommerce-tariff-moratorium-balks-at-us-push-for-permanent-extension/articleshow/129857308.cms"
+    },
+    {
+      "id": "live_9a295c61",
+      "headline": "Six days or 74 days? Decoding India’s petroleum reserve debate, in charts",
+      "source": "Livemint",
+      "published_at": "2026-03-28T01:30:25Z",
+      "risk_level": "HIGH",
+      "confidence": 0.85,
+      "commodities_affected": [
+        "LPG",
+        "crude_oil",
+        "transport"
+      ],
+      "url": "https://www.livemint.com/industry/energy/india-petroleum-reserve-oil-and-gas-supply-west-asia-war-lpg-crisis-11774611596148.html"
     }
   ]
 }

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
+import { supabaseBrowser } from "@/lib/supabase-browser";
 import { CitySearch } from "@/components/ui/CitySearch";
 import {
   User, Building2, Phone, MapPin, Briefcase, Save,
@@ -85,29 +86,48 @@ export function ProfileTab() {
     if (!form.name.trim() || !form.city.trim()) return;
     setLoading(true);
 
-    const { data: existing } = await supabase.from("users").select("id").eq("phone", form.phone).maybeSingle();
-    const userId = existing?.id ?? crypto.randomUUID();
+    try {
+      // Prefer the currently authenticated user's ID so we always update the same row
+      const { data: { user: authUser } } = await supabaseBrowser.auth.getUser();
+      let userId = authUser?.id ?? (localStorage.getItem("rai_user_id") || "");
 
-    await supabase.from("users").upsert({
-      id:                userId,
-      name:              form.name,
-      city:              form.city,
-      phone:             form.phone,
-      business_type:     form.business_type,
-      weekly_revenue_inr: form.weekly_revenue,
-      lang:              form.lang,
-    });
+      // If no auth id (shouldn't happen), fall back to phone lookup
+      if (!userId && form.phone) {
+        const { data: byPhone } = await supabase
+          .from("users").select("id").eq("phone", form.phone).maybeSingle();
+        userId = byPhone?.id ?? crypto.randomUUID();
+      }
+      if (!userId) userId = crypto.randomUUID();
 
-    localStorage.setItem("rai_user_id",  userId);
-    localStorage.setItem("rai_lang",     form.lang);
-    localStorage.setItem("rai_biz_type", form.business_type);
-    localStorage.setItem("rai_city",     form.city);
-    if (form.phone) localStorage.setItem("rai_phone", form.phone);
+      const { error: dbErr } = await supabase.from("users").upsert(
+        {
+          id:                userId,
+          name:              form.name,
+          city:              form.city,
+          phone:             form.phone || null,
+          business_type:     form.business_type,
+          weekly_revenue_inr: form.weekly_revenue,
+          lang:              form.lang,
+        },
+        { onConflict: "id" }
+      );
 
-    setLoading(false);
-    setSaved(true);
-    loadAllProfiles();
-    setTimeout(() => setSaved(false), 3500);
+      if (dbErr) throw dbErr;
+
+      localStorage.setItem("rai_user_id",  userId);
+      localStorage.setItem("rai_lang",     form.lang);
+      localStorage.setItem("rai_biz_type", form.business_type);
+      localStorage.setItem("rai_city",     form.city);
+      if (form.phone) localStorage.setItem("rai_phone", form.phone);
+
+      setSaved(true);
+      loadAllProfiles();
+      setTimeout(() => setSaved(false), 3500);
+    } catch (err: any) {
+      console.error("Profile save error:", err.message);
+    } finally {
+      setLoading(false);
+    }
   }
 
   const selectedBiz = BIZ_TYPES.find(b => b.value === form.business_type);
@@ -116,8 +136,9 @@ export function ProfileTab() {
     <div className="space-y-6">
       {/* ── Header ── */}
       <div>
-        <h1 className="text-2xl font-bold text-white">🏪 My Business Profile</h1>
-        <p className="text-white/40 text-sm mt-1">Set up once — get personalized alerts forever.</p>
+        <p className="section-label mb-1">Configuration</p>
+        <h1 className="section-headline">🏪 My Business Profile</h1>
+        <p className="text-sm mt-1" style={{ color:"rgba(187,202,191,0.5)" }}>Set up once — get personalized alerts forever.</p>
       </div>
 
       {/* ── Two-column layout ── */}
@@ -127,27 +148,28 @@ export function ProfileTab() {
         <form onSubmit={handleSave} className="space-y-5">
 
           {/* ── Step 1 + 2 merged in a horizontal grid ── */}
-          <div className="bg-white/[0.03] border border-white/5 rounded-2xl p-6 space-y-5">
-            <p className="text-[11px] uppercase tracking-widest text-white/30 font-semibold">
+          <div className="card-glass p-6 space-y-5">
+            <p className="text-[11px] uppercase tracking-widest font-semibold" style={{ color:"rgba(187,202,191,0.35)" }}>
               About You
             </p>
 
             {/* Name + Phone side by side */}
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="space-y-1.5">
-                <label className="flex items-center gap-2 text-xs text-white/50">
-                  <User className="w-3.5 h-3.5" /> Full Name <span className="text-red-400">*</span>
+                <label className="flex items-center gap-2 text-xs" style={{ color:"rgba(187,202,191,0.5)" }}>
+                  <User className="w-3.5 h-3.5" /> Full Name <span style={{ color:"#fc7c78" }}>*</span>
                 </label>
                 <input
                   type="text" required
                   value={form.name}
                   onChange={e => setForm({ ...form, name: e.target.value })}
                   placeholder="Ramesh Sharma"
-                  className="w-full bg-white/[0.04] border border-white/10 rounded-xl px-4 py-2.5 text-white placeholder-white/20 outline-none focus:border-cyan-500/40 focus:bg-white/[0.06] transition-all text-sm"
+                  className="w-full rounded-xl px-4 py-2.5 text-sm transition-all focus:outline-none"
+                  style={{ background:"rgba(255,255,255,0.04)", border:"1px solid rgba(255,255,255,0.1)", color:"#e4e1ec" }}
                 />
               </div>
               <div className="space-y-1.5">
-                <label className="flex items-center gap-2 text-xs text-white/50">
+                <label className="flex items-center gap-2 text-xs" style={{ color:"rgba(187,202,191,0.5)" }}>
                   <Phone className="w-3.5 h-3.5" /> WhatsApp Number
                 </label>
                 <input
@@ -155,7 +177,8 @@ export function ProfileTab() {
                   value={form.phone}
                   onChange={e => setForm({ ...form, phone: e.target.value })}
                   placeholder="+919876543210"
-                  className="w-full bg-white/[0.04] border border-white/10 rounded-xl px-4 py-2.5 text-white placeholder-white/20 outline-none focus:border-cyan-500/40 focus:bg-white/[0.06] transition-all text-sm"
+                  className="w-full rounded-xl px-4 py-2.5 text-sm transition-all focus:outline-none"
+                  style={{ background:"rgba(255,255,255,0.04)", border:"1px solid rgba(255,255,255,0.1)", color:"#e4e1ec" }}
                 />
               </div>
             </div>
@@ -163,8 +186,8 @@ export function ProfileTab() {
             {/* City + Language side by side */}
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="space-y-1.5">
-                <label className="flex items-center gap-2 text-xs text-white/50">
-                  <MapPin className="w-3.5 h-3.5" /> City <span className="text-red-400">*</span>
+                <label className="flex items-center gap-2 text-xs" style={{ color:"rgba(187,202,191,0.5)" }}>
+                  <MapPin className="w-3.5 h-3.5" /> City <span style={{ color:"#fc7c78" }}>*</span>
                 </label>
                 <CitySearch
                   value={form.city}
@@ -173,7 +196,7 @@ export function ProfileTab() {
                 />
               </div>
               <div className="space-y-1.5">
-                <label className="flex items-center gap-2 text-xs text-white/50">
+                <label className="flex items-center gap-2 text-xs" style={{ color:"rgba(187,202,191,0.5)" }}>
                   <Globe className="w-3.5 h-3.5" /> Preferred Language
                 </label>
                 <div className="flex gap-2 h-[42px]">
@@ -181,11 +204,12 @@ export function ProfileTab() {
                     <button
                       key={l} type="button"
                       onClick={() => setForm({ ...form, lang: l })}
-                      className={`flex-1 rounded-xl text-sm font-semibold border transition-all ${
-                        form.lang === l
-                          ? "bg-cyan-500/20 border-cyan-500/50 text-cyan-300"
-                          : "bg-white/[0.03] border-white/10 text-white/40 hover:text-white/60"
-                      }`}
+                      className="flex-1 rounded-xl text-sm font-semibold border transition-all"
+                      style={{
+                        background: form.lang === l ? "rgba(78,222,163,0.15)" : "rgba(255,255,255,0.03)",
+                        border: form.lang === l ? "1px solid rgba(78,222,163,0.3)" : "1px solid rgba(255,255,255,0.08)",
+                        color: form.lang === l ? "#4edea3" : "rgba(187,202,191,0.4)"
+                      }}
                     >
                       {l === "en" ? "🇬🇧 EN" : "🇮🇳 हिं"}
                     </button>
@@ -196,26 +220,27 @@ export function ProfileTab() {
           </div>
 
           {/* ── Business section ── */}
-          <div className="bg-white/[0.03] border border-white/5 rounded-2xl p-6 space-y-5">
-            <p className="text-[11px] uppercase tracking-widest text-white/30 font-semibold">
+          <div className="card-glass p-6 space-y-5">
+            <p className="text-[11px] uppercase tracking-widest font-semibold" style={{ color:"rgba(187,202,191,0.35)" }}>
               Your Business
             </p>
 
             {/* Business type as pill selector */}
             <div className="space-y-1.5">
-              <label className="flex items-center gap-2 text-xs text-white/50">
-                <Briefcase className="w-3.5 h-3.5" /> Business Type <span className="text-red-400">*</span>
+              <label className="flex items-center gap-2 text-xs" style={{ color:"rgba(187,202,191,0.5)" }}>
+                <Briefcase className="w-3.5 h-3.5" /> Business Type <span style={{ color:"#fc7c78" }}>*</span>
               </label>
               <div className="flex flex-wrap gap-2">
                 {BIZ_TYPES.map(b => (
                   <button
                     key={b.value} type="button"
                     onClick={() => setForm({ ...form, business_type: b.value })}
-                    className={`px-3 py-2 rounded-xl text-xs font-semibold border transition-all ${
-                      form.business_type === b.value
-                        ? "bg-emerald-500/20 border-emerald-500/50 text-emerald-300"
-                        : "bg-white/[0.03] border-white/10 text-white/40 hover:text-white/60 hover:border-white/20"
-                    }`}
+                    className="px-3 py-2 rounded-xl text-xs font-semibold border transition-all"
+                    style={{
+                      background: form.business_type === b.value ? "rgba(78,222,163,0.15)" : "rgba(255,255,255,0.03)",
+                      border: form.business_type === b.value ? "1px solid rgba(78,222,163,0.3)" : "1px solid rgba(255,255,255,0.08)",
+                      color: form.business_type === b.value ? "#4edea3" : "rgba(187,202,191,0.4)"
+                    }}
                   >
                     {b.emoji} {b.label}
                   </button>
@@ -226,16 +251,16 @@ export function ProfileTab() {
             {/* Revenue slider */}
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <label className="flex items-center gap-2 text-xs text-white/50">
+                <label className="flex items-center gap-2 text-xs" style={{ color:"rgba(187,202,191,0.5)" }}>
                   <Building2 className="w-3.5 h-3.5" /> Weekly Revenue
                 </label>
-                <span className="text-white font-bold text-sm">₹{form.weekly_revenue.toLocaleString()}</span>
+                <span className="font-bold text-sm" style={{ color:"#e4e1ec" }}>₹{form.weekly_revenue.toLocaleString()}</span>
               </div>
               <div className="relative h-2">
-                <div className="absolute inset-0 bg-white/10 rounded-full" />
+                <div className="absolute inset-0 rounded-full" style={{ background:"rgba(255,255,255,0.1)" }} />
                 <div
-                  className="absolute left-0 top-0 h-full rounded-full bg-gradient-to-r from-emerald-400 to-cyan-500"
-                  style={{ width: `${((form.weekly_revenue - 5000) / 995000) * 100}%` }}
+                  className="absolute left-0 top-0 h-full rounded-full"
+                  style={{ width: `${((form.weekly_revenue - 5000) / 995000) * 100}%`, background:"#4edea3" }}
                 />
                 <input
                   type="range" min={5000} max={1000000} step={5000}
@@ -244,44 +269,47 @@ export function ProfileTab() {
                   className="absolute inset-0 w-full opacity-0 cursor-pointer"
                 />
               </div>
-              <div className="flex justify-between text-[10px] text-white/20">
+              <div className="flex justify-between text-[10px]" style={{ color:"rgba(187,202,191,0.2)" }}>
                 <span>₹5K</span><span>₹10L</span>
               </div>
             </div>
           </div>
 
           {/* ── Alert preferences ── */}
-          <div className="bg-white/[0.03] border border-white/5 rounded-2xl p-6 space-y-4">
-            <p className="text-[11px] uppercase tracking-widest text-white/30 font-semibold">
+          <div className="card-glass p-6 space-y-4">
+            <p className="text-[11px] uppercase tracking-widest font-semibold" style={{ color:"rgba(187,202,191,0.35)" }}>
               Alert Preferences
             </p>
 
             <div className="space-y-2">
-              <label className="flex items-center gap-2 text-xs text-white/50">
+              <label className="flex items-center gap-2 text-xs" style={{ color:"rgba(187,202,191,0.5)" }}>
                 <Bell className="w-3.5 h-3.5" /> Alert me when risk is at least
               </label>
               <div className="flex gap-2">
                 {ALERT_LEVELS.map(level => {
-                  const colors: Record<AlertLevel, string> = {
-                    LOW:    "border-emerald-500/50 bg-emerald-500/20 text-emerald-300",
-                    MEDIUM: "border-amber-500/50  bg-amber-500/20  text-amber-300",
-                    HIGH:   "border-red-500/50    bg-red-500/20    text-red-300",
+                  const colors = {
+                    LOW:    { bg:"rgba(78,222,163,0.15)", border:"rgba(78,222,163,0.4)", color:"#4edea3" },
+                    MEDIUM: { bg:"rgba(255,185,95,0.15)", border:"rgba(255,185,95,0.4)", color:"#ffb95f" },
+                    HIGH:   { bg:"rgba(252,124,120,0.15)", border:"rgba(252,124,120,0.4)", color:"#fc7c78" },
                   };
                   return (
                     <button
                       key={level} type="button"
                       onClick={() => setForm({ ...form, alert_level: level })}
-                      className={`flex-1 py-2.5 rounded-xl text-xs font-bold border transition-all ${
-                        form.alert_level === level ? colors[level] : "border-white/10 bg-white/[0.03] text-white/40 hover:text-white/60"
-                      }`}
+                      className="flex-1 py-2.5 rounded-xl text-xs font-bold border transition-all"
+                      style={{
+                        background: form.alert_level === level ? colors[level].bg : "rgba(255,255,255,0.03)",
+                        border: form.alert_level === level ? `1px solid ${colors[level].border}` : "1px solid rgba(255,255,255,0.08)",
+                        color: form.alert_level === level ? colors[level].color : "rgba(187,202,191,0.4)",
+                      }}
                     >
                       {level === "LOW" ? "🟢" : level === "MEDIUM" ? "🟡" : "🔴"} {level}
                     </button>
                   );
                 })}
               </div>
-              <p className="text-[11px] text-white/25">
-                WhatsApp alerts for <strong className="text-white/40">{form.alert_level}</strong> and above events.
+              <p className="text-[11px]" style={{ color:"rgba(187,202,191,0.3)" }}>
+                WhatsApp alerts for <strong style={{ color:"rgba(187,202,191,0.6)" }}>{form.alert_level}</strong> and above events.
               </p>
             </div>
           </div>
@@ -289,11 +317,13 @@ export function ProfileTab() {
           {/* Save button */}
           <button
             type="submit" disabled={loading}
-            className={`w-full flex items-center justify-center gap-2 py-3.5 rounded-xl font-semibold text-sm transition-all ${
-              saved
-                ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
-                : "bg-emerald-500 text-black hover:bg-emerald-400 active:scale-[0.98]"
-            } disabled:opacity-50`}
+            className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl font-bold text-sm transition-all"
+            style={{
+              background: saved ? "rgba(78,222,163,0.15)" : "#4edea3",
+              color: saved ? "#4edea3" : "#000",
+              border: saved ? "1px solid rgba(78,222,163,0.3)" : "none",
+              opacity: loading ? 0.5 : 1
+            }}
           >
             {loading ? (
               <><Loader2 className="w-4 h-4 animate-spin" />Saving…</>
@@ -309,19 +339,20 @@ export function ProfileTab() {
         <div className="space-y-4 lg:sticky lg:top-6">
 
           {/* Live Profile Card */}
-          <div className="bg-white/[0.03] border border-white/5 rounded-2xl p-5 space-y-4">
-            <p className="text-[11px] uppercase tracking-widest text-white/30 font-semibold">
+          <div className="card-glass p-5 space-y-4">
+            <p className="text-[11px] uppercase tracking-widest font-semibold" style={{ color:"rgba(187,202,191,0.35)" }}>
               Your Profile Preview
             </p>
 
             {/* Avatar + name */}
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-white font-bold text-lg flex-shrink-0">
+              <div className="w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg flex-shrink-0"
+                   style={{ background:"#4edea3", color:"#000" }}>
                 {form.name?.[0]?.toUpperCase() || "?"}
               </div>
               <div>
-                <p className="text-white font-semibold">{form.name || <span className="text-white/20">Your Name</span>}</p>
-                <p className="text-white/40 text-xs">{form.city || <span className="text-white/20">City</span>}</p>
+                <p className="font-semibold" style={{ color:"#e4e1ec" }}>{form.name || <span style={{ color:"rgba(187,202,191,0.2)" }}>Your Name</span>}</p>
+                <p className="text-xs" style={{ color:"rgba(187,202,191,0.4)" }}>{form.city || <span style={{ color:"rgba(187,202,191,0.2)" }}>City</span>}</p>
               </div>
             </div>
 
@@ -333,35 +364,35 @@ export function ProfileTab() {
                 { icon: Phone,       label: "WhatsApp",  value: form.phone || "Not set" },
                 { icon: Globe,       label: "Language",  value: form.lang === "en" ? "🇬🇧 English" : "🇮🇳 हिंदी" },
               ].map(s => (
-                <div key={s.label} className="bg-white/[0.04] rounded-xl p-3 space-y-1">
-                  <div className="flex items-center gap-1 text-white/30">
+                <div key={s.label} className="rounded-xl p-3 space-y-1" style={{ background:"rgba(255,255,255,0.04)" }}>
+                  <div className="flex items-center gap-1" style={{ color:"rgba(187,202,191,0.3)" }}>
                     <s.icon className="w-3 h-3" />
                     <span className="text-[10px]">{s.label}</span>
                   </div>
-                  <p className="text-white text-xs font-medium truncate">{s.value}</p>
+                  <p className="text-xs font-medium truncate" style={{ color:"#e4e1ec" }}>{s.value}</p>
                 </div>
               ))}
             </div>
 
             {/* Alert badge */}
-            <div className={`rounded-xl p-3 flex items-center gap-2 text-xs font-medium border ${
-              form.alert_level === "HIGH"
-                ? "bg-red-500/10 border-red-500/20 text-red-300"
-                : form.alert_level === "MEDIUM"
-                ? "bg-amber-500/10 border-amber-500/20 text-amber-300"
-                : "bg-emerald-500/10 border-emerald-500/20 text-emerald-300"
-            }`}>
+            <div className="rounded-xl p-3 flex items-center gap-2 text-xs font-medium border"
+                 style={{
+                    background: form.alert_level === "HIGH" ? "rgba(252,124,120,0.15)" : form.alert_level === "MEDIUM" ? "rgba(255,185,95,0.15)" : "rgba(78,222,163,0.15)",
+                    border: form.alert_level === "HIGH" ? "1px solid rgba(252,124,120,0.3)" : form.alert_level === "MEDIUM" ? "1px solid rgba(255,185,95,0.3)" : "1px solid rgba(78,222,163,0.3)",
+                    color: form.alert_level === "HIGH" ? "#fc7c78" : form.alert_level === "MEDIUM" ? "#ffb95f" : "#4edea3"
+                 }}>
               <Bell className="w-3.5 h-3.5 flex-shrink-0" />
               Alerts at <strong className="ml-1">{form.alert_level}</strong> &amp; above
             </div>
 
             {/* WhatsApp status */}
             {form.phone && (
-              <div className="bg-emerald-500/[0.06] border border-emerald-500/15 rounded-xl p-3 flex items-start gap-2">
+              <div className="rounded-xl p-3 flex items-start gap-2"
+                   style={{ background:"rgba(78,222,163,0.1)", border:"1px solid rgba(78,222,163,0.2)" }}>
                 <span className="text-lg">📱</span>
                 <div>
-                  <p className="text-emerald-300 text-xs font-semibold">WhatsApp Ready</p>
-                  <p className="text-emerald-300/50 text-[10px] mt-0.5 break-all">{form.phone}</p>
+                  <p className="text-xs font-semibold" style={{ color:"#4edea3" }}>WhatsApp Ready</p>
+                  <p className="text-[10px] mt-0.5 break-all" style={{ color:"rgba(78,222,163,0.6)" }}>{form.phone}</p>
                 </div>
               </div>
             )}
@@ -383,7 +414,7 @@ export function ProfileTab() {
 
           {/* Registered Users */}
           <div className="space-y-3">
-            <div className="flex items-center gap-2 text-white/30">
+            <div className="flex items-center gap-2" style={{ color:"rgba(187,202,191,0.3)" }}>
               <Users className="w-3.5 h-3.5" />
               <span className="text-[10px] uppercase tracking-widest font-semibold">
                 Registered Users {profiles.length > 0 && `(${profiles.length})`}
@@ -392,24 +423,25 @@ export function ProfileTab() {
             </div>
 
             {profiles.length === 0 && !fetchingUsers && (
-              <p className="text-white/20 text-xs">No users yet — be first!</p>
+              <p className="text-xs" style={{ color:"rgba(187,202,191,0.2)" }}>No users yet — be first!</p>
             )}
 
             <div className="space-y-2 max-h-64 overflow-y-auto pr-1">
               {profiles.map(p => (
                 <div
                   key={p.id}
-                  className="bg-white/[0.02] border border-white/5 rounded-xl px-3 py-2.5 flex items-center gap-3"
+                  className="card-glass px-3 py-2.5 flex items-center gap-3"
                 >
-                  <div className="w-7 h-7 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-white font-bold text-[10px] flex-shrink-0">
+                  <div className="w-7 h-7 rounded-full flex items-center justify-center font-bold text-[10px] flex-shrink-0"
+                       style={{ background:"rgba(255,255,255,0.08)", color:"#e4e1ec" }}>
                     {p.name?.[0]?.toUpperCase() || "?"}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-white text-xs font-semibold truncate">{p.name}</p>
-                    <p className="text-white/30 text-[10px] truncate">{p.business_type} · {p.city}</p>
+                    <p className="text-xs font-semibold truncate" style={{ color:"#e4e1ec" }}>{p.name}</p>
+                    <p className="text-[10px] truncate" style={{ color:"rgba(187,202,191,0.3)" }}>{p.business_type} · {p.city}</p>
                   </div>
                   <div className="text-right flex-shrink-0">
-                    <p className="text-white/40 text-[10px]">₹{((p.weekly_revenue_inr || 0) / 1000).toFixed(0)}K/wk</p>
+                    <p className="text-[10px]" style={{ color:"rgba(187,202,191,0.4)" }}>₹{((p.weekly_revenue_inr || 0) / 1000).toFixed(0)}K/wk</p>
                   </div>
                 </div>
               ))}

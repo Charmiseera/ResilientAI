@@ -148,25 +148,21 @@ export function SimulatorTab() {
     fmt: (v: number) => string; grad: string;
     onChange: (v: number) => void;
   }) => (
-    <div className="bg-white/[0.03] border border-white/5 rounded-2xl p-4">
+    <div className="card-glass p-4">
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
-          <Icon className="w-4 h-4 text-white/40" />
-          <span className="text-white/60 text-xs">{label}</span>
+          <Icon className="w-4 h-4" style={{ color:"rgba(187,202,191,0.4)" }}/>
+          <span className="text-xs" style={{ color:"rgba(187,202,191,0.6)" }}>{label}</span>
         </div>
-        <span className="text-white font-bold text-sm">{fmt(value)}</span>
+        <span className="font-bold text-sm" style={{ color:"#e4e1ec" }}>{fmt(value)}</span>
       </div>
       <div className="relative h-2">
-        <div className="absolute inset-0 bg-white/10 rounded-full" />
-        <div
-          className={`absolute left-0 top-0 h-full rounded-full bg-gradient-to-r ${grad}`}
-          style={{ width: `${((value - min) / (max - min)) * 100}%` }}
-        />
-        <input
-          type="range" min={min} max={max} step={step} value={value}
+        <div className="absolute inset-0 rounded-full" style={{ background:"rgba(255,255,255,0.08)" }}/>
+        <div className={`absolute left-0 top-0 h-full rounded-full bg-gradient-to-r ${grad}`}
+             style={{ width:`${((value-min)/(max-min))*100}%`}}/>
+        <input type="range" min={min} max={max} step={step} value={value}
           onChange={e => onChange(Number(e.target.value))}
-          className="absolute inset-0 w-full opacity-0 cursor-pointer"
-        />
+          className="absolute inset-0 w-full opacity-0 cursor-pointer"/>
       </div>
     </div>
   );
@@ -175,8 +171,9 @@ export function SimulatorTab() {
     <div className="space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-white">🧮 Profit Simulator</h1>
-        <p className="text-white/40 text-sm mt-1">
+        <p className="section-label mb-1">Scenario Modeling</p>
+        <h1 className="section-headline">Profit Simulator</h1>
+        <p className="text-sm mt-1" style={{ color:"rgba(187,202,191,0.5)" }}>
           Test strategies before committing — see exact ₹ impact in real-time as you move sliders.
         </p>
       </div>
@@ -206,8 +203,8 @@ export function SimulatorTab() {
 
         {/* Right: Strategy Parameters */}
         <div className="space-y-3">
-          <p className="text-xs uppercase tracking-widest text-white/40 font-semibold">
-            ⚙️ Strategy Parameters
+          <p className="text-xs uppercase tracking-widest font-semibold" style={{ color:"rgba(187,202,191,0.4)" }}>
+            Strategy Parameters
           </p>
           {STRATEGY_SLIDERS.map(s => (
             <SliderCard
@@ -225,8 +222,9 @@ export function SimulatorTab() {
           ))}
 
           {/* Tip */}
-          <div className="bg-blue-500/[0.06] border border-blue-500/15 rounded-xl px-4 py-3 text-blue-300/70 text-xs leading-relaxed">
-            💡 Results update <strong className="text-blue-300">instantly</strong> as you move sliders — no button click needed.
+          <div className="rounded-xl px-4 py-3 text-xs leading-relaxed"
+               style={{ background:"rgba(78,222,163,0.05)", border:"1px solid rgba(78,222,163,0.15)", color:"rgba(78,222,163,0.7)" }}>
+            💡 Results update <strong style={{ color:"#4edea3" }}>instantly</strong> as you move sliders.
           </div>
         </div>
       </div>
@@ -235,32 +233,30 @@ export function SimulatorTab() {
       {result && (
         <div className="space-y-6">
           <div className="flex items-center gap-3">
-            <div className="flex-1 h-px bg-white/5" />
-            <span className="text-xs text-white/30 uppercase tracking-widest">📊 Results</span>
-            <div className="flex-1 h-px bg-white/5" />
+            <div className="flex-1 h-px" style={{ background:"rgba(255,255,255,0.05)" }}/>
+            <span className="text-xs uppercase tracking-widest" style={{ color:"rgba(187,202,191,0.25)" }}>Results</span>
+            <div className="flex-1 h-px" style={{ background:"rgba(255,255,255,0.05)" }}/>
           </div>
 
-          {/* 4 KPIs — matches Streamlit's 4-column metric row */}
+          {/* KPI metrics */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
             {[
-              { label: "Base Profit",      value: `₹${Math.round(result.baseProfit).toLocaleString()}`,    color: "text-white",       delta: null },
-              { label: "Shock Hit",        value: `-₹${Math.round(result.costHit).toLocaleString()}`,      color: "text-red-400",     delta: null },
-              { label: "Projected Profit", value: `₹${Math.round(result.projected).toLocaleString()}`,     color: "text-emerald-400", delta: `${result.projected >= result.baseProfit ? "+" : ""}₹${Math.round(result.projected - result.baseProfit).toLocaleString()} vs baseline` },
-              { label: "New Margin",       value: `${(result.projected / revenue * 100).toFixed(1)}%`,     color: "text-cyan-400",    delta: null },
+              { label:"Base Profit",      value:`₹${Math.round(result.baseProfit).toLocaleString()}`,    color:"#e4e1ec",   delta:null },
+              { label:"Shock Hit",        value:`-₹${Math.round(result.costHit).toLocaleString()}`,      color:"#fc7c78",   delta:null },
+              { label:"Projected Profit", value:`₹${Math.round(result.projected).toLocaleString()}`,     color:"#4edea3",  delta:`${result.projected>=result.baseProfit?"+":""}${Math.round(result.projected-result.baseProfit).toLocaleString()} vs baseline` },
+              { label:"New Margin",       value:`${(result.projected/revenue*100).toFixed(1)}%`,          color:"#ffb95f",  delta:null },
             ].map(m => (
-              <div key={m.label} className="bg-white/[0.04] border border-white/5 rounded-xl p-4 text-center">
-                <p className="text-[10px] text-white/30 mb-1 uppercase tracking-wider">{m.label}</p>
-                <p className={`font-bold text-lg ${m.color}`}>{m.value}</p>
-                {m.delta && <p className="text-[10px] text-white/25 mt-1">{m.delta}</p>}
+              <div key={m.label} className="card-glass p-4 text-center">
+                <p className="section-label mb-1">{m.label}</p>
+                <p className="font-bold text-lg" style={{ color:m.color }}>{m.value}</p>
+                {m.delta && <p className="text-[10px] mt-1" style={{ color:"rgba(187,202,191,0.3)" }}>{m.delta}</p>}
               </div>
             ))}
           </div>
 
           {/* Strategy comparison bar chart */}
-          <div className="bg-white/[0.03] border border-white/5 rounded-2xl p-5">
-            <p className="text-white/50 text-xs uppercase tracking-widest mb-4">
-              Strategy Comparison — Weekly Profit
-            </p>
+          <div className="card-glass p-5">
+            <p className="section-label mb-4">Strategy Comparison — Weekly Profit</p>
             <ResponsiveContainer width="100%" height={240}>
               <BarChart data={result.scenarios} margin={{ top: 5, right: 10, bottom: 5, left: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
@@ -288,22 +284,14 @@ export function SimulatorTab() {
           </div>
 
           {/* Adopt button */}
-          <button
-            onClick={handleAdopt}
-            disabled={saving}
-            className={`w-full flex items-center justify-center gap-2 py-3.5 rounded-2xl font-semibold text-sm transition-all disabled:opacity-50 ${
-              saved
-                ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
-                : "bg-emerald-500 text-black hover:bg-emerald-400 active:scale-[0.98]"
-            }`}
-          >
-            {saving ? (
-              <><Loader2 className="w-4 h-4 animate-spin" />Saving strategy…</>
-            ) : saved ? (
-              <><CheckCircle2 className="w-4 h-4" />✓ Strategy Saved to Cloud</>
-            ) : (
-              <>✅ Adopt Price + Stock Strategy — +₹{Math.max(0, Math.round(result.projected - result.baseProfit)).toLocaleString()}/week</>
-            )}
+          <button onClick={handleAdopt} disabled={saving}
+            className="w-full flex items-center justify-center gap-2 py-3.5 rounded-2xl font-bold text-sm transition-all disabled:opacity-50"
+            style={saved
+              ? { background:"rgba(78,222,163,0.1)", color:"#4edea3", border:"1px solid rgba(78,222,163,0.2)" }
+              : { background:"linear-gradient(135deg,#10b981,#4edea3)", color:"#003824" }}>
+            {saving ? (<><Loader2 className="w-4 h-4 animate-spin"/>Saving strategy…</>) :
+             saved  ? (<><CheckCircle2 className="w-4 h-4"/>Strategy Saved to Cloud</>) :
+             (<>✅ Adopt Price + Stock Strategy — +₹{Math.max(0,Math.round(result.projected-result.baseProfit)).toLocaleString()}/week</>)}
           </button>
         </div>
       )}

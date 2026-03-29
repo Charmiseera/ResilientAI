@@ -1,29 +1,46 @@
 @import "tailwindcss";
 
 @theme {
-  --color-rai-acid: #ccff00;
-  --color-rai-orange: #ff4500;
-  --color-rai-crimson: #ff0033;
-  --color-rai-black: #050505;
-  --color-rai-obsidian: #000000;
-  --color-rai-panel: #111111;
-  --color-rai-gray: #333333;
-  --color-rai-text: #f0f0f0;
-  --color-rai-dim: #888888;
-  
-  --font-display: var(--font-space-grotesk), system-ui, sans-serif;
-  --font-sans: var(--font-inter), system-ui, sans-serif;
-  --font-mono: var(--font-jetbrains-mono), monospace;
+  /* ── Obsidian Sentinel Surface Scale ── */
+  --color-surface: #13131a;
+  --color-surface-dim: #0e0d15;
+  --color-surface-low: #1b1b23;
+  --color-surface-container: #1f1f27;
+  --color-surface-high: #2a2931;
+  --color-surface-highest: #34343c;
 
-  /* Overriding default border radius to enforce sharp brutally edges globally */
-  --radius-sm: 0px;
-  --radius-md: 0px;
-  --radius-lg: 0px;
-  --radius-xl: 0px;
-  --radius-2xl: 0px;
-  --radius-3xl: 0px;
-  --radius-full: 0px;
-  --radius: 0px;
+  /* ── Brand Primary (Emerald / Resilience) ── */
+  --color-primary: #4edea3;
+  --color-primary-container: #10b981;
+  --color-on-primary: #003824;
+
+  /* ── Brand Secondary (Amber / Risk) ── */
+  --color-secondary: #ffb95f;
+  --color-secondary-container: #ee9800;
+
+  /* ── Brand Tertiary (Coral / Critical) ── */
+  --color-tertiary: #ffb3af;
+  --color-tertiary-container: #fc7c78;
+
+  /* ── Text ── */
+  --color-on-surface: #e4e1ec;
+  --color-on-surface-variant: #bbcabf;
+  --color-outline-variant: rgba(255, 255, 255, 0.07);
+
+  /* ── Legacy (for backward compatibility within tabs) ── */
+  --color-rai-acid: #4edea3;
+  --color-rai-orange: #ffb95f;
+  --color-rai-crimson: #ffb3af;
+
+  /* ── Fonts ── */
+  --font-sans: 'Inter', system-ui, sans-serif;
+
+  /* ── Rounded corners (Obsidian Sentinel scale) ── */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-2xl: 2rem;
 }
 
 @layer base {
@@ -32,40 +49,242 @@
     scroll-behavior: smooth;
   }
 
+  html,
   body {
-    background-color: var(--color-rai-obsidian);
-    color: var(--color-rai-text);
+    background-color: var(--color-surface);
+    color: var(--color-on-surface);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     letter-spacing: -0.01em;
   }
 
-  /* Brutalist Scrollbar */
+  /* Scrollbar */
   ::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
+    width: 6px;
+    height: 6px;
   }
+
   ::-webkit-scrollbar-track {
-    background: var(--color-rai-obsidian);
-    border-left: 1px solid var(--color-rai-gray);
+    background: var(--color-surface-low);
   }
+
   ::-webkit-scrollbar-thumb {
-    background: var(--color-rai-gray);
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 99px;
   }
+
   ::-webkit-scrollbar-thumb:hover {
-    background: var(--color-rai-acid);
+    background: var(--color-primary);
   }
 }
 
 @layer utilities {
-  .brutalist-border {
-    border: 1px solid var(--color-rai-gray);
+
+  /* ── Card glass style (used everywhere) ── */
+  .card-glass {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 1rem;
   }
-  .brutalist-border:hover {
-    border-color: var(--color-rai-text);
+
+  .card-glass-lg {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 1.5rem;
   }
-  .brutalist-border-active {
-    border-color: var(--color-rai-acid);
-    box-shadow: 4px 4px 0px 0px var(--color-rai-acid);
+
+  /* ── Stat display typography ── */
+  .stat-display {
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: var(--color-on-surface);
+  }
+
+  .stat-display-lg {
+    font-size: 3.5rem;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1;
+  }
+
+  /* ── Section label ── */
+  .section-label {
+    font-size: 0.6875rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-primary);
+  }
+
+  /* ── Section headline ── */
+  .section-headline {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--color-on-surface);
+  }
+
+  /* ── Primary button ── */
+  .btn-primary {
+    background: linear-gradient(135deg, var(--color-primary-container), var(--color-primary));
+    color: #003824;
+    font-weight: 600;
+    border-radius: 0.75rem;
+    padding: 0.625rem 1.25rem;
+    transition: opacity 0.15s, transform 0.1s;
+  }
+
+  .btn-primary:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+  }
+
+  .btn-primary:active {
+    transform: scale(0.99);
+  }
+
+  /* ── Ghost button ── */
+  .btn-ghost {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: var(--color-on-surface);
+    font-weight: 500;
+    border-radius: 0.75rem;
+    padding: 0.625rem 1.25rem;
+    transition: background 0.15s, border-color 0.15s;
+  }
+
+  .btn-ghost:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  /* ── Severity badges ── */
+  .badge-critical {
+    background: rgba(239, 68, 68, 0.15);
+    color: #ff6b6b;
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.375rem;
+  }
+
+  .badge-medium {
+    background: rgba(249, 115, 22, 0.15);
+    color: #ffb95f;
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.375rem;
+  }
+
+  .badge-low {
+    background: rgba(78, 222, 163, 0.12);
+    color: #4edea3;
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.375rem;
+  }
+
+  .badge-info {
+    background: rgba(148, 163, 184, 0.1);
+    color: #94a3b8;
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.375rem;
+  }
+
+  /* ── Commodity chip ── */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--color-on-surface-variant);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    padding: 0.2rem 0.625rem;
+    border-radius: 99px;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+  }
+
+  /* ── Input base ── */
+  .input-obsidian {
+    background: var(--color-surface-low);
+    border: 1px solid transparent;
+    border-radius: 0.75rem;
+    color: var(--color-on-surface);
+    font-size: 0.875rem;
+    padding: 0.75rem 1rem;
+    width: 100%;
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+
+  .input-obsidian::placeholder {
+    color: rgba(187, 202, 191, 0.4);
+  }
+
+  .input-obsidian:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(78, 222, 163, 0.08);
+  }
+
+  /* ── Pulse dot ── */
+  .pulse-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    animation: pulse-ring 2s infinite;
+  }
+
+  @keyframes pulse-ring {
+    0% {
+      box-shadow: 0 0 0 0 rgba(78, 222, 163, 0.5);
+    }
+
+    70% {
+      box-shadow: 0 0 0 8px rgba(78, 222, 163, 0);
+    }
+
+    100% {
+      box-shadow: 0 0 0 0 rgba(78, 222, 163, 0);
+    }
+  }
+
+  /* ── Progress bar ── */
+  .progress-bar {
+    height: 4px;
+    border-radius: 99px;
+    background: rgba(255, 255, 255, 0.07);
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    border-radius: 99px;
+    background: linear-gradient(90deg, var(--color-primary-container), var(--color-primary));
+    transition: width 0.6s ease;
+  }
+
+  .progress-fill-amber {
+    background: linear-gradient(90deg, #ee9800, #ffb95f);
+  }
+
+  .progress-fill-coral {
+    background: linear-gradient(90deg, #ef4444, #ff6b6b);
   }
 }

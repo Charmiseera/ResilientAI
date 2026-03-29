@@ -1,6 +1,7 @@
 """
 FastAPI application entry point.
 Run with: uvicorn api.main:app --reload --port 8000
+# Updated WHATSAPP_TOKEN in .env
 """
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware

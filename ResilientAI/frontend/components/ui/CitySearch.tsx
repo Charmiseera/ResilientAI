@@ -13,6 +13,19 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { MapPin, Loader2, X } from "lucide-react";
 
+declare namespace google {
+  namespace maps {
+    namespace places {
+      class AutocompleteService {
+        getPlacePredictions(request: any, callback: (predictions: any, status: any) => void): void;
+      }
+      enum PlacesServiceStatus {
+        OK = "OK"
+      }
+    }
+  }
+}
+
 interface Suggestion {
   placeId: string;
   description: string;        // full string e.g. "Mumbai, Maharashtra, India"
@@ -38,6 +51,14 @@ const callbacks: Array<() => void> = [];
 function loadGoogleMaps(key: string): Promise<void> {
   return new Promise(resolve => {
     if (scriptLoaded) { resolve(); return; }
+    
+    // Check if script is already in the document (prevents HMR duplicates)
+    if (document.querySelector('script[src^="https://maps.googleapis.com/maps/api/js"]')) {
+      scriptLoaded = true;
+      resolve();
+      return;
+    }
+
     callbacks.push(resolve);
     if (scriptLoading) return;
     scriptLoading = true;
@@ -64,7 +85,7 @@ export function CitySearch({
   const [open,        setOpen]        = useState(false);
   const [mapsReady,   setMapsReady]   = useState(false);
   const debounceRef   = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const serviceRef    = useRef<google.maps.places.AutocompleteService | null>(null);
+  const serviceRef    = useRef<any>(null);
 
   // Keep query in sync when value changes externally
   useEffect(() => { setQuery(value); }, [value]);
@@ -90,13 +111,13 @@ export function CitySearch({
         types:                ["(cities)"],
         componentRestrictions: { country: "in" }, // India only
       },
-      (predictions, status) => {
+      (predictions: any, status: any) => {
         setLoading(false);
         if (status !== google.maps.places.PlacesServiceStatus.OK || !predictions) {
           setSuggestions([]); return;
         }
         setSuggestions(
-          predictions.map(p => ({
+          predictions.map((p: any) => ({
             placeId:     p.place_id,
             description: p.description,
             mainText:    p.structured_formatting.main_text,

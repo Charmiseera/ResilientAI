@@ -25,25 +25,49 @@ export function OnboardingModal({ onComplete }: OnboardingModalProps) {
     try {
       // Get current Supabase auth user
       const { data: { user } } = await supabaseBrowser.auth.getUser();
-      const userId = user?.id ?? crypto.randomUUID();
+      const authId = user?.id;
 
-      // Upsert into users table
-      const { error: dbErr } = await supabaseBrowser.from("users").upsert({
-        id:                userId,
-        name:              name.trim(),
-        phone:             phone.trim(),
-        city:              city,
-        business_type:     localStorage.getItem("rai_biz_type") || "kirana",
-        weekly_revenue_inr: 50000,
-        lang:              localStorage.getItem("rai_lang") || "en",
-      });
+      // Resolve which row to upsert:
+      // 1. Prefer the auth user's own row (by id)
+      // 2. Else look up an existing row with this phone (to avoid duplicate phone)
+      // 3. Fall back to a new UUID
+      let userId: string;
+      if (authId) {
+        userId = authId;
+      } else {
+        const trimmedPhone = phone.trim();
+        if (trimmedPhone && trimmedPhone.length > 3) {
+          const { data: byPhone } = await supabaseBrowser
+            .from("users")
+            .select("id")
+            .eq("phone", trimmedPhone)
+            .maybeSingle();
+          userId = byPhone?.id ?? crypto.randomUUID();
+        } else {
+          userId = crypto.randomUUID();
+        }
+      }
+
+      // Upsert on primary key (id) — never conflicts on phone unique index
+      const { error: dbErr } = await supabaseBrowser.from("users").upsert(
+        {
+          id:                userId,
+          name:              name.trim(),
+          phone:             phone.trim() || null,
+          city:              city,
+          business_type:     localStorage.getItem("rai_biz_type") || "kirana",
+          weekly_revenue_inr: 50000,
+          lang:              localStorage.getItem("rai_lang") || "en",
+        },
+        { onConflict: "id" }
+      );
 
       if (dbErr) throw new Error(dbErr.message);
 
       // Persist to localStorage for immediate use across tabs
       localStorage.setItem("rai_user_id", userId);
       localStorage.setItem("rai_city",    city);
-      if (phone.length > 3) localStorage.setItem("rai_phone", phone.trim());
+      if (phone.trim().length > 3) localStorage.setItem("rai_phone", phone.trim());
       localStorage.setItem("rai_onboarded", "true");
 
       onComplete();

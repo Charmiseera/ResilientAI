@@ -274,8 +274,9 @@ export function DecisionHistoryTab() {
     <div className="space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-white">Decision History</h1>
-        <p className="text-white/40 text-sm mt-1">
+        <p className="section-label mb-1">Audit Timeline</p>
+        <h1 className="section-headline">Decision History</h1>
+        <p className="text-sm mt-1" style={{ color:"rgba(187,202,191,0.5)" }}>
           Complete audit trail — accepted recommendations and adopted strategies with outcome feedback.
         </p>
       </div>
@@ -284,30 +285,30 @@ export function DecisionHistoryTab() {
       {!loading && decisions.length > 0 && (
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
           {[
-            { label: "Decisions Logged",   value: decisions.length.toString(),          color: "text-white" },
-            { label: "Total Profit Impact", value: `₹${Math.round(totalProfit).toLocaleString()}`, color: "text-emerald-400" },
-            { label: "Avg Outcome Rating",  value: avgRating === "—" ? "—" : `★ ${avgRating}`, color: "text-amber-400" },
-            { label: "Feedback Rate",       value: `${feedbackPct}%`,                    color: "text-cyan-400" },
+            { label: "Decisions Logged",   value: decisions.length.toString(),          color: "#e4e1ec" },
+            { label: "Total Profit Impact", value: `₹${Math.round(totalProfit).toLocaleString()}`, color: "#4edea3" },
+            { label: "Avg Outcome Rating",  value: avgRating === "—" ? "—" : `★ ${avgRating}`, color: "#ffb95f" },
+            { label: "Feedback Rate",       value: `${feedbackPct}%`,                    color: "#06b6d4" }, // cyan
           ].map(s => (
-            <div key={s.label} className="bg-white/[0.03] border border-white/5 rounded-xl p-4 text-center">
-              <p className="text-white/30 text-[10px] uppercase tracking-wider">{s.label}</p>
-              <p className={`text-xl font-bold mt-1 ${s.color}`}>{s.value}</p>
+            <div key={s.label} className="card-glass p-4 text-center">
+              <p className="text-[10px] uppercase tracking-wider" style={{ color:"rgba(187,202,191,0.35)" }}>{s.label}</p>
+              <p className="text-xl font-bold mt-1" style={{ color:s.color }}>{s.value}</p>
             </div>
           ))}
         </div>
       )}
 
       {/* Tab switcher */}
-      <div className="flex gap-1 bg-white/[0.03] p-1 rounded-xl border border-white/5 w-fit">
+      <div className="flex gap-1 p-1 rounded-xl w-fit" style={{ background:"rgba(255,255,255,0.02)", border:"1px solid rgba(255,255,255,0.05)" }}>
         {(["decisions", "strategies"] as const).map(t => (
           <button
             key={t}
             onClick={() => setTab(t)}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all capitalize ${
-              tab === t
-                ? "bg-white/10 text-white"
-                : "text-white/30 hover:text-white/60"
-            }`}
+            className="px-4 py-2 rounded-lg text-sm font-medium transition-all capitalize"
+            style={{
+              background: tab === t ? "rgba(255,255,255,0.08)" : "transparent",
+              color: tab === t ? "#e4e1ec" : "rgba(187,202,191,0.35)",
+            }}
           >
             {t === "decisions"
               ? `✅ Recommendations (${decisions.length})`
@@ -324,46 +325,45 @@ export function DecisionHistoryTab() {
         /* ── Executed Decisions ── */
         <div className="space-y-3">
           {decisions.length === 0 && (
-            <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-10 text-white/25 text-sm text-center">
+            <div className="card-glass p-10 text-sm text-center" style={{ color:"rgba(187,202,191,0.3)" }}>
               No decisions logged yet. Execute recommendations in the Intelligence tab.
             </div>
           )}
           {decisions.map(d => (
             <div
               key={d.id}
-              className={`bg-white/[0.03] border rounded-2xl p-5 space-y-1 transition-all ${
-                d.feedback
-                  ? "border-emerald-500/15"
-                  : "border-white/5 hover:border-white/10"
-              }`}
+              className="card-glass p-5 space-y-1 transition-all"
+              style={{
+                borderLeft: d.feedback ? "3px solid #4edea3" : "3px solid transparent"
+              }}
             >
               {/* Header row */}
               <div className="flex items-start justify-between gap-3 flex-wrap">
                 <div className="space-y-0.5">
                   <div className="flex items-center gap-2">
-                    <span className="text-white font-semibold text-sm capitalize">
+                    <span className="font-semibold text-sm capitalize" style={{ color:"#e4e1ec" }}>
                       {d.event_id.replace(/_/g, " ")}
                     </span>
-                    <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${
-                      d.engine === "quantum"
-                        ? "bg-violet-500/15 text-violet-300"
-                        : "bg-blue-500/15 text-blue-300"
-                    }`}>
+                    <span className="text-[10px] px-2 py-0.5 rounded-full font-medium"
+                      style={{
+                        background: d.engine === "quantum" ? "rgba(139,92,246,0.15)" : "rgba(59,130,246,0.15)",
+                        color: d.engine === "quantum" ? "#c4b5fd" : "#93c5fd"
+                      }}>
                       {d.engine === "quantum" ? "⚛ Quantum" : "🧠 Classical"}
                     </span>
                     {d.feedback && (
-                      <span className="text-[10px] text-emerald-400/70 flex items-center gap-1">
+                      <span className="text-[10px] flex items-center gap-1" style={{ color:"rgba(78,222,163,0.7)" }}>
                         <CheckCircle2 className="w-3 h-3" /> Feedback given
                       </span>
                     )}
                   </div>
-                  <p className="text-white/50 text-xs capitalize">{d.business_type}</p>
+                  <p className="text-xs capitalize" style={{ color:"rgba(187,202,191,0.5)" }}>{d.business_type}</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-emerald-400 font-bold">
+                  <p className="font-bold" style={{ color:"#4edea3" }}>
                     +₹{Math.abs(d.profit_impact_inr).toLocaleString()}
                   </p>
-                  <p className="text-white/20 text-[10px] flex items-center gap-1 justify-end mt-0.5">
+                  <p className="text-[10px] flex items-center gap-1 justify-end mt-0.5" style={{ color:"rgba(187,202,191,0.2)" }}>
                     <Clock className="w-3 h-3" />
                     {new Date(d.timestamp).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" })}
                   </p>
@@ -371,7 +371,7 @@ export function DecisionHistoryTab() {
               </div>
 
               {/* Action taken */}
-              <p className="text-white/40 text-xs leading-relaxed line-clamp-2">{d.action_taken}</p>
+              <p className="text-xs leading-relaxed line-clamp-2" style={{ color:"rgba(187,202,191,0.4)" }}>{d.action_taken}</p>
 
               {/* Feedback panel */}
               <FeedbackPanel decision={d} onSaved={handleFeedbackSaved} />
@@ -382,17 +382,17 @@ export function DecisionHistoryTab() {
         /* ── Adopted Strategies ── */
         <div className="space-y-3">
           {strategies.length === 0 && (
-            <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-10 text-white/25 text-sm text-center">
+            <div className="card-glass p-10 text-sm text-center" style={{ color:"rgba(187,202,191,0.3)" }}>
               No strategies saved yet. Use the Profit Simulator to adopt strategies.
             </div>
           )}
           {strategies.map(s => (
-            <div key={s.id} className="bg-white/[0.03] border border-white/5 rounded-2xl p-5 space-y-3">
+            <div key={s.id} className="card-glass p-5 space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-white font-semibold text-sm">
+                <span className="font-semibold text-sm" style={{ color:"#e4e1ec" }}>
                   Strategy @ {(s.current_margin_pct * 100).toFixed(0)}% margin
                 </span>
-                <span className="text-emerald-400 font-bold text-sm">
+                <span className="font-bold text-sm" style={{ color:"#4edea3" }}>
                   ₹{Math.round(s.projected_profit).toLocaleString()}/wk
                 </span>
               </div>
@@ -402,13 +402,13 @@ export function DecisionHistoryTab() {
                   { label: "Price ↑",   value: `₹${s.price_delta}/unit` },
                   { label: "Margin",    value: `${(s.current_margin_pct * 100).toFixed(0)}%` },
                 ].map(m => (
-                  <div key={m.label} className="bg-white/5 rounded-xl p-2.5 text-center">
-                    <p className="text-[10px] text-white/30">{m.label}</p>
-                    <p className="text-xs text-white font-semibold mt-0.5">{m.value}</p>
+                  <div key={m.label} className="rounded-xl p-2.5 text-center" style={{ background:"rgba(255,255,255,0.04)" }}>
+                    <p className="text-[10px]" style={{ color:"rgba(187,202,191,0.3)" }}>{m.label}</p>
+                    <p className="text-xs font-semibold mt-0.5" style={{ color:"#e4e1ec" }}>{m.value}</p>
                   </div>
                 ))}
               </div>
-              <p className="text-white/20 text-[10px] flex items-center gap-1">
+              <p className="text-[10px] flex items-center gap-1" style={{ color:"rgba(187,202,191,0.2)" }}>
                 <Clock className="w-3 h-3" />
                 {new Date(s.timestamp).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" })}
               </p>
