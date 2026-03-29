@@ -67,8 +67,8 @@ def _detect_lang(text: str, fallback: str = "en") -> str:
         return fallback
 
 
-def _build_prompt(query: str, lang: str, news_context: str) -> tuple[str, str]:
-    """Return (system_prompt, user_message). Auto-detects query language."""
+def _build_prompt(query: str, lang: str, news_context: str, user_behavior: dict | None = None) -> tuple[str, str, str]:
+    """Return (system_prompt, user_message, tts_lang). Auto-detects query language."""
     # Auto-detect from actual query — overrides the sidebar lang if different
     detected = _detect_lang(query, fallback=lang)
 
@@ -88,27 +88,48 @@ def _build_prompt(query: str, lang: str, news_context: str) -> tuple[str, str]:
         lang_instr = "The user is writing in English. Respond in simple English. Max 3 sentences."
         tts_lang = "en"
 
+    # Build personal history section from feedback data
+    personal_ctx = ""
+    if user_behavior and user_behavior.get("total_rated_decisions", 0) > 0:
+        avg = user_behavior.get("avg_outcome_rating")
+        best = user_behavior.get("best_performing_action")
+        worst = user_behavior.get("worst_performing_action")
+        recent = user_behavior.get("recent_feedback", [])
+
+        personal_ctx = f"\n\nUSER HISTORY (use this to personalise advice):\n"
+        if avg is not None:
+            personal_ctx += f"- Avg outcome rating: {avg:.1f}/5 across {user_behavior['total_rated_decisions']} decisions\n"
+        if best:
+            personal_ctx += f"- Best-rated strategy: '{best[:60]}' (worked well for this user)\n"
+        if worst:
+            personal_ctx += f"- Poorly-rated strategy: '{worst[:60]}' (avoid recommending this)\n"
+        if recent:
+            personal_ctx += "- Recent feedback:\n"
+            for f in recent[:2]:
+                personal_ctx += f"  • '{f['action'][:50]}' rated {f['rating']}/5: \"{f['note'][:80]}\"\n"
+        personal_ctx += "Prioritise strategies this user has previously found effective."
+
     system_prompt = (
         f"You are ResilientAI, an AI supply chain advisor for small Indian MSME businesses "
-        f"(kirana stores, restaurants, pharmacies).\n"
-        f"{lang_instr}\n\n"
+        f"(kirana stores, restaurants, pharmacies).\\n"
+        f"{lang_instr}\\n\\n"
         f"Answer ONLY based on the news context provided. "
         f"Mention specific commodities, % changes, or risks if they appear in the news. "
-        f"Do NOT make up numbers. If the news doesn't cover the topic, say so honestly.\n\n"
-        f"Current supply chain news:\n{news_context}"
+        f"Do NOT make up numbers. If the news doesn't cover the topic, say so honestly.\\n\\n"
+        f"Current supply chain news:\\n{news_context}"
+        f"{personal_ctx}"
     )
     return system_prompt, query, tts_lang
 
 
-
-def _ask_kimi(query: str, lang: str, news_context: str) -> tuple[str, str]:
+def _ask_kimi(query: str, lang: str, news_context: str, user_behavior: dict | None = None) -> tuple[str, str]:
     """Call Nebius Kimi-K2.5 via OpenAI-compatible SDK. Returns (reply, tts_lang)."""
     from openai import OpenAI
     client = OpenAI(
         base_url=_NEBIUS_BASE_URL,
         api_key=_NEBIUS_API_KEY,
     )
-    system_prompt, user_message, tts_lang = _build_prompt(query, lang, news_context)
+    system_prompt, user_message, tts_lang = _build_prompt(query, lang, news_context, user_behavior)
     response = client.chat.completions.create(
         model=_KIMI_MODEL,
         messages=[
@@ -119,30 +140,30 @@ def _ask_kimi(query: str, lang: str, news_context: str) -> tuple[str, str]:
     return response.choices[0].message.content.strip(), tts_lang
 
 
-def _ask_gemini(query: str, lang: str, news_context: str) -> tuple[str, str]:
+def _ask_gemini(query: str, lang: str, news_context: str, user_behavior: dict | None = None) -> tuple[str, str]:
     """Fallback: call Gemini 1.5 Flash. Returns (reply, tts_lang)."""
     import google.generativeai as genai
     gemini_key = os.getenv("GEMINI_API_KEY", "")
     if not gemini_key:
         raise RuntimeError("No GEMINI_API_KEY set either.")
     genai.configure(api_key=gemini_key)
-    system_prompt, user_message, tts_lang = _build_prompt(query, lang, news_context)
+    system_prompt, user_message, tts_lang = _build_prompt(query, lang, news_context, user_behavior)
     model = genai.GenerativeModel("gemini-1.5-flash")
     resp = model.generate_content(f"{system_prompt}\n\nUser: {user_message}")
     return resp.text.strip(), tts_lang
 
 
-def _ask_ai(query: str, lang: str, news_context: str) -> tuple[str, str]:
+def _ask_ai(query: str, lang: str, news_context: str, user_behavior: dict | None = None) -> tuple[str, str]:
     """Route to Kimi (Nebius) if key present, otherwise Gemini. Returns (reply, tts_lang)."""
     if _NEBIUS_API_KEY and _NEBIUS_API_KEY != "your_nebius_api_key_here":
         try:
             logger.info("Using Kimi-K2.5 via Nebius")
-            return _ask_kimi(query, lang, news_context)
+            return _ask_kimi(query, lang, news_context, user_behavior)
         except Exception as exc:
             logger.warning("Kimi call failed (%s) — falling back to Gemini", exc)
 
     logger.info("Using Gemini 1.5 Flash fallback")
-    return _ask_gemini(query, lang, news_context)
+    return _ask_gemini(query, lang, news_context, user_behavior)
 
 
 def _text_to_audio_base64(text: str, lang: str) -> str:
@@ -162,12 +183,23 @@ def _text_to_audio_base64(text: str, lang: str) -> str:
 @router.post("/voice", response_model=VoiceResponse)
 def voice_query(req: VoiceRequest):
     """
-    Accept a user text query, ground it in live news, and return an
-    AI-generated response (Kimi-K2.5 via Nebius or Gemini fallback)
-    with base64 MP3 audio in the auto-detected query language.
+    Accept a user text query, ground it in live news, and return a
+    personalised AI-generated response (Kimi-K2.5 or Gemini fallback)
+    with base64 MP3 audio. User's feedback history is injected into the
+    AI prompt so repeat recommendations reflect what worked before.
     """
+    from engines.user_store import get_user_behavior_summary
+    from fastapi import Query as QParam
+
     news_context = _get_news_context()
-    text_response, tts_lang = _ask_ai(req.query, req.lang, news_context)
-    # Use auto-detected language for TTS, not just sidebar setting
+
+    # Load user behavior (best-effort — never fail the voice call)
+    user_id = getattr(req, "user_id", "demo") or "demo"
+    try:
+        behavior = get_user_behavior_summary(user_id)
+    except Exception:
+        behavior = None
+
+    text_response, tts_lang = _ask_ai(req.query, req.lang, news_context, behavior)
     audio_b64 = _text_to_audio_base64(text_response, lang=tts_lang)
     return VoiceResponse(text_response=text_response, audio_base64=audio_b64)

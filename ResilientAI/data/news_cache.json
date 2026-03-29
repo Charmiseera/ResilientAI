@@ -1,126 +1,116 @@
 {
-  "cached_at": "2026-03-28T11:24:25.507087+00:00",
+  "cached_at": "2026-03-28T23:08:19.253374+00:00",
   "articles": [
     {
-      "id": "live_bc8f67e4",
-      "headline": "Macquarie: Two More Months of War Could Send Oil to $200",
-      "source": "OilPrice.com",
-      "published_at": "2026-03-27T11:20:56Z",
+      "id": "live_89446edd",
+      "headline": "Breitbart Business Digest: Healthy Americans Drag Down Productivity While the Fed Plots Rate Hikes Over $4 Gas",
+      "source": "Breitbart News",
+      "published_at": "2026-03-27T23:01:23Z",
+      "risk_level": "LOW",
+      "confidence": 0.55,
+      "commodities_affected": [
+        "LPG",
+        "crude_oil"
+      ],
+      "url": "https://www.breitbart.com/economy/2026/03/27/breitbart-business-digest-healthy-americans-drag-down-productivity-while-the-fed-plots-rate-hikes-over-4-gas/"
+    },
+    {
+      "id": "live_86cf71b3",
+      "headline": "Fusion Fuel Highlights Royal Uranium’s 2% NSR on Two Mineral Claims held by the Shea Creek Joint Venture, One of Canada’",
+      "source": "GlobeNewswire",
+      "published_at": "2026-03-27T22:58:00Z",
+      "risk_level": "LOW",
+      "confidence": 0.55,
+      "commodities_affected": [
+        "diesel"
+      ],
+      "url": "https://www.globenewswire.com/news-release/2026/03/27/3264145/0/en/Fusion-Fuel-Highlights-Royal-Uranium-s-2-NSR-on-Two-Mineral-Claims-held-by-the-Shea-Creek-Joint-Venture-One-of-Canada-s-Largest-Undeveloped-Uranium-Projects-in-the-Athabasca-Basin.html"
+    },
+    {
+      "id": "live_e826ad96",
+      "headline": "Pentagon May Send 10,000 More Ground Troops To Middle East, Suggests Seizing Iranian Islands",
+      "source": "Shtfplan.com",
+      "published_at": "2026-03-27T22:30:01Z",
       "risk_level": "HIGH",
       "confidence": 0.85,
       "commodities_affected": [
-        "crude_oil"
+        "general"
       ],
-      "url": "https://oilprice.com/Latest-Energy-News/World-News/Macquarie-Two-More-Months-of-War-Could-Send-Oil-to-200.html"
+      "url": "https://www.shtfplan.com/war/pentagon-may-send-10000-more-ground-troops-to-middle-east-suggests-seizing-iranian-islands"
     },
     {
-      "id": "live_270cca1c",
-      "headline": "Anthropic accidentally leaked details of a new AI model that poses unprecedented cybersecurity risks",
-      "source": "Fortune",
-      "published_at": "2026-03-27T11:19:45Z",
+      "id": "live_132f0698",
+      "headline": "Sony temporarily suspends memory card sales due to shortages",
+      "source": "The Verge",
+      "published_at": "2026-03-27T22:21:11Z",
       "risk_level": "MEDIUM",
       "confidence": 0.7,
       "commodities_affected": [
         "general"
       ],
-      "url": "https://fortune.com/2026/03/27/anthropic-leaked-ai-mythos-cybersecurity-risk/"
+      "url": "https://www.theverge.com/tech/902828/sony-sd-cfexpress-memory-card-shortage"
     },
     {
-      "id": "live_7d06c3bf",
-      "headline": "TV, AC, washing machine prices set to rise 7–12% from April 1: Hisense CEO",
-      "source": "BusinessLine",
-      "published_at": "2026-03-27T11:09:54Z",
+      "id": "live_585853c1",
+      "headline": "After 5-yr wait, jobs for kin of C’nagar oxygen-shortage victims",
+      "source": "The Times of India",
+      "published_at": "2026-03-27T22:12:00Z",
+      "risk_level": "HIGH",
+      "confidence": 0.85,
+      "commodities_affected": [
+        "general"
+      ],
+      "url": "https://timesofindia.indiatimes.com/city/bengaluru/after-5-yr-wait-jobs-for-kin-of-cnagar-oxygen-shortage-victims/articleshow/129853737.cms"
+    },
+    {
+      "id": "live_82ae7cdd",
+      "headline": "Commercial LPG allocation to states increased by 20%",
+      "source": "The Times of India",
+      "published_at": "2026-03-27T22:02:26Z",
+      "risk_level": "LOW",
+      "confidence": 0.55,
+      "commodities_affected": [
+        "LPG",
+        "crude_oil"
+      ],
+      "url": "https://timesofindia.indiatimes.com/india/commercial-lpg-allocation-to-states-increased-by-20/articleshow/129854679.cms"
+    },
+    {
+      "id": "live_50878cb3",
+      "headline": "The Cushion Is Gone and the Oil Market Is Now Exposed",
+      "source": "OilPrice.com",
+      "published_at": "2026-03-27T22:00:00Z",
+      "risk_level": "MEDIUM",
+      "confidence": 0.7,
+      "commodities_affected": [
+        "crude_oil"
+      ],
+      "url": "https://oilprice.com/Energy/Energy-General/The-Cushion-Is-Gone-and-the-Oil-Market-Is-Now-Exposed.html"
+    },
+    {
+      "id": "live_da8de478",
+      "headline": "3 Reasons Why Sony Has Increased PS5 Prices by 30% Since Last Year",
+      "source": "ComicBook.com",
+      "published_at": "2026-03-27T22:00:00Z",
       "risk_level": "LOW",
       "confidence": 0.55,
       "commodities_affected": [
         "general"
       ],
-      "url": "https://www.thehindubusinessline.com/companies/tv-ac-washing-machine-prices-set-to-rise-712-from-april-1-hisense-ceo/article70792057.ece"
+      "url": "http://comicbook.com/gaming/feature/3-reasons-why-sony-has-increased-ps5-prices-by-30-since-last-year/"
     },
     {
-      "id": "live_59fff14d",
-      "headline": "Oil slips on Iran talks, but prices remain elevated",
-      "source": "BusinessLine",
-      "published_at": "2026-03-27T11:04:16Z",
-      "risk_level": "HIGH",
-      "confidence": 0.85,
-      "commodities_affected": [
-        "crude_oil"
-      ],
-      "url": "https://www.thehindubusinessline.com/markets/commodities/oil-slips-on-iran-talks-but-prices-remain-elevated/article70792234.ece"
-    },
-    {
-      "id": "live_1f4be8a7",
-      "headline": "Trigger-happy Hegseth puts Pentagon on brink of new crisis with missile frenzy: insiders",
-      "source": "Raw Story",
-      "published_at": "2026-03-27T11:02:58Z",
-      "risk_level": "HIGH",
-      "confidence": 0.85,
-      "commodities_affected": [
-        "general"
-      ],
-      "url": "https://www.rawstory.com/hegseth-weapons-iran/"
-    },
-    {
-      "id": "live_e0d912c2",
-      "headline": "Alberta’s GDP projected to rise as oil supply crisis rages on, but impact on citizens more complex: ATB",
-      "source": "CBC News",
-      "published_at": "2026-03-27T11:00:00Z",
+      "id": "live_7caf61e3",
+      "headline": "Lockdown reports‘harmful, baseless’, says govt, allays fear",
+      "source": "The Times of India",
+      "published_at": "2026-03-27T21:55:10Z",
       "risk_level": "HIGH",
       "confidence": 0.85,
       "commodities_affected": [
         "crude_oil",
         "transport"
       ],
-      "url": "https://www.cbc.ca/news/canada/edmonton/atb-alberta-oil-gas-economy-forecast-9.7143848"
-    },
-    {
-      "id": "live_8d5c92bf",
-      "headline": "Who Needs Tanks in the Age of Drones?",
-      "source": "The Atlantic",
-      "published_at": "2026-03-27T11:00:00Z",
-      "risk_level": "LOW",
-      "confidence": 0.55,
-      "commodities_affected": [
-        "general"
-      ],
-      "url": "https://www.theatlantic.com/national-security/2026/03/who-needs-tanks-age-drones/686540/"
-    },
-    {
-      "id": "live_ac49d84e",
-      "headline": "Hyundai Motor shares offer just 5% upside; Asit C Mehta initiates with Hold rating, flags 5 risks",
-      "source": "The Times of India",
-      "published_at": "2026-03-27T10:59:40Z",
-      "risk_level": "MEDIUM",
-      "confidence": 0.7,
-      "commodities_affected": [
-        "general"
-      ],
-      "url": "https://economictimes.indiatimes.com/markets/stocks/news/hyundai-motor-shares-offer-just-5-upside-asit-c-mehta-initiates-with-hold-rating-flags-5-risks/articleshow/129845461.cms"
-    },
-    {
-      "id": "live_3651d48c",
-      "headline": "Japan to boost coal-fired power as Mideast war causes energy turmoil",
-      "source": "Digital Journal",
-      "published_at": "2026-03-27T10:57:32Z",
-      "risk_level": "HIGH",
-      "confidence": 0.85,
-      "commodities_affected": [
-        "crude_oil"
-      ],
-      "url": "https://www.digitaljournal.com/world/japan-to-boost-coal-fired-power-as-mideast-war-causes-energy-turmoil/article"
-    },
-    {
-      "id": "live_4e671f36",
-      "headline": "What is LNG and what is it used for?",
-      "source": "Al Jazeera English",
-      "published_at": "2026-03-27T10:53:24Z",
-      "risk_level": "LOW",
-      "confidence": 0.55,
-      "commodities_affected": [
-        "LPG"
-      ],
-      "url": "https://www.aljazeera.com/news/2026/3/27/what-is-lng-and-what-is-it-used-for"
+      "url": "https://timesofindia.indiatimes.com/india/lockdown-reportsharmful-baseless-says-govt-allays-fear/articleshow/129854647.cms"
     }
   ]
 }

@@ -13,7 +13,7 @@ import plotly.graph_objects as go
 from agents.risk_agent import detect_risks, get_event_by_id
 from engines.impact_engine import predict_impact
 from engines.optimizer import optimize
-from engines.user_store import save_profile, load_all_profiles, log_decision, load_decision_history
+from engines.user_store import save_profile, load_all_profiles, log_decision, load_decision_history, log_strategy_adoption, load_strategy_history, log_agent_learning, get_user_behavior_summary
 from voice.whatsapp import broadcast_alert
 
 st.set_page_config(
@@ -144,6 +144,10 @@ if "demo_loaded" not in st.session_state:
     st.session_state.demo_loaded = False
 if "active_event_id" not in st.session_state:
     st.session_state.active_event_id = None
+if "session_id" not in st.session_state:
+    from engines.user_store import log_login_session
+    st.session_state.session_id = log_login_session("demo")
+
 
 
 # ── Data helpers ──────────────────────────────────────────────────────────────
@@ -614,6 +618,16 @@ def tab_intelligence(biz_type, min_risk, lang):
         uid = st.session_state.get("user_id", "demo")
         log_decision(event_id, biz_type, rec.get("recommended_action",""),
                      rec.get("profit_impact_inr", 0), rec.get("generated_by","classical"), uid)
+        
+        # Log to AI learning pool
+        import json
+        log_agent_learning(
+            user_id=uid,
+            behavior_type="decision_accept",
+            pattern_data=json.dumps({"event_id": event_id, "action": rec.get("recommended_action")}),
+            confidence=0.9
+        )
+        
         st.balloons()
         st.success(f"✅ Logged: **{rec.get('recommended_action','')}**")
 
@@ -739,6 +753,16 @@ def tab_simulator():
     st.plotly_chart(fig, use_container_width=True)
 
     if st.button("✅ Adopt Price + Stock Strategy", type="primary"):
+        uid = st.session_state.get("user_id", "demo")
+        log_strategy_adoption(
+            user_id=uid,
+            weekly_revenue=weekly_rev,
+            current_margin_pct=current_margin_pct,
+            price_delta=price_delta,
+            extra_units=extra_units,
+            projected_profit=projected,
+            snapshot={"base_profit": base_profit, "cost_hit": cost_hit, "price_gain": price_gain, "stock_gain": stock_gain}
+        )
         st.success(f"Strategy locked in: +₹{price_delta}/unit · {extra_units} units stocked · Expected: +₹{max(0, projected-base_profit):,.0f}/week")
 
 
@@ -791,32 +815,53 @@ def tab_profile():
 
 # ══════════════════ TAB 4: DECISION HISTORY ══════════════════════════════════
 def tab_history():
-    st.subheader("📜 Decision History")
-    st.caption("Every recommendation you've acted on — your full audit trail.")
+    st.subheader("📜 Decision History & AI Learnings")
+    st.caption("Every recommendation you've acted on — helping the AI understand your patterns.")
     st.divider()
 
     uid = st.session_state.get("user_id", "demo")
     history = load_decision_history(uid)
+    strategies = load_strategy_history(uid)
+    
+    # Behavior Summary directly fed to AI
+    summary = get_user_behavior_summary(uid)
+    st.markdown("#### 🧠 AI Understanding of Your Business")
+    sc1, sc2, sc3 = st.columns(3)
+    sc1.metric("Accepted AI Recommendations", summary["total_accepted_decisions"])
+    sc2.metric("Manual Strategies Adopted", summary["total_strategies_adopted"])
+    sc3.metric("Total Profit Captured", f"₹{summary['total_profit_gained_inr']:,.0f}")
+    st.divider()
 
-    if not history:
+    if not history and not strategies:
         st.info("No decisions yet. Go to **🌐 Intelligence** tab → load demo → click **✅ Accept Recommendation**")
         return
 
-    total_profit = sum(d.get("profit_impact_inr", 0) for d in history)
-    q_count = sum(1 for d in history if d.get("engine") == "quantum")
+    st.markdown("#### 📅 Unified Activity Timeline")
+    
+    # Combine and sort both lists
+    unified = []
+    for d in history:
+        unified.append({
+            "ts": d.get("timestamp"),
+            "type": "decision",
+            "text": f"`{d['business_type']}` &nbsp;·&nbsp; {'⚛️' if d.get('engine') == 'quantum' else '🔢'} **{d['action_taken']}**",
+            "val": d.get('profit_impact_inr', 0)
+        })
+    for s in strategies:
+        unified.append({
+            "ts": s.get("timestamp"),
+            "type": "strategy",
+            "text": f"🧮 **Custom Strategy** &nbsp;·&nbsp; +₹{s.get('price_delta',0)} price, {s.get('extra_units',0)} units",
+            "val": s.get('projected_profit', 0)
+        })
+        
+    unified.sort(key=lambda x: x["ts"], reverse=True)
 
-    c1, c2, c3 = st.columns(3)
-    c1.metric("📊 Decisions Made", str(len(history)))
-    c2.metric("₹ Total Profit Impact", f"₹{total_profit:,.0f}")
-    c3.metric("⚛️ Quantum Decisions", str(q_count))
-    st.divider()
-
-    for d in reversed(history):
-        ts = d.get("timestamp", "")[:16].replace("T", " ")
-        badge = "⚛️" if d.get("engine") == "quantum" else "🔢"
+    for item in unified:
+        ts = item["ts"][:16].replace("T", " ")
         st.markdown(
-            f"**{ts}** &nbsp;→&nbsp; `{d['business_type']}` &nbsp;·&nbsp; "
-            f"{badge} **{d['action_taken']}** &nbsp;·&nbsp; +₹{d.get('profit_impact_inr',0):,.0f}"
+            f"**{ts}** &nbsp;→&nbsp; {item['text']} &nbsp;·&nbsp; <span style='color:#30D158'>Expected Profit: ₹{item['val']:,.0f}</span>",
+            unsafe_allow_html=True
         )
 
 

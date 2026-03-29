@@ -151,8 +151,38 @@ def _quantum_optimize(options: list[DecisionOption]) -> DecisionOption:
 
 
 # ── Public API ────────────────────────────────────────────────────────────────
-def optimize(impact: dict) -> OptimizationResult:
+def optimize(impact: dict, user_behavior: dict | None = None) -> OptimizationResult:
+    """
+    Find best decision using QAOA (primary) or classical (fallback).
+
+    user_behavior: output of get_user_behavior_summary() — if provided, outcome
+    ratings from past decisions are used to adjust option confidence scores so
+    the optimizer learns from what actually worked for this specific user.
+    """
     options = _build_options(impact)
+
+    # ── Apply feedback-based confidence adjustment ─────────────────────────────
+    if user_behavior:
+        best_action  = (user_behavior.get("best_performing_action")  or "").lower()
+        worst_action = (user_behavior.get("worst_performing_action") or "").lower()
+        avg_rating   = user_behavior.get("avg_outcome_rating") or 3.0
+
+        for opt in options:
+            action_lc = opt.action.lower()
+            # Boost if this action type matches the user's best historical outcome
+            if best_action and any(word in action_lc for word in best_action.split()[:3]):
+                opt.confidence  = min(0.99, opt.confidence * 1.15)   # +15%
+                opt.profit_impact_inr *= 1.08                          # +8% expected profit
+            # Penalise if this action type matches the user's worst outcome
+            elif worst_action and any(word in action_lc for word in worst_action.split()[:3]):
+                opt.confidence  = max(0.10, opt.confidence * 0.85)   # -15%
+                opt.risk_score  = min(0.95, opt.risk_score  * 1.20)   # +20% risk
+
+        # Round adjusted profit values
+        for opt in options:
+            opt.profit_impact_inr = round(opt.profit_impact_inr, 0)
+    # ──────────────────────────────────────────────────────────────────────────
+
     generated_by = "classical"
     best: DecisionOption | None = None
 
@@ -168,10 +198,24 @@ def optimize(impact: dict) -> OptimizationResult:
         best = _classical_optimize(options)
 
     alternatives = [o for o in options if o.action != best.action]
+
+    # Feedback-aware reason annotation
+    feedback_note = ""
+    if user_behavior and user_behavior.get("avg_outcome_rating") is not None:
+        avg_r = user_behavior["avg_outcome_rating"]
+        feedback_note = (
+            f" User history: avg outcome rating {avg_r:.1f}/5 "
+            f"across {user_behavior['total_rated_decisions']} rated decisions."
+        )
+        if user_behavior.get("best_performing_action"):
+            feedback_note += f" Best past action: '{user_behavior['best_performing_action'][:40]}…'."
+
+
     reason = (
         f"{'Quantum QAOA' if generated_by == 'quantum' else 'Classical optimizer'} "
-        f"evaluated {len(options)} strategies. '{best.action}' maximizes expected "
-        f"7-day profit by ₹{best.profit_impact_inr:,.0f} with {best.risk_score*100:.0f}% risk."
+        f"evaluated {len(options)} strategies. '{best.action}' maximises expected "
+        f"7-day profit by \u20b9{best.profit_impact_inr:,.0f} with {best.risk_score*100:.0f}% risk."
+        f"{feedback_note}"
     )
 
     return OptimizationResult(

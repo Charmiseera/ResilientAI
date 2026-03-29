@@ -95,6 +95,15 @@ def send_whatsapp_alert(alert: AlertMessage) -> dict:
         error_code = response_data.get("error", {}).get("code", 0)
         error_msg = response_data.get("error", {}).get("message", "Unknown error")
 
+        if error_code == 190:
+            custom_error = (
+                "Meta access token has EXPIRED. "
+                "Go to Meta Developer Console → WhatsApp → API Setup → generate a new token, "
+                "then update WHATSAPP_TOKEN in your .env file."
+            )
+            logger.error("Meta WhatsApp token expired (code 190): %s", error_msg)
+            return {"success": False, "id": "", "error": custom_error, "mode": "failed"}
+
         if error_code == 131030:
             custom_error = "Number not verified. Add this phone number to 'To' list in Meta Developer Console."
             logger.error("Meta WhatsApp send failed: %s", custom_error)

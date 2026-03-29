@@ -5,7 +5,7 @@ Run with: uvicorn api.main:app --reload --port 8000
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from api.routes import alerts, impact, recommend, simulate, voice
+from api.routes import alerts, impact, recommend, simulate, voice, decisions, cities, forecast, whatsapp, report
 
 app = FastAPI(
     title="ResilientAI API",
@@ -27,6 +27,11 @@ app.include_router(impact.router, prefix="/api/v1", tags=["Impact"])
 app.include_router(recommend.router, prefix="/api/v1", tags=["Recommend"])
 app.include_router(simulate.router, prefix="/api/v1", tags=["Simulate"])
 app.include_router(voice.router, prefix="/api/v1", tags=["Voice"])
+app.include_router(decisions.router, prefix="/api/v1", tags=["Decisions & Tracking"])
+app.include_router(cities.router,    prefix="/api/v1", tags=["Cities"])
+app.include_router(forecast.router,  prefix="/api/v1", tags=["Forecast"])
+app.include_router(whatsapp.router,  prefix="/api/v1", tags=["WhatsApp"])
+app.include_router(report.router,    prefix="/api/v1", tags=["Report"])
 
 
 @app.get("/", tags=["Health"])

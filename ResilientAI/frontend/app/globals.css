@@ -1,0 +1,71 @@
+@import "tailwindcss";
+
+@theme {
+  --color-rai-acid: #ccff00;
+  --color-rai-orange: #ff4500;
+  --color-rai-crimson: #ff0033;
+  --color-rai-black: #050505;
+  --color-rai-obsidian: #000000;
+  --color-rai-panel: #111111;
+  --color-rai-gray: #333333;
+  --color-rai-text: #f0f0f0;
+  --color-rai-dim: #888888;
+  
+  --font-display: var(--font-space-grotesk), system-ui, sans-serif;
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), monospace;
+
+  /* Overriding default border radius to enforce sharp brutally edges globally */
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-2xl: 0px;
+  --radius-3xl: 0px;
+  --radius-full: 0px;
+  --radius: 0px;
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-rai-obsidian);
+    color: var(--color-rai-text);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    letter-spacing: -0.01em;
+  }
+
+  /* Brutalist Scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-rai-obsidian);
+    border-left: 1px solid var(--color-rai-gray);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-rai-gray);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-rai-acid);
+  }
+}
+
+@layer utilities {
+  .brutalist-border {
+    border: 1px solid var(--color-rai-gray);
+  }
+  .brutalist-border:hover {
+    border-color: var(--color-rai-text);
+  }
+  .brutalist-border-active {
+    border-color: var(--color-rai-acid);
+    box-shadow: 4px 4px 0px 0px var(--color-rai-acid);
+  }
+}
