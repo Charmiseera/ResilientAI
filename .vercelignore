@@ -1,0 +1,21 @@
+# Ignore Python backend folders for Vercel (Backend is on Render)
+api/
+agents/
+engines/
+voice/
+data/
+tests/
+
+# Ignore Python specific files
+requirements.txt
+Procfile
+render.yaml
+pytest.ini
+.python-version
+.venv/
+__pycache__/
+*.pyc
+
+# Ignore environment files
+.env
+.env.example
