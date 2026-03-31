@@ -163,14 +163,6 @@ export function IntelligenceTab() {
           </p>
         </div>
         <div className="flex items-center gap-3">
-          <div className={`flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-medium`}
-               style={backendOk
-                 ? { background:"rgba(78,222,163,0.08)", border:"1px solid rgba(78,222,163,0.2)", color:"#4edea3" }
-                 : { background:"rgba(239,68,68,0.08)", border:"1px solid rgba(239,68,68,0.2)", color:"#fc7c78" }}>
-            <span className={`w-2 h-2 rounded-full ${backendOk ? "animate-pulse" : ""}`}
-                  style={{ background: backendOk ? "#4edea3" : "#fc7c78" }} />
-            {backendOk ? "Backend Live" : "Backend Offline"}
-          </div>
           <select value={businessType} onChange={e => { const v=e.target.value; setBizType(v); loadScenario(activeScenario??undefined,v); }}
             className="rounded-xl px-3 py-2 text-sm outline-none cursor-pointer"
             style={{ background:"rgba(255,255,255,0.05)", border:"1px solid rgba(255,255,255,0.1)", color:"#e4e1ec" }}>

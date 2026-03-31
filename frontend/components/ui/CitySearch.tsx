@@ -13,16 +13,9 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { MapPin, Loader2, X } from "lucide-react";
 
-declare namespace google {
-  namespace maps {
-    namespace places {
-      class AutocompleteService {
-        getPlacePredictions(request: any, callback: (predictions: any, status: any) => void): void;
-      }
-      enum PlacesServiceStatus {
-        OK = "OK"
-      }
-    }
+declare global {
+  interface Window {
+    google: any;
   }
 }
 
@@ -50,12 +43,24 @@ const callbacks: Array<() => void> = [];
 
 function loadGoogleMaps(key: string): Promise<void> {
   return new Promise(resolve => {
-    if (scriptLoaded) { resolve(); return; }
-    
-    // Check if script is already in the document (prevents HMR duplicates)
-    if (document.querySelector('script[src^="https://maps.googleapis.com/maps/api/js"]')) {
+    // If google maps is already loaded on window, resolve immediately
+    if (typeof window !== "undefined" && window.google?.maps?.places) {
       scriptLoaded = true;
       resolve();
+      return;
+    }
+    
+    // Check if script is already in the document but maybe not loaded yet
+    if (document.querySelector('script[src*="maps.googleapis.com"]')) {
+      const checkAndResolve = () => {
+        if (window.google?.maps?.places) {
+          scriptLoaded = true;
+          resolve();
+        } else {
+          setTimeout(checkAndResolve, 100);
+        }
+      };
+      checkAndResolve();
       return;
     }
 
@@ -64,8 +69,10 @@ function loadGoogleMaps(key: string): Promise<void> {
     scriptLoading = true;
 
     const script   = document.createElement("script");
-    script.src     = `https://maps.googleapis.com/maps/api/js?key=${key}&libraries=places`;
+    // Use loading=async to avoid the suboptimal loading warning
+    script.src     = `https://maps.googleapis.com/maps/api/js?key=${key}&libraries=places&loading=async`;
     script.async   = true;
+    script.defer   = true;
     script.onload  = () => {
       scriptLoaded = true;
       callbacks.forEach(cb => cb());
@@ -94,38 +101,54 @@ export function CitySearch({
   useEffect(() => {
     if (!MAPS_OK) return;
     loadGoogleMaps(MAPS_KEY).then(() => {
-      serviceRef.current = new google.maps.places.AutocompleteService();
+      // serviceRef is not needed for new API — mark maps as ready
       setMapsReady(true);
     });
   }, []);
 
-  // Fetch suggestions (debounced 300ms)
-  const fetchSuggestions = useCallback((input: string) => {
-    if (!serviceRef.current || !mapsReady || input.length < 2) {
+  // Fetch suggestions using the new AutocompleteSuggestion API (debounced 300ms)
+  const fetchSuggestions = useCallback(async (input: string) => {
+    if (!mapsReady || input.length < 2) {
       setSuggestions([]); return;
     }
     setLoading(true);
-    serviceRef.current.getPlacePredictions(
-      {
-        input,
-        types:                ["(cities)"],
-        componentRestrictions: { country: "in" }, // India only
-      },
-      (predictions: any, status: any) => {
-        setLoading(false);
-        if (status !== google.maps.places.PlacesServiceStatus.OK || !predictions) {
-          setSuggestions([]); return;
+    try {
+      const { suggestions: results } =
+        await window.google.maps.places.AutocompleteSuggestion.fetchAutocompleteSuggestions({
+          input,
+          includedPrimaryTypes: ["locality", "administrative_area_level_3"],
+          includedRegionCodes: ["IN"],
+        });
+      setSuggestions(
+        (results ?? []).map((s: any) => ({
+          placeId:     s.placePrediction?.placeId     ?? "",
+          description: s.placePrediction?.text?.text  ?? input,
+          mainText:    s.placePrediction?.structuredFormat?.mainText?.text ?? input,
+        }))
+      );
+      setOpen(true);
+    } catch {
+      // Fallback: try old AutocompleteService if new API unavailable
+      const svc = serviceRef.current ||
+        (serviceRef.current = new window.google.maps.places.AutocompleteService());
+      svc.getPlacePredictions(
+        { input, types: ["(cities)"], componentRestrictions: { country: "in" } },
+        (predictions: any, status: any) => {
+          setLoading(false);
+          if (status !== "OK" || !predictions) { setSuggestions([]); return; }
+          setSuggestions(
+            predictions.map((p: any) => ({
+              placeId:     p.place_id,
+              description: p.description,
+              mainText:    p.structured_formatting.main_text,
+            }))
+          );
+          setOpen(true);
         }
-        setSuggestions(
-          predictions.map((p: any) => ({
-            placeId:     p.place_id,
-            description: p.description,
-            mainText:    p.structured_formatting.main_text,
-          }))
-        );
-        setOpen(true);
-      }
-    );
+      );
+      return;
+    }
+    setLoading(false);
   }, [mapsReady]);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {

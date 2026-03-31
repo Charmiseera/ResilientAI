@@ -25,122 +25,122 @@ _CACHE_TTL = 3600  # 1 hour
 # ── Known city profiles (Tier 1 metros — high confidence, no AI needed) ───────
 _KNOWN_PROFILES: dict[str, dict] = {
     "Mumbai": {
-        "tier": 1, "state": "Maharashtra",
+        "tier": 1, "state": "Maharashtra", "lat": 19.0760, "lng": 72.8777,
         "price_multiplier": 1.18, "demand_multiplier": 1.25, "shock_absorption": 0.85,
         "port_access": True, "oil_refinery_proximity": True,
     },
     "Delhi": {
-        "tier": 1, "state": "Delhi",
+        "tier": 1, "state": "Delhi", "lat": 28.7041, "lng": 77.1025,
         "price_multiplier": 1.15, "demand_multiplier": 1.20, "shock_absorption": 0.80,
         "port_access": False, "oil_refinery_proximity": False,
     },
     "Bangalore": {
-        "tier": 1, "state": "Karnataka",
+        "tier": 1, "state": "Karnataka", "lat": 12.9716, "lng": 77.5946,
         "price_multiplier": 1.12, "demand_multiplier": 1.15, "shock_absorption": 0.82,
         "port_access": False, "oil_refinery_proximity": False,
     },
     "Bengaluru": {
-        "tier": 1, "state": "Karnataka",
+        "tier": 1, "state": "Karnataka", "lat": 12.9716, "lng": 77.5946,
         "price_multiplier": 1.12, "demand_multiplier": 1.15, "shock_absorption": 0.82,
         "port_access": False, "oil_refinery_proximity": False,
     },
     "Chennai": {
-        "tier": 1, "state": "Tamil Nadu",
+        "tier": 1, "state": "Tamil Nadu", "lat": 13.0827, "lng": 80.2707,
         "price_multiplier": 1.10, "demand_multiplier": 1.10, "shock_absorption": 0.83,
         "port_access": True, "oil_refinery_proximity": True,
     },
     "Hyderabad": {
-        "tier": 1, "state": "Telangana",
+        "tier": 1, "state": "Telangana", "lat": 17.3850, "lng": 78.4867,
         "price_multiplier": 1.09, "demand_multiplier": 1.12, "shock_absorption": 0.84,
         "port_access": False, "oil_refinery_proximity": False,
     },
     "Kolkata": {
-        "tier": 1, "state": "West Bengal",
+        "tier": 1, "state": "West Bengal", "lat": 22.5726, "lng": 88.3639,
         "price_multiplier": 1.06, "demand_multiplier": 1.08, "shock_absorption": 0.88,
         "port_access": True, "oil_refinery_proximity": False,
     },
     "Ahmedabad": {
-        "tier": 1, "state": "Gujarat",
+        "tier": 1, "state": "Gujarat", "lat": 23.0225, "lng": 72.5714,
         "price_multiplier": 1.05, "demand_multiplier": 1.06, "shock_absorption": 0.87,
         "port_access": False, "oil_refinery_proximity": True,
     },
     "Pune": {
-        "tier": 2, "state": "Maharashtra",
+        "tier": 2, "state": "Maharashtra", "lat": 18.5204, "lng": 73.8567,
         "price_multiplier": 1.08, "demand_multiplier": 1.05, "shock_absorption": 0.92,
         "port_access": False, "oil_refinery_proximity": False,
     },
     "Nagpur": {
-        "tier": 2, "state": "Maharashtra",
+        "tier": 2, "state": "Maharashtra", "lat": 21.1458, "lng": 79.0882,
         "price_multiplier": 1.00, "demand_multiplier": 1.00, "shock_absorption": 1.00,
         "port_access": False, "oil_refinery_proximity": False,
     },
     "Jaipur": {
-        "tier": 2, "state": "Rajasthan",
+        "tier": 2, "state": "Rajasthan", "lat": 26.9124, "lng": 75.7873,
         "price_multiplier": 0.95, "demand_multiplier": 0.95, "shock_absorption": 1.05,
         "port_access": False, "oil_refinery_proximity": False,
     },
     "Lucknow": {
-        "tier": 2, "state": "Uttar Pradesh",
+        "tier": 2, "state": "Uttar Pradesh", "lat": 26.8467, "lng": 80.9462,
         "price_multiplier": 0.93, "demand_multiplier": 0.90, "shock_absorption": 1.08,
         "port_access": False, "oil_refinery_proximity": False,
     },
     "Surat": {
-        "tier": 2, "state": "Gujarat",
+        "tier": 2, "state": "Gujarat", "lat": 21.1702, "lng": 72.8311,
         "price_multiplier": 1.02, "demand_multiplier": 1.02, "shock_absorption": 0.95,
         "port_access": True, "oil_refinery_proximity": True,
     },
     "Visakhapatnam": {
-        "tier": 2, "state": "Andhra Pradesh",
+        "tier": 2, "state": "Andhra Pradesh", "lat": 17.6868, "lng": 83.2185,
         "price_multiplier": 0.98, "demand_multiplier": 0.96, "shock_absorption": 1.03,
         "port_access": True, "oil_refinery_proximity": True,
     },
     "Vizag": {
-        "tier": 2, "state": "Andhra Pradesh",
+        "tier": 2, "state": "Andhra Pradesh", "lat": 17.6868, "lng": 83.2185,
         "price_multiplier": 0.98, "demand_multiplier": 0.96, "shock_absorption": 1.03,
         "port_access": True, "oil_refinery_proximity": True,
     },
     "Indore": {
-        "tier": 2, "state": "Madhya Pradesh",
+        "tier": 2, "state": "Madhya Pradesh", "lat": 22.7196, "lng": 75.8577,
         "price_multiplier": 0.97, "demand_multiplier": 0.96, "shock_absorption": 1.04,
         "port_access": False, "oil_refinery_proximity": False,
     },
     "Bhopal": {
-        "tier": 2, "state": "Madhya Pradesh",
+        "tier": 2, "state": "Madhya Pradesh", "lat": 23.2599, "lng": 77.4126,
         "price_multiplier": 0.94, "demand_multiplier": 0.93, "shock_absorption": 1.06,
         "port_access": False, "oil_refinery_proximity": False,
     },
     "Kochi": {
-        "tier": 2, "state": "Kerala",
+        "tier": 2, "state": "Kerala", "lat": 9.9312, "lng": 76.2673,
         "price_multiplier": 1.04, "demand_multiplier": 1.03, "shock_absorption": 0.94,
         "port_access": True, "oil_refinery_proximity": True,
     },
     "Chandigarh": {
-        "tier": 2, "state": "Punjab",
+        "tier": 2, "state": "Punjab", "lat": 30.7333, "lng": 76.7794,
         "price_multiplier": 1.05, "demand_multiplier": 1.04, "shock_absorption": 0.93,
         "port_access": False, "oil_refinery_proximity": False,
     },
     "Coimbatore": {
-        "tier": 2, "state": "Tamil Nadu",
+        "tier": 2, "state": "Tamil Nadu", "lat": 11.0168, "lng": 76.9558,
         "price_multiplier": 1.00, "demand_multiplier": 0.98, "shock_absorption": 0.99,
         "port_access": False, "oil_refinery_proximity": False,
     },
     "Patna": {
-        "tier": 2, "state": "Bihar",
+        "tier": 2, "state": "Bihar", "lat": 25.5941, "lng": 85.1376,
         "price_multiplier": 0.90, "demand_multiplier": 0.87, "shock_absorption": 1.12,
         "port_access": False, "oil_refinery_proximity": False,
     },
     "Rural Maharashtra": {
-        "tier": 3, "state": "Maharashtra",
+        "tier": 3, "state": "Maharashtra", "lat": 19.7515, "lng": 75.7139,
         "price_multiplier": 0.82, "demand_multiplier": 0.70, "shock_absorption": 1.25,
         "port_access": False, "oil_refinery_proximity": False,
     },
     "Rural UP": {
-        "tier": 3, "state": "Uttar Pradesh",
+        "tier": 3, "state": "Uttar Pradesh", "lat": 26.8467, "lng": 80.9462,
         "price_multiplier": 0.78, "demand_multiplier": 0.65, "shock_absorption": 1.30,
         "port_access": False, "oil_refinery_proximity": False,
     },
     "Rural Bihar": {
-        "tier": 3, "state": "Bihar",
+        "tier": 3, "state": "Bihar", "lat": 25.0961, "lng": 85.3131,
         "price_multiplier": 0.75, "demand_multiplier": 0.60, "shock_absorption": 1.35,
         "port_access": False, "oil_refinery_proximity": False,
     },
@@ -157,6 +157,8 @@ class CityImpact:
     city: str
     tier: int
     state: str
+    lat: float
+    lng: float
     adjusted_margin_change: float
     adjusted_demand_change: float
     adjusted_cost_changes: dict[str, float]
@@ -171,6 +173,8 @@ class CityImpact:
             "city": self.city,
             "tier": self.tier,
             "state": self.state,
+            "lat": self.lat,
+            "lng": self.lng,
             "adjusted_margin_change": self.adjusted_margin_change,
             "adjusted_demand_change": self.adjusted_demand_change,
             "adjusted_cost_changes": self.adjusted_cost_changes,
@@ -227,6 +231,8 @@ Return ONLY a JSON object with these exact fields:
 {{
   "tier": <1, 2, or 3>,
   "state": "<Indian state name>",
+  "latitude": <rough GPS coordinate float>,
+  "longitude": <rough GPS coordinate float>,
   "price_multiplier": <float between 0.70 and 1.30, relative to national average>,
   "demand_multiplier": <float between 0.55 and 1.35>,
   "shock_absorption": <float between 0.70 and 1.40; lower = faster recovery>,
@@ -250,7 +256,7 @@ Return only valid JSON, no markdown, no explanation outside the JSON."""
         profile = json.loads(raw)
 
         # Validate required fields
-        required = ["tier", "state", "price_multiplier", "demand_multiplier", "shock_absorption"]
+        required = ["tier", "state", "latitude", "longitude", "price_multiplier", "demand_multiplier", "shock_absorption"]
         for field in required:
             if field not in profile:
                 raise ValueError(f"Missing field: {field}")
@@ -307,6 +313,8 @@ def get_city_config(city: str, event_context: str = "") -> dict:
     return {
         "tier": 2,
         "state": "India",
+        "lat": 20.5937,
+        "lng": 78.9629,
         "price_multiplier": round(0.90 + seed * 0.01, 2),
         "demand_multiplier": round(0.88 + seed * 0.012, 2),
         "shock_absorption": round(1.15 - seed * 0.005, 2),
@@ -351,10 +359,16 @@ def adjust_impact_for_city(
     base_profit = city_revenue * 0.15
     profit_inr = round(base_profit * (1 + abs(margin_change) * 0.8), 0)
 
+    # extract location (handle both 'lat'/'lng' from known profiles and 'latitude'/'longitude' from AI)
+    city_lat = cfg.get("lat", cfg.get("latitude", 20.5937))
+    city_lng = cfg.get("lng", cfg.get("longitude", 78.9629))
+
     return CityImpact(
         city=city,
         tier=cfg.get("tier", 2),
         state=cfg.get("state", "India"),
+        lat=city_lat,
+        lng=city_lng,
         adjusted_margin_change=round(margin_change, 4),
         adjusted_demand_change=round(demand_change, 4),
         adjusted_cost_changes=cost_changes,

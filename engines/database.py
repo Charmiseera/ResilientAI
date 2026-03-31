@@ -8,8 +8,8 @@ from dotenv import load_dotenv
 # Load env in case it's not loaded
 load_dotenv()
 
-url: str = os.environ.get("SUPABASE_URL", "")
-key: str = os.environ.get("SUPABASE_SECRET_KEY", os.environ.get("SUPABASE_KEY", ""))
+url: str = os.environ.get("SUPABASE_URL", os.environ.get("NEXT_PUBLIC_SUPABASE_URL", ""))
+key: str = os.environ.get("SUPABASE_SECRET_KEY", os.environ.get("SUPABASE_KEY", os.environ.get("NEXT_PUBLIC_SUPABASE_ANON_KEY", "")))
 
 if not url or not key:
     print("WARNING: SUPABASE_URL or SUPABASE_KEY is missing from .env")

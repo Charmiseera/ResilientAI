@@ -1,57 +1,131 @@
 # ResilientAI 🚀
 
-> Autonomous Supply Intelligence for MSMEs — Global events → Local decisions, instantly.
+> **Autonomous Supply Intelligence for MSMEs — Global events → Local decisions, instantly.**
 
-## Stack
-- **Backend:** FastAPI + Python 3.11
-- **AI Agent:** LangChain (ReAct)
-- **Optimizer:** Qiskit QAOA + NumPy fallback
-- **Frontend:** Next.js (React 19) + TailwindCSS
-- **NLP:** spaCy
-- **Voice:** SpeechRecognition + gTTS
+*ResilientAI is a Decision Intelligence platform that converts global supply chain disruptions into real-time, actionable recommendations for small and micro businesses (MSMEs). If the Strait of Hormuz closes today, a kirana owner in Pune shouldn't have to wait 3 weeks to see prices spike—ResilientAI predicts the cost impact immediately and provides optimized action strategies.*
 
-## Quick Start
+---
 
-```powershell
-# 1. Clone and enter project
-cd d:\MSC\ResilientAI
+## 🏗️ Technology Stack
 
-# 2. Create virtual environment
-python -m venv venv
-.\venv\Scripts\Activate.ps1
+- **Frontend Dashboard:** Next.js (React 19) + Tailwind CSS + shadcn/ui
+- **Geospatial Analytics:** MapLibre GL for 3D Globe Visualizations
+- **Backend API:** FastAPI + Python 3.11
+- **AI Agent:** LangChain (ReAct) + OpenAI/Gemini support
+- **Optimization Engine:** Qiskit (QAOA Quantum-inspired optimizer) + NumPy classical fallback
+- **NLP & Voice Processing:** spaCy, SpeechRecognition, gTTS
 
-# 3. Install dependencies
+---
+
+## ✨ Core Features
+
+1. **🌍 Global Event Monitoring (Risk Detection Agent)**
+   - Autonomously scans geopolitical datasets and news feeds.
+   - Detects supply disruptions and classifies risk levels automatically.
+   
+2. **📉 Impact Prediction Engine**
+   - Maps global risks directly to local cost impacts.
+   - Calculates cascading factor effects (e.g., LPG supply drop → Transport cost rises → Product margin compression).
+
+3. **🧠 Quantum-Inspired Optimization Engine**
+   - Evaluates multi-variable trade-offs for immediate action.
+   - Recommends the mathematically best strategy for businesses to mitigate losses and protect profit margins.
+
+4. **🗺️ 3D City Comparison Intelligence**
+   - Fully interactive MapLibre 3D globe visualization.
+   - Compare city-specific resilience metrics, vulnerability scores, and logistics hubs in real-time.
+
+5. **🎙️ Voice-Activated Intelligence**
+   - Ask complex supply chain questions in plain language (e.g. "Gas price badhega kya?") and receive localized audio insights.
+
+---
+
+## 📁 Repository Structure
+
+```
+ResilientAI/
+├── .env.example       # Example environment configuration
+├── agents/            # Risk Detection & Decision Agents (LangChain / CrewAI)
+├── api/               # FastAPI backend routing and endpoints
+├── data/              # Seed data and commodity baselines
+├── engines/           # Impact Prediction & Qiskit Optimization Engines
+├── frontend/          # Next.js Web Dashboard & MapLibre 3D Visualizations
+├── tests/             # Pytest unit and integration tests
+├── voice/             # Speech-to-Text and Text-to-Speech logic
+└── README.md          # Project Documentation
+```
+
+---
+
+## 🚀 Quick Start Guide
+
+### Prerequisites
+- [Python 3.11+](https://www.python.org/downloads/)
+- [Node.js 20+](https://nodejs.org/en) (for the frontend application)
+- API Keys for OpenAI/Gemini (if not using seeded demo data)
+
+### 1. Clone & Set Up Python Backend Environment
+
+```bash
+# Clone the repository
+git clone https://github.com/Charmiseera/ResilientAI.git
+cd ResilientAI
+
+# Create virtual environment
+python -m venv .venv
+# On Windows:
+.venv\Scripts\activate
+# On macOS/Linux:
+source .venv/bin/activate
+
+# Install dependencies
 pip install -r requirements.txt
 
-# 4. Download spaCy model
+# Download NLP model for spaCy
 python -m spacy download en_core_web_sm
+```
 
-# 5. Set up environment
-Copy-Item .env.example .env
-# Edit .env — set USE_SEED_DATA=true for demo mode (no API key needed)
+### 2. Configure Environment Variables
 
-# 6. Run API Backend (Terminal 1)
+```bash
+# Copy template file
+cp .env.example .env
+
+# Open .env and populate your target API keys
+# To run in demo mode without active API keys, ensure USE_SEED_DATA is set properly.
+```
+
+### 3. Start the Application
+
+You need two terminal windows to run both the FastAPI backend and the Next.js frontend dashboard.
+
+**Terminal 1 — API Backend:**
+```bash
 uvicorn api.main:app --reload --port 8000
+```
+> API will be available at `http://localhost:8000`. You can access auto-generated documentation at `http://localhost:8000/docs`.
 
-# 7. Run Next.js Frontend (Terminal 2)
+**Terminal 2 — Next.js Frontend Development Server:**
+```bash
 cd frontend
 npm install
 npm run dev
 ```
+> The dashboard will be accessible at `http://localhost:3000`.
 
-## Demo Flow
-1. Open http://localhost:3000
-2. Select a pre-configured scenario (e.g., Hormuz Disruption) from the "Risk Intelligence" tab.
-3. Watch: Risk Alert → Impact → Recommendation appear in real time.
-4. Click **"Execute this Decision"** to log the decision.
+---
 
-## Project Structure
-ResilientAI/
-├── agents/          # Risk Detection Agent (LangChain)
-├── engines/         # Impact Prediction + Quantum Optimizer
-├── api/             # FastAPI backend (10+ endpoints)
-├── frontend/        # Next.js UI (React 19)
-├── voice/           # STT + TTS (bonus)
-├── data/            # Seed data, commodity baselines
-└── tests/           # Unit + integration tests
-```
+## 🎯 Typical Demo Flow
+
+1. Open `http://localhost:3000` in your web browser.
+2. Under the **Intelligence Panel**, select a simulated global event (e.g., *Hormuz Disruption*).
+3. Observe the AI Risk Detection Agent automatically score the event.
+4. Watch the Impact Engine propagate cost changes to your specific MSME local profile.
+5. Review the recommended actions generated by the Qiskit optimization engine.
+6. Open the **City Comparisons** tab to visualize the global impact on the 3D interactive MapLibre globe and track affected regions.
+
+---
+
+## 🛡️ License
+
+Built for real-world impact. See [ResilientAI_PRD.md](./ResilientAI_PRD.md) for full product requirement details.
