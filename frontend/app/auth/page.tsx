@@ -1,13 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { supabaseBrowser } from "@/lib/supabase-browser";
 import { Loader2, Mail, Lock, Eye, EyeOff, CheckCircle2, ShieldCheck } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 
 type Mode = "signin" | "signup" | "forgot";
 
-export default function AuthPage() {
+function AuthContent() {
   const searchParams  = useSearchParams();
   const callbackError = searchParams.get("error");
 
@@ -133,7 +133,7 @@ export default function AuthPage() {
             <button
               onClick={handleGoogle}
               disabled={googleLoad || loading}
-              className="w-full flex items-center justify-center gap-3 py-3 rounded-xl text-sm font-medium transition-all disabled:opacity-50 bg-[var(--color-glass-bg)] border border-[var(--color-glass-border)] text-[var(--color-rai-text)] hover:bg-[var(--color-glass-highlight)] hover:border-[var(--color-rai-acid)]/30"
+              className="w-full flex items-center justify-center gap-3 py-3 rounded-xl text-sm font-medium transition-all disabled:opacity-50 bg-[var(--color-glass-bg)] border border-[var(--color-glass-border)] text-[var(--color-rai-text)] hover:bg-[var(--color-glass-highlight)] hover:border(--color-rai-acid)]/30"
             >
               {googleLoad ? <Loader2 className="w-4 h-4 animate-spin" /> : (
                 <svg className="w-4 h-4" viewBox="0 0 24 24">
@@ -260,5 +260,17 @@ export default function AuthPage() {
         LATENCY: 12ms // STABLE
       </div>
     </div>
+  );
+}
+
+export default function AuthPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-[var(--color-rai-obsidian)] flex items-center justify-center">
+        <Loader2 className="w-10 h-10 animate-spin text-[var(--color-rai-acid)]" />
+      </div>
+    }>
+      <AuthContent />
+    </Suspense>
   );
 }
