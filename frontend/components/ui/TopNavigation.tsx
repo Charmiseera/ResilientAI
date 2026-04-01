@@ -2,9 +2,10 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { Shield, BrainCircuit, ActivitySquare } from "lucide-react";
+import { Shield, BrainCircuit, ActivitySquare, Sun, Moon } from "lucide-react";
 import { cn } from "@/lib/utils";
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect, useState } from "react";
+import { useTheme } from "next-themes";
 
 const TABS = [
   { id: "profile", label: "My Profile", icon: Shield },
@@ -15,6 +16,12 @@ const TABS = [
 function TopNavigationInner() {
   const searchParams = useSearchParams();
   const currentTab = searchParams.get("tab") || "profile";
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <nav className="border-b border-[var(--color-rai-gray)] sticky top-0 bg-[var(--color-rai-obsidian)] z-50">
@@ -38,7 +45,7 @@ function TopNavigationInner() {
                   className={cn(
                     "flex items-center gap-2 px-5 py-3 font-display text-xs font-bold uppercase tracking-widest border transition-all outline-none",
                     isActive 
-                      ? "bg-[var(--color-rai-text)] text-[var(--color-rai-obsidian)] border-[var(--color-rai-text)] shadow-[4px_4px_0px_var(--color-rai-acid)] -translate-y-1" 
+                      ? "bg-[var(--color-rai-text)] text-[var(--color-rai-obsidian)] border-[var(--color-rai-text)] shadow-[var(--shadow-soft)] -translate-y-1" 
                       : "bg-[var(--color-rai-obsidian)] text-[var(--color-rai-dim)] border-[var(--color-rai-gray)] hover:border-[var(--color-rai-acid)] hover:text-[var(--color-rai-acid)]"
                   )}
                 >
@@ -47,6 +54,15 @@ function TopNavigationInner() {
                 </Link>
               );
             })}
+            {mounted && (
+              <button
+                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                className="flex items-center justify-center px-4 py-3 border transition-all outline-none bg-[var(--color-rai-obsidian)] text-[var(--color-rai-dim)] border-[var(--color-rai-gray)] hover:border-[var(--color-rai-acid)] hover:text-[var(--color-rai-acid)] hover:-translate-y-1 hover:shadow-[var(--shadow-soft)]"
+                aria-label="Toggle Theme"
+              >
+                {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+              </button>
+            )}
           </div>
         </div>
       </div>

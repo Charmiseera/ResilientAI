@@ -12,7 +12,8 @@ import { DecisionHistoryTab } from "@/components/tabs/DecisionHistoryTab";
 import { CityComparisonsTab } from "@/components/tabs/CityComparisonsTab";
 import { AIAssistantTab } from "@/components/tabs/AIAssistantTab";
 import { VoiceAssistant } from "@/components/ui/VoiceAssistant";
-import { Search, Bell, Settings } from "lucide-react";
+import { Search, Bell, Settings, Sun, Moon } from "lucide-react";
+import { useTheme } from "next-themes";
 
 export type TabId = "intelligence" | "simulator" | "analytics" | "history" | "cities" | "profile" | "assistant";
 
@@ -32,6 +33,13 @@ export default function Dashboard() {
   const [userAvatar,     setUserAvatar]     = useState<string | null>(null);
   const [userName,       setUserName]       = useState<string | null>(null);
 
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   useEffect(() => {
     const already = localStorage.getItem("rai_onboarded") === "true";
     const hasCity  = !!localStorage.getItem("rai_city");
@@ -47,7 +55,7 @@ export default function Dashboard() {
   const meta = TAB_LABELS[activeTab];
 
   return (
-    <div className="flex h-screen overflow-hidden" style={{ background: "#13131a" }}>
+    <div className="flex h-screen overflow-hidden bg-[var(--color-rai-obsidian)] text-[var(--color-rai-text)]">
       <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} open={true} setOpen={() => {}} />
 
       {/* Main */}
@@ -55,38 +63,43 @@ export default function Dashboard() {
 
         {/* Topbar — glass */}
         <header
-          className="flex-shrink-0 flex items-center justify-between px-6 h-14"
-          style={{
-            background:  "rgba(27,27,35,0.8)",
-            backdropFilter: "blur(12px)",
-            borderBottom: "1px solid rgba(255,255,255,0.06)",
-          }}
+          className="flex-shrink-0 flex items-center justify-between px-6 h-14 bg-[var(--color-glass-bg)] border-b border-[var(--color-glass-border)] backdrop-blur-[12px]"
         >
           {/* Breadcrumb */}
           <div className="flex items-center gap-2 text-sm">
-            <span style={{ color: "rgba(187,202,191,0.45)" }}>ResilientAI</span>
-            <span style={{ color: "rgba(187,202,191,0.25)" }}>/</span>
-            <span className="font-semibold" style={{ color: "#e4e1ec" }}>{meta.label}</span>
+            <span className="text-[var(--color-glass-text-dim)]">ResilientAI</span>
+            <span className="text-[var(--color-glass-text-dim)]/50">/</span>
+            <span className="font-semibold text-[var(--color-rai-text)]">{meta.label}</span>
           </div>
 
           {/* Search */}
           <div
-            className="flex items-center gap-2 px-3 h-8 rounded-lg text-sm"
-            style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.07)", minWidth: 200 }}
+            className="flex items-center gap-2 px-3 h-8 rounded-lg text-sm bg-[var(--color-glass-highlight)] border border-[var(--color-glass-border)]"
+            style={{ minWidth: 200 }}
           >
-            <Search className="w-3.5 h-3.5" style={{ color: "rgba(187,202,191,0.35)" }} />
-            <span style={{ color: "rgba(187,202,191,0.35)", fontSize: "0.8125rem" }}>Search signals…</span>
+            <Search className="w-3.5 h-3.5 text-[var(--color-glass-text-dim)]" />
+            <span className="text-[var(--color-glass-text-dim)] text-[0.8125rem]">Search signals…</span>
           </div>
 
           {/* Icons + avatar */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-4">
+            {mounted && (
+              <button
+                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                className="flex items-center justify-center w-8 h-8 rounded-full border bg-[var(--color-glass-bg)] text-[var(--color-glass-text-dim)] border-[var(--color-glass-border)] hover:border-[var(--color-rai-acid)] hover:text-[var(--color-rai-acid)] transition-all outline-none"
+                aria-label="Toggle Theme"
+              >
+                {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+              </button>
+            )}
+
             <button onClick={() => setActiveTab("profile")} className="cursor-pointer transition-transform hover:scale-105 active:scale-95">
             {userAvatar ? (
               <img src={userAvatar} alt="avatar" className="w-7 h-7 rounded-full" />
             ) : (
               <div
-                className="w-7 h-7 rounded-full flex items-center justify-center text-white text-xs font-bold"
-                style={{ background: "linear-gradient(135deg, #10b981, #4edea3)" }}
+                className="w-7 h-7 rounded-full flex items-center justify-center text-[var(--color-rai-obsidian)] text-xs font-bold"
+                style={{ background: "linear-gradient(135deg, var(--color-rai-acid), var(--color-rai-acid))" }}
               >
                 {userName?.[0]?.toUpperCase() ?? "U"}
               </div>

@@ -50,7 +50,7 @@ function StarRating({
             className={`w-5 h-5 transition-colors ${
               n <= (hovered || value)
                 ? "fill-amber-400 text-amber-400"
-                : "text-white/15"
+                : "text-[var(--color-rai-text)]/15"
             }`}
           />
         </button>
@@ -110,7 +110,7 @@ function FeedbackPanel({
   // ── Already has feedback — show summary + edit toggle ──────────────────────
   if (saved || alreadyHasFeedback) {
     return (
-      <div className="mt-3 pt-3 border-t border-white/5">
+      <div className="mt-3 pt-3 border-t border-[var(--color-rai-text)]/5">
         {!open ? (
           <div className="flex items-center justify-between gap-3 flex-wrap">
             <div className="space-y-1">
@@ -118,17 +118,17 @@ function FeedbackPanel({
                 {[1,2,3,4,5].map(n => (
                   <Star
                     key={n}
-                    className={`w-3.5 h-3.5 ${n <= (decision.outcome_rating ?? rating) ? "fill-amber-400 text-amber-400" : "text-white/10"}`}
+                    className={`w-3.5 h-3.5 ${n <= (decision.outcome_rating ?? rating) ? "fill-amber-400 text-amber-400" : "text-[var(--color-rai-text)]/10"}`}
                   />
                 ))}
               </div>
-              <p className="text-white/40 text-xs italic line-clamp-1">
+              <p className="text-[var(--color-rai-text)]/40 text-xs italic line-clamp-1">
                 "{decision.feedback ?? text}"
               </p>
             </div>
             <button
               onClick={() => setOpen(true)}
-              className="text-[10px] text-white/25 hover:text-white/60 underline transition-colors flex-shrink-0"
+              className="text-[10px] text-[var(--color-rai-text)]/25 hover:text-[var(--color-rai-text)]/60 underline transition-colors flex-shrink-0"
             >
               Edit feedback
             </button>
@@ -149,13 +149,13 @@ function FeedbackPanel({
 
   // ── No feedback yet — show CTA or form ──────────────────────────────────────
   return (
-    <div className="mt-3 pt-3 border-t border-white/5">
+    <div className="mt-3 pt-3 border-t border-[var(--color-rai-text)]/5">
       {!open ? (
         <button
           onClick={() => setOpen(true)}
           className="w-full flex items-center justify-center gap-2 py-2 rounded-xl
-            border border-dashed border-white/10 text-white/30 hover:text-white/60
-            hover:border-white/20 text-xs transition-all group"
+            border border-dashed border-[var(--color-rai-text)]/10 text-[var(--color-rai-text)]/30 hover:text-[var(--color-rai-text)]/60
+            hover:border-[var(--color-rai-text)]/20 text-xs transition-all group"
         >
           <MessageSquare className="w-3.5 h-3.5 group-hover:text-emerald-400 transition-colors" />
           Add outcome feedback
@@ -186,14 +186,14 @@ function FeedbackForm({
 }) {
   return (
     <div className="space-y-3 animate-in fade-in slide-in-from-bottom-2 duration-200">
-      <p className="text-[11px] text-white/50 font-semibold uppercase tracking-wider">
+      <p className="text-[11px] text-[var(--color-rai-text)]/50 font-semibold uppercase tracking-wider">
         {isEdit ? "✏️ Edit Outcome Feedback" : "📋 How did this recommendation work out?"}
       </p>
       {/* Star rating */}
       <div className="space-y-1">
-        <p className="text-[10px] text-white/30">Rate the outcome</p>
+        <p className="text-[10px] text-[var(--color-rai-text)]/30">Rate the outcome</p>
         <StarRating value={rating} onChange={setRating} />
-        <p className="text-[9px] text-white/20">
+        <p className="text-[9px] text-[var(--color-rai-text)]/20">
           {["", "Poor — didn't help", "Below expectations", "Okay — partial benefit", "Good — worked well", "Excellent — exceeded expectations"][rating] ?? ""}
         </p>
       </div>
@@ -203,9 +203,9 @@ function FeedbackForm({
         value={text}
         onChange={e => setText(e.target.value)}
         placeholder="What happened after you implemented this? Any actual profit change, supplier response, or other outcome…"
-        className="w-full bg-white/[0.04] border border-white/10 rounded-xl px-3 py-2 text-white/80
-          text-xs placeholder:text-white/20 outline-none resize-none
-          focus:border-emerald-500/30 focus:bg-white/[0.06] transition-all"
+        className="w-full bg-[var(--color-rai-text)]/[0.04] border border-[var(--color-rai-text)]/10 rounded-xl px-3 py-2 text-[var(--color-rai-text)]/80
+          text-xs placeholder:text-[var(--color-rai-text)]/20 outline-none resize-none
+          focus:border-emerald-500/30 focus:bg-[var(--color-rai-text)]/[0.06] transition-all"
       />
       {error && <p className="text-red-400 text-[10px]">{error}</p>}
       {/* Action buttons */}
@@ -214,7 +214,7 @@ function FeedbackForm({
           onClick={onSubmit}
           disabled={saving}
           className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl
-            bg-emerald-500 text-black text-xs font-bold
+            bg-emerald-500 text-[var(--color-rai-obsidian)] text-xs font-bold
             hover:bg-emerald-400 active:scale-[.98] disabled:opacity-50 transition-all"
         >
           {saving
@@ -224,8 +224,8 @@ function FeedbackForm({
         </button>
         <button
           onClick={onCancel}
-          className="px-3 py-2 rounded-xl border border-white/10 text-white/30
-            hover:text-white text-xs transition-all"
+          className="px-3 py-2 rounded-xl border border-[var(--color-rai-text)]/10 text-[var(--color-rai-text)]/30
+            hover:text-[var(--color-rai-text)] text-xs transition-all"
         >
           Cancel
         </button>
@@ -276,7 +276,7 @@ export function DecisionHistoryTab() {
       <div>
         <p className="section-label mb-1">Audit Timeline</p>
         <h1 className="section-headline">Decision History</h1>
-        <p className="text-sm mt-1" style={{ color:"rgba(187,202,191,0.5)" }}>
+        <p className="text-sm mt-1" style={{ color: "var(--color-glass-text-dim)" }}>
           Complete audit trail — accepted recommendations and adopted strategies with outcome feedback.
         </p>
       </div>
@@ -285,13 +285,13 @@ export function DecisionHistoryTab() {
       {!loading && decisions.length > 0 && (
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
           {[
-            { label: "Decisions Logged",   value: decisions.length.toString(),          color: "#e4e1ec" },
+            { label: "Decisions Logged",   value: decisions.length.toString(),          color: "var(--color-rai-text)" },
             { label: "Total Profit Impact", value: `₹${Math.round(totalProfit).toLocaleString()}`, color: "#4edea3" },
             { label: "Avg Outcome Rating",  value: avgRating === "—" ? "—" : `★ ${avgRating}`, color: "#ffb95f" },
             { label: "Feedback Rate",       value: `${feedbackPct}%`,                    color: "#06b6d4" }, // cyan
           ].map(s => (
             <div key={s.label} className="card-glass p-4 text-center">
-              <p className="text-[10px] uppercase tracking-wider" style={{ color:"rgba(187,202,191,0.35)" }}>{s.label}</p>
+              <p className="text-[10px] uppercase tracking-wider" style={{ color: "var(--color-glass-text-dim)" }}>{s.label}</p>
               <p className="text-xl font-bold mt-1" style={{ color:s.color }}>{s.value}</p>
             </div>
           ))}
@@ -299,7 +299,7 @@ export function DecisionHistoryTab() {
       )}
 
       {/* Tab switcher */}
-      <div className="flex gap-1 p-1 rounded-xl w-fit" style={{ background:"rgba(255,255,255,0.02)", border:"1px solid rgba(255,255,255,0.05)" }}>
+      <div className="flex gap-1 p-1 rounded-xl w-fit" style={{ background: "var(--color-glass-border)", border: "1px solid var(--color-glass-border)" }}>
         {(["decisions", "strategies"] as const).map(t => (
           <button
             key={t}
@@ -318,14 +318,14 @@ export function DecisionHistoryTab() {
       </div>
 
       {loading ? (
-        <div className="flex items-center gap-3 text-white/30 text-sm h-40 justify-center">
+        <div className="flex items-center gap-3 text-[var(--color-rai-text)]/30 text-sm h-40 justify-center">
           <Loader2 className="w-4 h-4 animate-spin" /> Loading from cloud…
         </div>
       ) : tab === "decisions" ? (
         /* ── Executed Decisions ── */
         <div className="space-y-3">
           {decisions.length === 0 && (
-            <div className="card-glass p-10 text-sm text-center" style={{ color:"rgba(187,202,191,0.3)" }}>
+            <div className="card-glass p-10 text-sm text-center" style={{ color: "var(--color-glass-text-dim)" }}>
               No decisions logged yet. Execute recommendations in the Intelligence tab.
             </div>
           )}
@@ -341,7 +341,7 @@ export function DecisionHistoryTab() {
               <div className="flex items-start justify-between gap-3 flex-wrap">
                 <div className="space-y-0.5">
                   <div className="flex items-center gap-2">
-                    <span className="font-semibold text-sm capitalize" style={{ color:"#e4e1ec" }}>
+                    <span className="font-semibold text-sm capitalize" style={{ color: "var(--color-rai-text)" }}>
                       {d.event_id.replace(/_/g, " ")}
                     </span>
                     <span className="text-[10px] px-2 py-0.5 rounded-full font-medium"
@@ -357,13 +357,13 @@ export function DecisionHistoryTab() {
                       </span>
                     )}
                   </div>
-                  <p className="text-xs capitalize" style={{ color:"rgba(187,202,191,0.5)" }}>{d.business_type}</p>
+                  <p className="text-xs capitalize" style={{ color: "var(--color-glass-text-dim)" }}>{d.business_type}</p>
                 </div>
                 <div className="text-right">
                   <p className="font-bold" style={{ color:"#4edea3" }}>
                     +₹{Math.abs(d.profit_impact_inr).toLocaleString()}
                   </p>
-                  <p className="text-[10px] flex items-center gap-1 justify-end mt-0.5" style={{ color:"rgba(187,202,191,0.2)" }}>
+                  <p className="text-[10px] flex items-center gap-1 justify-end mt-0.5" style={{ color: "var(--color-glass-text-dim)" }}>
                     <Clock className="w-3 h-3" />
                     {new Date(d.timestamp).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" })}
                   </p>
@@ -371,7 +371,7 @@ export function DecisionHistoryTab() {
               </div>
 
               {/* Action taken */}
-              <p className="text-xs leading-relaxed line-clamp-2" style={{ color:"rgba(187,202,191,0.4)" }}>{d.action_taken}</p>
+              <p className="text-xs leading-relaxed line-clamp-2" style={{ color: "var(--color-glass-text-dim)" }}>{d.action_taken}</p>
 
               {/* Feedback panel */}
               <FeedbackPanel decision={d} onSaved={handleFeedbackSaved} />
@@ -382,14 +382,14 @@ export function DecisionHistoryTab() {
         /* ── Adopted Strategies ── */
         <div className="space-y-3">
           {strategies.length === 0 && (
-            <div className="card-glass p-10 text-sm text-center" style={{ color:"rgba(187,202,191,0.3)" }}>
+            <div className="card-glass p-10 text-sm text-center" style={{ color: "var(--color-glass-text-dim)" }}>
               No strategies saved yet. Use the Profit Simulator to adopt strategies.
             </div>
           )}
           {strategies.map(s => (
             <div key={s.id} className="card-glass p-5 space-y-3">
               <div className="flex items-center justify-between">
-                <span className="font-semibold text-sm" style={{ color:"#e4e1ec" }}>
+                <span className="font-semibold text-sm" style={{ color: "var(--color-rai-text)" }}>
                   Strategy @ {(s.current_margin_pct * 100).toFixed(0)}% margin
                 </span>
                 <span className="font-bold text-sm" style={{ color:"#4edea3" }}>
@@ -402,13 +402,13 @@ export function DecisionHistoryTab() {
                   { label: "Price ↑",   value: `₹${s.price_delta}/unit` },
                   { label: "Margin",    value: `${(s.current_margin_pct * 100).toFixed(0)}%` },
                 ].map(m => (
-                  <div key={m.label} className="rounded-xl p-2.5 text-center" style={{ background:"rgba(255,255,255,0.04)" }}>
-                    <p className="text-[10px]" style={{ color:"rgba(187,202,191,0.3)" }}>{m.label}</p>
-                    <p className="text-xs font-semibold mt-0.5" style={{ color:"#e4e1ec" }}>{m.value}</p>
+                  <div key={m.label} className="rounded-xl p-2.5 text-center" style={{ background: "var(--color-glass-border)" }}>
+                    <p className="text-[10px]" style={{ color: "var(--color-glass-text-dim)" }}>{m.label}</p>
+                    <p className="text-xs font-semibold mt-0.5" style={{ color: "var(--color-rai-text)" }}>{m.value}</p>
                   </div>
                 ))}
               </div>
-              <p className="text-[10px] flex items-center gap-1" style={{ color:"rgba(187,202,191,0.2)" }}>
+              <p className="text-[10px] flex items-center gap-1" style={{ color: "var(--color-glass-text-dim)" }}>
                 <Clock className="w-3 h-3" />
                 {new Date(s.timestamp).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" })}
               </p>

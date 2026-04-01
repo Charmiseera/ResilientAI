@@ -158,14 +158,14 @@ export function IntelligenceTab() {
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <h1 className="section-headline">Risk Intelligence</h1>
-          <p className="text-sm mt-1" style={{ color: "rgba(187,202,191,0.5)" }}>
+          <p className="text-sm mt-1" style={{ color: "var(--color-glass-text-dim)" }}>
             Real-time disruptions → Quantum-optimised decisions → Local impact
           </p>
         </div>
         <div className="flex items-center gap-3">
           <select value={businessType} onChange={e => { const v=e.target.value; setBizType(v); loadScenario(activeScenario??undefined,v); }}
             className="rounded-xl px-3 py-2 text-sm outline-none cursor-pointer"
-            style={{ background:"rgba(255,255,255,0.05)", border:"1px solid rgba(255,255,255,0.1)", color:"#e4e1ec" }}>
+            style={{ background: "var(--color-glass-border)", border: "1px solid var(--color-glass-border)", color: "var(--color-rai-text)" }}>
             <option value="kirana">🏪 Kirana Retail</option>
             <option value="restaurant">🍽️ Restaurant</option>
             <option value="pharma">💊 Pharma</option>
@@ -182,15 +182,15 @@ export function IntelligenceTab() {
               background: activeScenario === s.id ? "rgba(78,222,163,0.07)" : "rgba(255,255,255,0.03)",
               border: activeScenario === s.id ? "1px solid rgba(78,222,163,0.3)" : "1px solid rgba(255,255,255,0.07)",
             }}>
-            <p className="text-sm font-semibold" style={{ color:"#e4e1ec" }}>{s.label}</p>
-            <p className="text-xs mt-0.5" style={{ color:"rgba(187,202,191,0.45)" }}>{s.sub}</p>
+            <p className="text-sm font-semibold" style={{ color: "var(--color-rai-text)" }}>{s.label}</p>
+            <p className="text-xs mt-0.5" style={{ color: "var(--color-glass-text-dim)" }}>{s.sub}</p>
           </button>
         ))}
         <button onClick={() => { setScenario(null); loadScenario(undefined, businessType); setExpanded({}); }}
           className="p-4 rounded-2xl text-left transition-all"
-          style={{ background:"rgba(255,255,255,0.03)", border:"1px solid rgba(255,255,255,0.07)" }}>
-          <p className="text-sm font-semibold" style={{ color:"#e4e1ec" }}>🌐 All Alerts</p>
-          <p className="text-xs mt-0.5" style={{ color:"rgba(187,202,191,0.45)" }}>Live event feed</p>
+          style={{ background: "var(--color-glass-border)", border: "1px solid var(--color-glass-border)" }}>
+          <p className="text-sm font-semibold" style={{ color: "var(--color-rai-text)" }}>🌐 All Alerts</p>
+          <p className="text-xs mt-0.5" style={{ color: "var(--color-glass-text-dim)" }}>Live event feed</p>
         </button>
       </div>
 
@@ -214,7 +214,7 @@ export function IntelligenceTab() {
                 fill="none" stroke="#ffb95f" strokeWidth="3" strokeLinecap="round"
                 strokeDasharray={`${Math.min(visibleEvents.length * 25, 90)},100`}/>
             </svg>
-            <div className="absolute inset-0 flex items-center justify-center text-sm font-bold" style={{ color:"#e4e1ec" }}>
+            <div className="absolute inset-0 flex items-center justify-center text-sm font-bold" style={{ color: "var(--color-rai-text)" }}>
               {Math.min(visibleEvents.length * 25, 90)}%
             </div>
           </div>
@@ -245,7 +245,7 @@ export function IntelligenceTab() {
 
       {/* ── Section header ── */}
       <div className="flex items-center justify-between">
-        <h2 className="text-lg font-semibold flex items-center gap-2" style={{ color:"#e4e1ec" }}>
+        <h2 className="text-lg font-semibold flex items-center gap-2" style={{ color: "var(--color-rai-text)" }}>
           <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="#4edea3" strokeWidth="2">
             <circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="11"/>
           </svg>
@@ -259,9 +259,9 @@ export function IntelligenceTab() {
         <div className="space-y-4">
           {[0,1,2].map(i => (
             <div key={i} className="card-glass p-6 animate-pulse space-y-3">
-              <div className="h-4 w-24 rounded" style={{ background:"rgba(255,255,255,0.07)" }} />
-              <div className="h-6 w-2/3 rounded" style={{ background:"rgba(255,255,255,0.07)" }} />
-              <div className="h-4 w-full rounded" style={{ background:"rgba(255,255,255,0.04)" }} />
+              <div className="h-4 w-24 rounded" style={{ background: "var(--color-glass-border)" }} />
+              <div className="h-6 w-2/3 rounded" style={{ background: "var(--color-glass-border)" }} />
+              <div className="h-4 w-full rounded" style={{ background: "var(--color-glass-border)" }} />
             </div>
           ))}
         </div>
@@ -297,8 +297,8 @@ export function IntelligenceTab() {
 
         return (
           <div key={event.id}
-            style={{ display:"flex", flexDirection:"row", background:"rgba(255,255,255,0.025)", border:"1px solid rgba(255,255,255,0.07)", borderRadius:"1rem", overflow:"hidden" }}
-            className="group transition-all hover:bg-white/5">
+            style={{ display:"flex", flexDirection:"row", background: "var(--color-glass-border)", border: "1px solid var(--color-glass-border)", borderRadius:"1rem", overflow:"hidden" }}
+            className="group transition-all hover:bg-[var(--color-rai-text)]/5">
             {/* Left accent bar */}
             <div style={{ width:4, flexShrink:0, background:cfg.leftColor }} />
 
@@ -310,15 +310,15 @@ export function IntelligenceTab() {
                         style={{ background:cfg.badgeBg, color:cfg.badgeColor }}>
                     {displayRisk}
                   </span>
-                  <h4 className="text-lg font-semibold" style={{ color:"#e4e1ec" }}>{event.headline}</h4>
+                  <h4 className="text-lg font-semibold" style={{ color: "var(--color-rai-text)" }}>{event.headline}</h4>
                 </div>
                 <div className="flex items-center gap-4">
-                  <span className="text-xs" style={{ color:"rgba(187,202,191,0.4)" }}>
+                  <span className="text-xs" style={{ color: "var(--color-glass-text-dim)" }}>
                     {new Date(event.published_at).toLocaleDateString()} · Source: {event.source}
                   </span>
                   <button onClick={() => setDismissed(p => ({ ...p, [event.id]:true }))}
                     className="p-1 rounded-lg transition-colors"
-                    style={{ color:"rgba(187,202,191,0.3)" }}
+                    style={{ color: "var(--color-glass-text-dim)" }}
                     onMouseEnter={e => (e.currentTarget.style.color="#e4e1ec")}
                     onMouseLeave={e => (e.currentTarget.style.color="rgba(187,202,191,0.3)")}>
                     <X className="w-4 h-4" />
@@ -330,7 +330,7 @@ export function IntelligenceTab() {
               <div className="flex flex-wrap items-center gap-2">
                 {event.commodities_affected.map(c => <span key={c} className="chip">{c}</span>)}
                 <div className="flex items-center gap-1.5 ml-auto">
-                  <span className="text-[10px] uppercase tracking-wide" style={{ color:"rgba(187,202,191,0.4)" }}>
+                  <span className="text-[10px] uppercase tracking-wide" style={{ color: "var(--color-glass-text-dim)" }}>
                     Confidence:
                   </span>
                   <span className="text-xs font-bold" style={{ color:"#4edea3" }}>
@@ -347,26 +347,26 @@ export function IntelligenceTab() {
                     ? { background:"rgba(78,222,163,0.1)", color:"#4edea3", border:"1px solid rgba(78,222,163,0.3)" }
                     : rec
                     ? { background:"transparent", color:"#4edea3", border:"1px solid rgba(78,222,163,0.4)" }
-                    : { background:"transparent", color:"rgba(187,202,191,0.3)", border:"1px solid rgba(255,255,255,0.07)" }}>
+                    : { background:"transparent", color: "var(--color-glass-text-dim)", border: "1px solid var(--color-glass-border)" }}>
                   {isExec ? "Logging…" : isAdopted ? "✓ Decision Executed" : "Get Recommendation"}
                 </button>
                 <button onClick={() => sendWhatsApp(event)}
                   className="flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium transition-all"
-                  style={{ color:"rgba(187,202,191,0.5)" }}
+                  style={{ color: "var(--color-glass-text-dim)" }}
                   onMouseEnter={e => (e.currentTarget.style.color="#e4e1ec")}
                   onMouseLeave={e => (e.currentTarget.style.color="rgba(187,202,191,0.5)")}>
                   <MessageSquare className="w-3.5 h-3.5" /> WhatsApp
                 </button>
                 <button onClick={() => downloadReport(event)}
                   className="flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium transition-all"
-                  style={{ color:"rgba(187,202,191,0.5)" }}
+                  style={{ color: "var(--color-glass-text-dim)" }}
                   onMouseEnter={e => (e.currentTarget.style.color="#e4e1ec")}
                   onMouseLeave={e => (e.currentTarget.style.color="rgba(187,202,191,0.5)")}>
                   <Download className="w-3.5 h-3.5" /> Download
                 </button>
                 <button onClick={() => setExpanded(p => ({ ...p, [event.id]:!p[event.id] }))}
                   className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium transition-all ml-auto"
-                  style={{ color:"rgba(187,202,191,0.4)" }}>
+                  style={{ color: "var(--color-glass-text-dim)" }}>
                   {isExpanded ? <ChevronUp className="w-3.5 h-3.5"/> : <ChevronDown className="w-3.5 h-3.5"/>}
                   {isExpanded ? "Hide" : "Details"}
                 </button>
@@ -375,7 +375,7 @@ export function IntelligenceTab() {
               {/* Wa status */}
               {whatsappStatus[event.id] && (
                 <div className="text-xs px-4 py-2 rounded-xl"
-                     style={{ background:"rgba(255,255,255,0.04)", color:"rgba(187,202,191,0.6)" }}>
+                     style={{ background: "var(--color-glass-border)", color: "var(--color-glass-text-dim)" }}>
                   {whatsappStatus[event.id]}
                 </div>
               )}
@@ -389,14 +389,14 @@ export function IntelligenceTab() {
                   {/* Header */}
                   <div className="flex items-center justify-between mb-5">
                     <div className="flex items-center gap-3">
-                      <h3 className="text-base font-bold" style={{ color:"#e4e1ec" }}>AI Recommendation</h3>
+                      <h3 className="text-base font-bold" style={{ color: "var(--color-rai-text)" }}>AI Recommendation</h3>
                       <span className="flex items-center gap-1.5 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider"
                             style={{ background:"rgba(78,222,163,0.15)", color:"#4edea3", border:"1px solid rgba(78,222,163,0.25)" }}>
                         <Zap className="w-3 h-3"/>
                         {rec.generated_by === "quantum" ? "Quantum Optimised" : "Classical"}
                       </span>
                     </div>
-                    <span className="text-xs" style={{ color:"rgba(187,202,191,0.3)" }}>
+                    <span className="text-xs" style={{ color: "var(--color-glass-text-dim)" }}>
                       Simulated {(rec.alternatives.length + 1) * 800} scenarios
                     </span>
                   </div>
@@ -406,21 +406,21 @@ export function IntelligenceTab() {
                     <div className="lg:col-span-2 space-y-4">
                       <div>
                         <p className="section-label mb-2">Optimal Action</p>
-                        <p className="text-lg font-semibold leading-relaxed" style={{ color:"#e4e1ec" }}>
+                        <p className="text-lg font-semibold leading-relaxed" style={{ color: "var(--color-rai-text)" }}>
                           {rec.recommended_action}
                         </p>
                       </div>
                       <div>
                         <p className="section-label mb-2">Reasoning</p>
-                        <p className="text-sm leading-relaxed" style={{ color:"rgba(187,202,191,0.65)" }}>{rec.reason}</p>
+                        <p className="text-sm leading-relaxed" style={{ color: "var(--color-glass-text-dim)" }}>{rec.reason}</p>
                       </div>
                       <div className="rounded-xl p-4 flex items-center gap-6"
-                           style={{ background:"rgba(255,255,255,0.04)", border:"1px solid rgba(255,255,255,0.07)" }}>
+                           style={{ background: "var(--color-glass-border)", border: "1px solid var(--color-glass-border)" }}>
                         <div>
-                          <p className="text-xs mb-1" style={{ color:"rgba(187,202,191,0.4)" }}>Projected Margin Recovery</p>
+                          <p className="text-xs mb-1" style={{ color: "var(--color-glass-text-dim)" }}>Projected Margin Recovery</p>
                           <p className="text-3xl font-black" style={{ color:"#4edea3" }}>+{fmt(rec.profit_impact_inr)}</p>
                         </div>
-                        <p className="text-sm" style={{ color:"rgba(187,202,191,0.35)" }}>
+                        <p className="text-sm" style={{ color: "var(--color-glass-text-dim)" }}>
                           {(rec.confidence * 100).toFixed(0)}% Probability of Outcome
                         </p>
                       </div>
@@ -442,17 +442,17 @@ export function IntelligenceTab() {
                         const altColors = ["#ffb95f", "rgba(187,202,191,0.35)", "#4edea3"];
                         return (
                           <div key={alt.action} className="p-4 rounded-xl cursor-pointer transition-all"
-                               style={{ background:"rgba(255,255,255,0.03)", border:"1px solid rgba(255,255,255,0.07)" }}
+                               style={{ background: "var(--color-glass-border)", border: "1px solid var(--color-glass-border)" }}
                                onMouseEnter={e => ((e.currentTarget as HTMLElement).style.borderColor="rgba(255,255,255,0.15)")}
                                onMouseLeave={e => ((e.currentTarget as HTMLElement).style.borderColor="rgba(255,255,255,0.07)")}>
                             <div className="flex items-center justify-between mb-1.5">
                               <span className="text-[10px] font-bold uppercase tracking-wider"
-                                    style={{ color:"rgba(187,202,191,0.35)" }}>{altLabels[i]}</span>
+                                    style={{ color: "var(--color-glass-text-dim)" }}>{altLabels[i]}</span>
                               <span className="text-xs font-bold" style={{ color:altColors[i] }}>
                                 {alt.profit_impact_inr >= 0 ? "+" : ""}{fmt(alt.profit_impact_inr)}
                               </span>
                             </div>
-                            <p className="text-xs leading-relaxed" style={{ color:"rgba(187,202,191,0.6)" }}>{alt.action}</p>
+                            <p className="text-xs leading-relaxed" style={{ color: "var(--color-glass-text-dim)" }}>{alt.action}</p>
                           </div>
                         );
                       })}
@@ -473,8 +473,8 @@ export function IntelligenceTab() {
                           <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)"/>
                           <XAxis dataKey="name" tick={{ fill:"rgba(255,255,255,0.4)",fontSize:10 }} axisLine={false} tickLine={false}/>
                           <YAxis tickFormatter={v => `${v}%`} tick={{ fill:"rgba(255,255,255,0.35)",fontSize:10 }} axisLine={false} tickLine={false}/>
-                          <Tooltip contentStyle={{ background:"#1f1f27",border:"1px solid rgba(255,255,255,0.08)",borderRadius:8,fontSize:12 }}
-                            formatter={(v: any) => [`+${v}%`,"Cost change"]} labelStyle={{ color:"white" }}/>
+                          <Tooltip contentStyle={{ background:"#1f1f27",border: "1px solid var(--color-glass-border)",borderRadius:8,fontSize:12 }}
+                            formatter={(v: any) => [`+${v}%`,"Cost change"]} labelStyle={{ color: "var(--color-rai-text)" }}/>
                           <Bar dataKey="pct" radius={[4,4,0,0]}>
                             {costData.map((_: any, i: number) => <Cell key={i} fill={i===0?"#fc7c78":i===1?"#ffb95f":"#eab308"}/>)}
                           </Bar>
@@ -492,10 +492,10 @@ export function IntelligenceTab() {
                           <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)"/>
                           <XAxis dataKey="date" tick={{ fill:"rgba(255,255,255,0.4)",fontSize:10 }} axisLine={false} tickLine={false}/>
                           <YAxis tickFormatter={(v) => `₹${v}`} tick={{ fill:"rgba(255,255,255,0.35)",fontSize:10 }} axisLine={false} tickLine={false}/>
-                          <Tooltip contentStyle={{ background:"#1f1f27",border:"1px solid rgba(255,255,255,0.08)",borderRadius:8,fontSize:12 }}
-                            labelStyle={{ color:"rgba(255,255,255,0.6)" }}
+                          <Tooltip contentStyle={{ background:"#1f1f27",border: "1px solid var(--color-glass-border)",borderRadius:8,fontSize:12 }}
+                            labelStyle={{ color: "var(--color-glass-text-dim)" }}
                             formatter={(v: any) => [`₹${Number(v).toLocaleString()}`,""] }/>
-                          <Legend wrapperStyle={{ fontSize:11,color:"rgba(255,255,255,0.5)" }}/>
+                          <Legend wrapperStyle={{ fontSize:11,color: "var(--color-glass-text-dim)" }}/>
                           {forecasts.map((f: any, i: number) => (
                             <Line key={f.commodity} type="monotone" dataKey={f.commodity}
                               stroke={CHART_COLORS[i%CHART_COLORS.length]} strokeWidth={2.5}
@@ -514,13 +514,13 @@ export function IntelligenceTab() {
                       </p>
                       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
                         {[
-                          { label:"City Price Level",   value:`${(cityCfg.price*100).toFixed(0)}%`,  color:"#e4e1ec" },
+                          { label:"City Price Level",   value:`${(cityCfg.price*100).toFixed(0)}%`,  color: "var(--color-rai-text)" },
                           { label:"Adj. Margin Impact", value:`${(adjMargin*100).toFixed(1)}%`,       color:"#ffb3af" },
                           { label:"Adj. Demand Impact", value:`${(adjDemand*100).toFixed(1)}%`,       color:"#ffb95f" },
                           { label:"Projected Profit",   value:fmt(adjProfit),                          color:"#4edea3" },
                         ].map(m => (
                           <div key={m.label} className="card-glass p-4 text-center">
-                            <p className="text-[10px] mb-1" style={{ color:"rgba(187,202,191,0.4)" }}>{m.label}</p>
+                            <p className="text-[10px] mb-1" style={{ color: "var(--color-glass-text-dim)" }}>{m.label}</p>
                             <p className="text-base font-bold" style={{ color:m.color }}>{m.value}</p>
                           </div>
                         ))}
@@ -536,9 +536,9 @@ export function IntelligenceTab() {
 
       {!loading && visibleEvents.length === 0 && (
         <div className="text-center py-24">
-          <AlertTriangle className="w-12 h-12 mx-auto mb-3" style={{ color:"rgba(187,202,191,0.2)" }}/>
-          <p className="text-lg" style={{ color:"rgba(187,202,191,0.3)" }}>No active alerts.</p>
-          <p className="text-sm mt-1" style={{ color:"rgba(187,202,191,0.2)" }}>Click a scenario above to load disruption data.</p>
+          <AlertTriangle className="w-12 h-12 mx-auto mb-3" style={{ color: "var(--color-glass-text-dim)" }}/>
+          <p className="text-lg" style={{ color: "var(--color-glass-text-dim)" }}>No active alerts.</p>
+          <p className="text-sm mt-1" style={{ color: "var(--color-glass-text-dim)" }}>Click a scenario above to load disruption data.</p>
         </div>
       )}
     </div>

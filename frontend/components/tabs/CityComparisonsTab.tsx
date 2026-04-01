@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from "react";
 import { MapPin, RefreshCw, X } from "lucide-react";
 import { CitySearch } from "@/components/ui/CitySearch";
 import { Map, MapMarker, MarkerContent, MarkerPopup, MapControls } from "@/components/ui/map";
+import { useTheme } from "next-themes";
 
 const TIER_COLORS: Record<number, string> = { 1: "#10b981", 2: "#f97316", 3: "#ef4444" };
 const TIER_LABELS: Record<number, string>  = { 1: "Metro",    2: "City",    3: "Rural"  };
@@ -40,6 +41,13 @@ export function CityComparisonsTab() {
   const [results, setResults]     = useState<CityResult[]>([]);
   const [loading, setLoading]     = useState(false);
   const [error, setError]         = useState<string | null>(null);
+  
+  const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api/v1";
 
@@ -84,28 +92,28 @@ export function CityComparisonsTab() {
       <div>
         <p className="section-label mb-1">Regional Intelligence</p>
         <h1 className="section-headline">City Comparisons</h1>
-        <p className="text-sm mt-1" style={{ color:"rgba(187,202,191,0.5)" }}>
+        <p className="text-sm mt-1" style={{ color: "var(--color-glass-text-dim)" }}>
           How does a supply disruption hit differently across Indian cities? Powered by Gemini AI for any city.
         </p>
       </div>
 
       {/* Controls */}
       <div className="grid md:grid-cols-3 gap-4">
-        <div className="md:col-span-2 bg-white/[0.03] border border-white/5 rounded-2xl p-5 space-y-4">
+        <div className="md:col-span-2 bg-[var(--color-glass-bg)] border border-[var(--color-glass-border)] rounded-2xl p-5 space-y-4">
           
           <div className="grid sm:grid-cols-2 gap-4 pb-2">
             {/* Scenario selector */}
             <div>
-              <p className="text-white/50 text-xs uppercase tracking-widest mb-2">
+              <p className="text-[var(--color-glass-text-dim)] text-xs uppercase tracking-widest mb-2">
                 Scenario
               </p>
               <select
                 value={eventId}
                 onChange={e => setEventId(e.target.value)}
-                className="w-full bg-white/[0.04] border border-white/10 rounded-xl px-4 py-2.5 text-white outline-none focus:border-cyan-500/40 focus:bg-white/[0.06] transition-all text-sm appearance-none"
+                className="w-full bg-[var(--color-glass-bg)] border border-[var(--color-glass-border)] rounded-xl px-4 py-2.5 text-[var(--color-rai-text)] outline-none focus:border-[var(--color-rai-acid)] focus:bg-[var(--color-glass-highlight)] transition-all text-sm appearance-none"
               >
                 {EVENTS.map(evt => (
-                  <option key={evt.id} value={evt.id} className="bg-gray-900 text-white">
+                  <option key={evt.id} value={evt.id} className="bg-[var(--color-rai-obsidian)] text-[var(--color-rai-text)]">
                     {evt.label}
                   </option>
                 ))}
@@ -114,9 +122,9 @@ export function CityComparisonsTab() {
 
             {/* Search input */}
             <div>
-              <p className="text-white/50 text-xs uppercase tracking-widest mb-2 flex items-center justify-between">
+              <p className="text-[var(--color-glass-text-dim)] text-xs uppercase tracking-widest mb-2 flex items-center justify-between">
                 <span>Add Cities</span>
-                <span className="text-white/25 normal-case">({selected.length}/6)</span>
+                <span className="text-[var(--color-glass-text-dim)] normal-case">({selected.length}/6)</span>
               </p>
             <div className="flex gap-2">
               <div className="flex-1">
@@ -160,19 +168,19 @@ export function CityComparisonsTab() {
           )}
 
           {selected.length === 0 && (
-            <p className="text-white/20 text-xs">
+            <p className="text-[var(--color-glass-text-dim)] text-xs">
               Search and add cities above to compare supply chain impact.
             </p>
           )}
         </div>
 
-        <div className="bg-white/[0.03] border border-white/5 rounded-2xl p-5 flex flex-col gap-4">
+        <div className="bg-[var(--color-glass-bg)] border border-[var(--color-glass-border)] rounded-2xl p-5 flex flex-col gap-4">
           <div>
-            <p className="text-white/60 text-xs uppercase tracking-widest mb-2">Weekly Revenue</p>
-            <p className="text-white font-bold text-lg">₹{weeklyRev.toLocaleString()}</p>
+            <p className="text-[var(--color-glass-text-dim)] text-xs uppercase tracking-widest mb-2">Weekly Revenue</p>
+            <p className="text-[var(--color-rai-text)] font-bold text-lg">₹{weeklyRev.toLocaleString()}</p>
             <div className="relative h-2 mt-2">
-              <div className="absolute inset-0 bg-white/10 rounded-full" />
-              <div className="absolute left-0 top-0 h-full rounded-full bg-gradient-to-r from-emerald-400 to-cyan-500"
+              <div className="absolute inset-0 border border-[var(--color-glass-border)] bg-[var(--color-glass-bg)] rounded-full" />
+              <div className="absolute left-0 top-0 h-full rounded-full bg-gradient-to-r from-[var(--color-rai-acid)] to-[var(--color-rai-acid)]"
                 style={{ width:`${((weeklyRev-10000)/490000)*100}%` }} />
               <input type="range" min={10000} max={500000} step={5000} value={weeklyRev}
                 onChange={e => setRevenue(Number(e.target.value))}
@@ -180,7 +188,7 @@ export function CityComparisonsTab() {
             </div>
           </div>
           <button onClick={fetchComparisons} disabled={loading || selected.length === 0}
-            className="py-2.5 rounded-xl bg-emerald-500 text-black font-semibold text-sm flex items-center justify-center gap-2 hover:bg-emerald-400 disabled:opacity-50">
+            className="py-2.5 rounded-xl bg-emerald-500 text-[var(--color-rai-obsidian)] font-semibold text-sm flex items-center justify-center gap-2 hover:bg-emerald-400 disabled:opacity-50">
             <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} />
             Compare Cities
           </button>
@@ -194,17 +202,17 @@ export function CityComparisonsTab() {
       {/* Globe visualization */}
       {results.length > 0 && (
         <>
-          <div className="bg-white/[0.03] border border-white/5 rounded-2xl overflow-hidden relative" style={{ height: "450px" }}>
+          <div className="bg-[var(--color-glass-bg)] border border-[var(--color-glass-border)] rounded-2xl overflow-hidden relative" style={{ height: "450px" }}>
             <div className="absolute top-6 left-6 z-10 pointer-events-none">
-              <p className="text-white/60 text-xs uppercase tracking-widest mb-1 drop-shadow-md">
+              <p className="text-[var(--color-glass-text-dim)] text-xs uppercase tracking-widest mb-1 drop-shadow-md">
                 ResilientAI Global Radar
               </p>
-              <h2 className="text-lg font-bold text-white drop-shadow-md">
+              <h2 className="text-lg font-bold text-[var(--color-rai-text)] drop-shadow-md">
                 Impact by Region ({EVENTS.find(e => e.id === eventId)?.label.split(" ").slice(1).join(" ")})
               </h2>
             </div>
             <Map
-              theme="dark"
+              theme={mounted && theme === 'light' ? 'light' : 'dark'}
               projection={{ type: "globe" }}
               viewport={{
                 zoom: 3.5,
@@ -224,33 +232,33 @@ export function CityComparisonsTab() {
                   >
                     <MarkerContent>
                       <div
-                        className="relative h-4 w-4 rounded-full border border-white/50 shadow-lg cursor-pointer"
+                        className="relative h-4 w-4 rounded-full border border-[var(--color-rai-text)]/50 shadow-lg cursor-pointer"
                         style={{ backgroundColor: tc }}
                       >
                         <div className="absolute inset-0 rounded-full animate-ping opacity-50" style={{ backgroundColor: tc }} />
                       </div>
                     </MarkerContent>
-                    <MarkerPopup className="bg-zinc-950/95 border border-white/10 text-white rounded-xl shadow-2xl backdrop-blur-md">
+                    <MarkerPopup className="bg-[var(--color-rai-obsidian)] border border-[var(--color-glass-border)] text-[var(--color-rai-text)] rounded-xl shadow-2xl backdrop-blur-md">
                       <div className="w-56 p-2 space-y-2 select-none">
-                        <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                        <div className="flex items-center justify-between border-b border-[var(--color-glass-border)] pb-2">
                           <div>
-                            <p className="font-bold text-sm text-white">{r.city}</p>
-                            <p className="text-[10px] text-white/50 uppercase tracking-wide">Tier {r.tier} • {r.state}</p>
+                            <p className="font-bold text-sm">{r.city}</p>
+                            <p className="text-[10px] text-[var(--color-glass-text-dim)] uppercase tracking-wide">Tier {r.tier} • {r.state}</p>
                           </div>
                           <div className="w-3 h-3 rounded-full" style={{ backgroundColor: tc }} />
                         </div>
                         <div className="space-y-1 pt-1">
                           <p className="text-xs flex justify-between">
-                            <span className="text-white/60">Profit / wk:</span> 
-                            <span className="text-emerald-400 font-bold">₹{r.adjusted_profit_inr.toLocaleString()}</span>
+                            <span className="text-[var(--color-glass-text-dim)]">Profit / wk:</span> 
+                            <span className="text-[var(--color-rai-acid)] font-bold">₹{r.adjusted_profit_inr.toLocaleString()}</span>
                           </p>
                           <p className="text-xs flex justify-between">
-                            <span className="text-white/60">Demand Impact:</span> 
-                            <span className="font-semibold" style={{ color: r.adjusted_demand_change < 0 ? "#fc7c78" : "#4edea3" }}>{(r.adjusted_demand_change*100).toFixed(1)}%</span>
+                            <span className="text-[var(--color-glass-text-dim)]">Demand Impact:</span> 
+                            <span className="font-semibold" style={{ color: r.adjusted_demand_change < 0 ? "var(--color-rai-crimson)" : "var(--color-rai-acid)" }}>{(r.adjusted_demand_change*100).toFixed(1)}%</span>
                           </p>
                           <p className="text-xs flex justify-between">
-                            <span className="text-white/60">Margin Hit:</span> 
-                            <span className="font-semibold" style={{ color: r.adjusted_margin_change < 0 ? "#fc7c78" : "#4edea3" }}>{(r.adjusted_margin_change*100).toFixed(1)}%</span>
+                            <span className="text-[var(--color-glass-text-dim)]">Margin Hit:</span> 
+                            <span className="font-semibold" style={{ color: r.adjusted_margin_change < 0 ? "var(--color-rai-crimson)" : "var(--color-rai-acid)" }}>{(r.adjusted_margin_change*100).toFixed(1)}%</span>
                           </p>
                         </div>
                       </div>
@@ -259,7 +267,7 @@ export function CityComparisonsTab() {
                 );
               })}
             </Map>
-            <div className="absolute bottom-6 left-6 z-10 pointer-events-none flex items-center gap-4 text-[10px] text-white/60 bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10">
+            <div className="absolute bottom-6 left-6 z-10 pointer-events-none flex items-center gap-4 text-[10px] text-[var(--color-glass-text-dim)] bg-[var(--color-rai-obsidian)]/80 backdrop-blur-md px-3 py-1.5 rounded-full border border-[var(--color-glass-border)]">
               {Object.entries(TIER_COLORS).map(([tier, color]) => (
                 <span key={tier} className="flex items-center gap-1.5 font-medium">
                   <span className="w-2.5 h-2.5 rounded-full" style={{ background: color }} />
@@ -271,14 +279,14 @@ export function CityComparisonsTab() {
 
           {/* Best/Worst insight banner */}
           {best && worst && best.city !== worst.city && (
-            <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-2xl p-4 text-sm">
-              <span className="text-emerald-400 font-semibold">💡 Best outcome:</span>{" "}
-              <span className="text-white">{best.city} (₹{best.adjusted_profit_inr.toLocaleString()})</span>
+            <div className="bg-[var(--color-glass-highlight)] border border-[var(--color-rai-acid)]/20 rounded-2xl p-4 text-sm">
+              <span className="text-[var(--color-rai-acid)] font-semibold">💡 Best outcome:</span>{" "}
+              <span className="text-[var(--color-rai-text)]">{best.city} (₹{best.adjusted_profit_inr.toLocaleString()})</span>
               {" · "}
-              <span className="text-orange-400 font-semibold">Most affected:</span>{" "}
-              <span className="text-white">{worst.city} (₹{worst.adjusted_profit_inr.toLocaleString()})</span>
+              <span className="text-[var(--color-rai-orange)] font-semibold">Most affected:</span>{" "}
+              <span className="text-[var(--color-rai-text)]">{worst.city} (₹{worst.adjusted_profit_inr.toLocaleString()})</span>
               {" — "}
-              <span className="text-white/60">
+              <span className="text-[var(--color-glass-text-dim)]">
                 {Math.abs(((best.adjusted_profit_inr - worst.adjusted_profit_inr) / worst.adjusted_profit_inr) * 100).toFixed(0)}% gap between metro and rural MSMEs
               </span>
             </div>
@@ -286,7 +294,7 @@ export function CityComparisonsTab() {
 
           {/* City detail cards — mirrors Streamlit exactly */}
           <div>
-            <p className="text-white/60 text-xs uppercase tracking-widest mb-4">📊 City Breakdown</p>
+            <p className="text-[var(--color-glass-text-dim)] text-xs uppercase tracking-widest mb-4">📊 City Breakdown</p>
             <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-4">
               {results.map(r => {
                 const tc = TIER_COLORS[r.tier] || "#6b7280";
@@ -296,15 +304,14 @@ export function CityComparisonsTab() {
                       <div>
                         <div className="flex items-center gap-2">
                           <MapPin className="w-4 h-4" style={{ color: tc }} />
-                          <span className="font-semibold" style={{ color:"#e4e1ec" }}>{r.city}</span>
+                          <span className="font-semibold text-[var(--color-rai-text)]">{r.city}</span>
                           {r.ai_generated && (
-                            <span className="text-[9px] font-bold px-1.5 py-0.5 rounded"
-                              style={{ background:"rgba(78,222,163,0.12)", color:"#4edea3", border:"1px solid rgba(78,222,163,0.2)" }}>
+                            <span className="text-[9px] font-bold px-1.5 py-0.5 rounded text-[var(--color-rai-acid)] bg-[var(--color-glass-highlight)] border border-[var(--color-rai-acid)]/20">
                               ✦ AI
                             </span>
                           )}
                         </div>
-                        <p className="text-xs mt-0.5" style={{ color:"rgba(187,202,191,0.35)" }}>{r.state}</p>
+                        <p className="text-xs mt-0.5 text-[var(--color-glass-text-dim)]">{r.state}</p>
                       </div>
                       <span className="text-xs font-bold px-2 py-1 rounded-lg"
                         style={{ color: tc, background: `${tc}20` }}>
@@ -314,36 +321,35 @@ export function CityComparisonsTab() {
 
                     <div className="grid grid-cols-2 gap-2 text-sm">
                       {[
-                        { label:"Price Level",  value:`${(r.price_multiplier*100).toFixed(0)}%`,          color:"#e4e1ec"     },
-                        { label:"Margin Hit",   value:`${(r.adjusted_margin_change*100).toFixed(1)}%`,    color:"#fc7c78"     },
-                        { label:"Demand",       value:`${(r.adjusted_demand_change*100).toFixed(1)}%`,    color:"#ffb95f"     },
-                        { label:"Profit/wk",   value:`₹${r.adjusted_profit_inr.toLocaleString(undefined,{maximumFractionDigits:0})}`, color:"#4edea3" },
+                        { label:"Price Level",  value:`${(r.price_multiplier*100).toFixed(0)}%`,          color:"var(--color-rai-text)"     },
+                        { label:"Margin Hit",   value:`${(r.adjusted_margin_change*100).toFixed(1)}%`,    color:"var(--color-rai-crimson)"     },
+                        { label:"Demand",       value:`${(r.adjusted_demand_change*100).toFixed(1)}%`,    color:"var(--color-rai-orange)"     },
+                        { label:"Profit/wk",   value:`₹${r.adjusted_profit_inr.toLocaleString(undefined,{maximumFractionDigits:0})}`, color:"var(--color-rai-acid)" },
                       ].map(m => (
-                        <div key={m.label} className="rounded-xl p-2.5 text-center" style={{ background:"rgba(255,255,255,0.04)" }}>
-                          <p className="text-[10px] mb-0.5" style={{ color:"rgba(187,202,191,0.35)" }}>{m.label}</p>
+                        <div key={m.label} className="rounded-xl p-2.5 text-center bg-[var(--color-glass-bg)] border border-[var(--color-glass-border)]">
+                          <p className="text-[10px] mb-0.5 text-[var(--color-glass-text-dim)]">{m.label}</p>
                           <p className="font-bold text-sm" style={{ color:m.color }}>{m.value}</p>
                         </div>
                       ))}
                     </div>
 
                     <div className="pt-1">
-                      <p className="text-[10px] mb-1" style={{ color:"rgba(187,202,191,0.3)" }}>Shock absorption</p>
-                      <div className="w-full h-1.5 rounded-full" style={{ background:"rgba(255,255,255,0.08)" }}>
+                      <p className="text-[10px] mb-1 text-[var(--color-glass-text-dim)]">Shock absorption</p>
+                      <div className="w-full h-1.5 rounded-full bg-[var(--color-glass-bg)] border border-[var(--color-glass-border)]">
                         <div className="h-full rounded-full" style={{
                           width:`${Math.min(100, (r.shock_absorption / 1.5) * 100)}%`,
-                          background: r.shock_absorption < 1 ? "#4edea3" : "#fc7c78"
+                          background: r.shock_absorption < 1 ? "var(--color-rai-acid)" : "var(--color-rai-crimson)"
                         }} />
                       </div>
-                      <p className="text-[10px] mt-0.5" style={{ color:"rgba(187,202,191,0.25)" }}>
+                      <p className="text-[10px] mt-0.5 text-[var(--color-glass-text-dim)]/70">
                         {r.shock_absorption < 1 ? "Fast recovery (metro)" : "Slow recovery (inland)"}
                       </p>
                     </div>
 
                     {/* AI rationale */}
                     {r.ai_rationale && (
-                      <div className="pt-1 rounded-xl p-3 text-xs leading-relaxed"
-                           style={{ background:"rgba(78,222,163,0.05)", border:"1px solid rgba(78,222,163,0.12)", color:"rgba(187,202,191,0.6)" }}>
-                        <span style={{ color:"#4edea3",fontWeight:600 }}>✦ Gemini: </span>
+                      <div className="pt-1 rounded-xl p-3 text-xs leading-relaxed text-[var(--color-rai-text)] bg-[var(--color-glass-highlight)] border border-[var(--color-rai-acid)]/20">
+                        <span className="text-[var(--color-rai-acid)] font-semibold">✦ Gemini: </span>
                         {r.ai_rationale}
                       </div>
                     )}

@@ -80,9 +80,9 @@ export function OnboardingModal({ onComplete }: OnboardingModalProps) {
 
   return (
     /* Full-screen backdrop */
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[var(--color-rai-obsidian)]/70 backdrop-blur-sm p-4">
       <div
-        className="w-full max-w-md rounded-3xl border border-white/[0.08] overflow-hidden"
+        className="w-full max-w-md rounded-3xl border border-[var(--color-rai-text)]/[0.08] overflow-hidden"
         style={{ background: "#0d0d18", boxShadow: "0 32px 80px rgba(0,0,0,0.8)" }}
       >
         {/* Top gradient bar */}
@@ -91,8 +91,8 @@ export function OnboardingModal({ onComplete }: OnboardingModalProps) {
         <div className="p-7 space-y-6">
           {/* Heading */}
           <div className="space-y-1">
-            <h2 className="text-xl font-bold text-white">👋 Welcome to ResilientAI</h2>
-            <p className="text-white/40 text-sm">
+            <h2 className="text-xl font-bold text-[var(--color-rai-text)]">👋 Welcome to ResilientAI</h2>
+            <p className="text-[var(--color-rai-text)]/40 text-sm">
               Tell us a little about yourself so we can personalise alerts and insights for your city and business.
             </p>
           </div>
@@ -101,7 +101,7 @@ export function OnboardingModal({ onComplete }: OnboardingModalProps) {
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Name */}
             <div className="space-y-1.5">
-              <label className="flex items-center gap-2 text-xs text-white/50">
+              <label className="flex items-center gap-2 text-xs text-[var(--color-rai-text)]/50">
                 <User className="w-3.5 h-3.5" /> Full Name <span className="text-red-400">*</span>
               </label>
               <input
@@ -109,28 +109,28 @@ export function OnboardingModal({ onComplete }: OnboardingModalProps) {
                 value={name}
                 onChange={e => setName(e.target.value)}
                 placeholder="Ramesh Sharma"
-                className="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/20 outline-none focus:border-cyan-500/50 focus:bg-white/[0.07] transition-all text-sm"
+                className="w-full bg-[var(--color-rai-text)]/[0.05] border border-[var(--color-rai-text)]/10 rounded-xl px-4 py-3 text-[var(--color-rai-text)] placeholder-white/20 outline-none focus:border-cyan-500/50 focus:bg-[var(--color-rai-text)]/[0.07] transition-all text-sm"
               />
             </div>
 
             {/* Phone */}
             <div className="space-y-1.5">
-              <label className="flex items-center gap-2 text-xs text-white/50">
+              <label className="flex items-center gap-2 text-xs text-[var(--color-rai-text)]/50">
                 <Phone className="w-3.5 h-3.5" /> WhatsApp Number
-                <span className="text-white/25 text-[10px]">(for alerts — optional)</span>
+                <span className="text-[var(--color-rai-text)]/25 text-[10px]">(for alerts — optional)</span>
               </label>
               <input
                 type="tel"
                 value={phone}
                 onChange={e => setPhone(e.target.value)}
                 placeholder="+919876543210"
-                className="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/20 outline-none focus:border-cyan-500/50 focus:bg-white/[0.07] transition-all text-sm"
+                className="w-full bg-[var(--color-rai-text)]/[0.05] border border-[var(--color-rai-text)]/10 rounded-xl px-4 py-3 text-[var(--color-rai-text)] placeholder-white/20 outline-none focus:border-cyan-500/50 focus:bg-[var(--color-rai-text)]/[0.07] transition-all text-sm"
               />
             </div>
 
             {/* City — Google Places autocomplete */}
             <div className="space-y-1.5">
-              <label className="flex items-center gap-2 text-xs text-white/50">
+              <label className="flex items-center gap-2 text-xs text-[var(--color-rai-text)]/50">
                 <MapPin className="w-3.5 h-3.5" /> Your City <span className="text-red-400">*</span>
               </label>
               <CitySearch
@@ -169,7 +169,7 @@ export function OnboardingModal({ onComplete }: OnboardingModalProps) {
             {/* Submit */}
             <button
               type="submit" disabled={loading}
-              className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-emerald-500 text-black font-bold text-sm hover:opacity-90 active:scale-[0.99] disabled:opacity-50 transition-all"
+              className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-emerald-500 text-[var(--color-rai-obsidian)] font-bold text-sm hover:opacity-90 active:scale-[0.99] disabled:opacity-50 transition-all"
             >
               {loading ? (
                 <><Loader2 className="w-4 h-4 animate-spin" />Setting up…</>

@@ -72,8 +72,7 @@ export default function AuthPage() {
 
   return (
     <div
-      className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden"
-      style={{ background: "#08080f", fontFamily: "'Inter', sans-serif" }}
+      className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden bg-[var(--color-rai-obsidian)] text-[var(--color-rai-text)] font-sans"
     >
       {/* Hero ambient glow */}
       <div
@@ -86,55 +85,44 @@ export default function AuthPage() {
       />
 
       {/* System label — top left */}
-      <div className="absolute top-5 left-7 text-[10px] tracking-[0.12em] uppercase"
-           style={{ color: "rgba(255,255,255,0.15)" }}>
+      <div className="absolute top-5 left-7 text-[10px] tracking-[0.12em] uppercase text-[var(--color-glass-text-dim)]">
         ResilientAI // System Auth v4.0
       </div>
 
       {/* Logo */}
       <div className="flex items-center gap-2.5 mb-8 z-10">
         <div
-          className="w-9 h-9 flex items-center justify-center rounded-xl"
-          style={{ background: "rgba(78,222,163,0.12)", border: "1px solid rgba(78,222,163,0.3)" }}
+          className="w-9 h-9 flex items-center justify-center rounded-xl bg-[var(--color-glass-highlight)] border border-[var(--color-rai-acid)]/30"
         >
           {/* Target/radar icon */}
-          <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="#4edea3" strokeWidth="2">
+          <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" style={{color: "var(--color-rai-acid)"}} strokeWidth="2">
             <circle cx="12" cy="12" r="10"/>
             <circle cx="12" cy="12" r="6"/>
             <circle cx="12" cy="12" r="2"/>
           </svg>
         </div>
-        <span className="font-bold text-white text-lg tracking-tight">ResilientAI</span>
+        <span className="font-bold text-[var(--color-rai-text)] text-lg tracking-tight">ResilientAI</span>
       </div>
 
       {/* Heading */}
       <div className="text-center mb-8 z-10 px-4">
-        <h1 className="text-2xl font-bold text-white mb-2">{heading.title}</h1>
-        <p className="text-sm" style={{ color: "rgba(187,202,191,0.5)" }}>{heading.sub}</p>
+        <h1 className="text-2xl font-bold text-[var(--color-rai-text)] mb-2">{heading.title}</h1>
+        <p className="text-sm text-[var(--color-glass-text-dim)]">{heading.sub}</p>
       </div>
 
       {/* Card */}
       <div
-        className="relative z-10 w-full mx-4 p-8 space-y-5"
-        style={{
-          maxWidth: 380,
-          background:  "rgba(27,27,35,0.85)",
-          border:      "1px solid rgba(255,255,255,0.07)",
-          borderRadius: "1.25rem",
-          backdropFilter: "blur(20px)",
-          boxShadow: "0 24px 60px rgba(0,0,0,0.6)",
-        }}
+        className="relative z-10 w-full mx-4 p-8 space-y-5 bg-[var(--color-glass-bg)] border border-[var(--color-glass-border)] shadow-2xl rounded-[1.25rem] backdrop-blur-[20px]"
+        style={{ maxWidth: 380 }}
       >
         {/* Error / Success */}
         {error && (
-          <div className="text-sm px-4 py-3 rounded-xl"
-               style={{ background: "rgba(239,68,68,0.1)", border: "1px solid rgba(239,68,68,0.2)", color: "#ff6b6b" }}>
+          <div className="text-sm px-4 py-3 rounded-xl bg-[var(--color-rai-crimson)]/10 border border-[var(--color-rai-crimson)]/20 text-[var(--color-rai-crimson)]">
             ⚠️ {error}
           </div>
         )}
         {success && (
-          <div className="flex items-center gap-2 text-sm px-4 py-3 rounded-xl"
-               style={{ background: "rgba(78,222,163,0.08)", border: "1px solid rgba(78,222,163,0.2)", color: "#4edea3" }}>
+          <div className="flex items-center gap-2 text-sm px-4 py-3 rounded-xl bg-[var(--color-glass-highlight)] border border-[var(--color-rai-acid)]/20 text-[var(--color-rai-acid)]">
             <CheckCircle2 className="w-4 h-4 flex-shrink-0" /> {success}
           </div>
         )}
@@ -145,10 +133,7 @@ export default function AuthPage() {
             <button
               onClick={handleGoogle}
               disabled={googleLoad || loading}
-              className="w-full flex items-center justify-center gap-3 py-3 rounded-xl text-sm font-medium transition-all disabled:opacity-50"
-              style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "#e4e1ec" }}
-              onMouseEnter={e => ((e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.09)")}
-              onMouseLeave={e => ((e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.05)")}
+              className="w-full flex items-center justify-center gap-3 py-3 rounded-xl text-sm font-medium transition-all disabled:opacity-50 bg-[var(--color-glass-bg)] border border-[var(--color-glass-border)] text-[var(--color-rai-text)] hover:bg-[var(--color-glass-highlight)] hover:border-[var(--color-rai-acid)]/30"
             >
               {googleLoad ? <Loader2 className="w-4 h-4 animate-spin" /> : (
                 <svg className="w-4 h-4" viewBox="0 0 24 24">
@@ -161,9 +146,9 @@ export default function AuthPage() {
               Continue with Google
             </button>
             <div className="flex items-center gap-3">
-              <div className="flex-1 h-px" style={{ background: "rgba(255,255,255,0.06)" }} />
-              <span className="text-[11px]" style={{ color: "rgba(187,202,191,0.3)" }}>or</span>
-              <div className="flex-1 h-px" style={{ background: "rgba(255,255,255,0.06)" }} />
+              <div className="flex-1 h-px bg-[var(--color-glass-border)]" />
+              <span className="text-[11px] text-[var(--color-glass-text-dim)]/50">or</span>
+              <div className="flex-1 h-px bg-[var(--color-glass-border)]" />
             </div>
           </>
         )}
@@ -172,12 +157,11 @@ export default function AuthPage() {
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Email */}
           <div className="space-y-1.5">
-            <label className="text-[10px] font-semibold tracking-[0.1em] uppercase"
-                   style={{ color: "rgba(187,202,191,0.4)" }}>
+            <label className="text-[10px] font-semibold tracking-[0.1em] uppercase text-[var(--color-glass-text-dim)]">
               Command Identity
             </label>
             <div className="relative">
-              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: "rgba(187,202,191,0.3)" }} />
+              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-glass-text-dim)]" />
               <input
                 type="email" required
                 value={email}
@@ -192,22 +176,18 @@ export default function AuthPage() {
           {mode !== "forgot" && (
             <div className="space-y-1.5">
               <div className="flex items-center justify-between">
-                <label className="text-[10px] font-semibold tracking-[0.1em] uppercase"
-                       style={{ color: "rgba(187,202,191,0.4)" }}>
+                <label className="text-[10px] font-semibold tracking-[0.1em] uppercase text-[var(--color-glass-text-dim)]">
                   Access Cipher
                 </label>
                 {mode === "signin" && (
                   <button type="button" onClick={() => setMode("forgot")}
-                          className="text-[10px] font-semibold transition-colors"
-                          style={{ color: "#4edea3" }}
-                          onMouseEnter={e => ((e.currentTarget as HTMLButtonElement).style.color = "#10b981")}
-                          onMouseLeave={e => ((e.currentTarget as HTMLButtonElement).style.color = "#4edea3")}>
+                          className="text-[10px] font-semibold transition-colors text-[var(--color-rai-acid)] hover:text-[var(--color-rai-acid)]/80">
                     FORGOT?
                   </button>
                 )}
               </div>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: "rgba(187,202,191,0.3)" }} />
+                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-glass-text-dim)]" />
                 <input
                   type={showPass ? "text" : "password"} required minLength={6}
                   value={password}
@@ -216,8 +196,7 @@ export default function AuthPage() {
                   className="input-obsidian pl-9 pr-10"
                 />
                 <button type="button" onClick={() => setShowPass(s => !s)}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 transition-colors"
-                        style={{ color: "rgba(187,202,191,0.3)" }}>
+                        className="absolute right-3 top-1/2 -translate-y-1/2 transition-colors text-[var(--color-glass-text-dim)] hover:text-[var(--color-rai-text)]">
                   {showPass ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
@@ -228,8 +207,8 @@ export default function AuthPage() {
           <button
             type="submit"
             disabled={loading || googleLoad}
-            className="btn-primary w-full flex items-center justify-center gap-2 py-3.5 mt-2 text-sm"
-            style={{ background: "linear-gradient(135deg, #10b981, #4edea3)", color: "#003824", borderRadius: "0.75rem" }}
+            className="w-full flex items-center justify-center gap-2 py-3.5 mt-2 text-sm font-semibold rounded-xl transition-transform hover:-translate-y-0.5 active:scale-95 text-[var(--color-rai-obsidian)]"
+            style={{ background: "linear-gradient(135deg, var(--color-rai-acid), var(--color-rai-acid))"}}
           >
             {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
             {mode === "signin"  ? "Access Intelligence →" :
@@ -239,25 +218,25 @@ export default function AuthPage() {
         </form>
 
         {/* Mode switcher */}
-        <p className="text-center text-sm" style={{ color: "rgba(187,202,191,0.35)" }}>
+        <p className="text-center text-sm text-[var(--color-glass-text-dim)]">
           {mode === "signin" ? (
             <>Don't have an account?{" "}
               <button onClick={() => setMode("signup")}
-                      className="font-semibold transition-colors" style={{ color: "#4edea3" }}>
+                      className="font-semibold transition-colors text-[var(--color-rai-acid)] hover:text-[var(--color-rai-acid)]/80">
                 Sign up
               </button>
             </>
           ) : mode === "signup" ? (
             <>Already have an account?{" "}
               <button onClick={() => setMode("signin")}
-                      className="font-semibold transition-colors" style={{ color: "#4edea3" }}>
+                      className="font-semibold transition-colors text-[var(--color-rai-acid)] hover:text-[var(--color-rai-acid)]/80">
                 Sign in
               </button>
             </>
           ) : (
             <>Remember it?{" "}
               <button onClick={() => setMode("signin")}
-                      className="font-semibold transition-colors" style={{ color: "#4edea3" }}>
+                      className="font-semibold transition-colors text-[var(--color-rai-acid)] hover:text-[var(--color-rai-acid)]/80">
                 Back to sign in
               </button>
             </>
@@ -267,19 +246,17 @@ export default function AuthPage() {
 
       {/* Quantum secured badge */}
       <div className="flex items-center gap-6 mt-10 z-10">
-        <div className="h-px w-16" style={{ background: "rgba(255,255,255,0.08)" }} />
+        <div className="h-px w-16 bg-[var(--color-glass-border)]" />
         <div
-          className="flex items-center gap-2 px-4 py-1.5 rounded-full text-[10px] font-semibold tracking-[0.1em] uppercase"
-          style={{ border: "1px solid rgba(78,222,163,0.2)", color: "#4edea3", background: "rgba(78,222,163,0.04)" }}
+          className="flex items-center gap-2 px-4 py-1.5 rounded-full text-[10px] font-semibold tracking-[0.1em] uppercase text-[var(--color-rai-acid)] bg-[var(--color-glass-highlight)] border border-[var(--color-rai-acid)]/20"
         >
           <ShieldCheck className="w-3.5 h-3.5" /> Quantum Secured
         </div>
-        <div className="h-px w-16" style={{ background: "rgba(255,255,255,0.08)" }} />
+        <div className="h-px w-16 bg-[var(--color-glass-border)]" />
       </div>
 
       {/* Latency indicator — bottom right */}
-      <div className="absolute bottom-5 right-7 text-[10px] tracking-[0.1em]"
-           style={{ color: "rgba(255,255,255,0.12)" }}>
+      <div className="absolute bottom-5 right-7 text-[10px] tracking-[0.1em] text-[var(--color-glass-text-dim)]/50">
         LATENCY: 12ms // STABLE
       </div>
     </div>

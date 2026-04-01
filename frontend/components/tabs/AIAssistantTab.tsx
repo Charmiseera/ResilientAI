@@ -128,8 +128,8 @@ export function AIAssistantTab() {
             <Bot className="w-5 h-5 text-emerald-400" />
           </div>
           <div>
-            <h1 className="text-xl font-bold text-white">AURA Intelligence</h1>
-            <p className="text-white/30 text-xs flex items-center gap-1">
+            <h1 className="text-xl font-bold text-[var(--color-rai-text)]">AURA Intelligence</h1>
+            <p className="text-[var(--color-rai-text)]/30 text-xs flex items-center gap-1">
               <Zap className="w-3 h-3 text-emerald-400" />
               Powered by Kimi-K2.5-fast · Nebius AI
             </p>
@@ -141,7 +141,7 @@ export function AIAssistantTab() {
           className={`flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-medium border transition-all ${
             voiceEnabled
               ? "bg-emerald-500/10 border-emerald-500/20 text-emerald-400"
-              : "bg-white/5 border-white/10 text-white/40 hover:text-white"
+              : "bg-[var(--color-rai-text)]/5 border-[var(--color-rai-text)]/10 text-[var(--color-rai-text)]/40 hover:text-[var(--color-rai-text)]"
           }`}
         >
           {voiceEnabled ? <Volume2 className="w-3.5 h-3.5" /> : <VolumeX className="w-3.5 h-3.5" />}
@@ -156,7 +156,7 @@ export function AIAssistantTab() {
             key={p}
             onClick={() => sendMessage(p)}
             disabled={loading}
-            className="text-xs px-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/10 text-white/50 hover:text-white hover:border-white/20 transition-all disabled:opacity-40"
+            className="text-xs px-3 py-1.5 rounded-lg bg-[var(--color-rai-text)]/[0.04] border border-[var(--color-rai-text)]/10 text-[var(--color-rai-text)]/50 hover:text-[var(--color-rai-text)] hover:border-[var(--color-rai-text)]/20 transition-all disabled:opacity-40"
           >
             {p}
           </button>
@@ -171,7 +171,7 @@ export function AIAssistantTab() {
             <div className={`w-8 h-8 rounded-xl flex-shrink-0 flex items-center justify-center ${
               msg.role === "assistant"
                 ? "bg-emerald-500/20 text-emerald-400"
-                : "bg-white/10 text-white"
+                : "bg-[var(--color-rai-text)]/10 text-[var(--color-rai-text)]"
             }`}>
               {msg.role === "assistant" ? <Bot className="w-4 h-4" /> : <User className="w-4 h-4" />}
             </div>
@@ -180,8 +180,8 @@ export function AIAssistantTab() {
             <div
               className={`max-w-[82%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
                 msg.role === "user"
-                  ? "bg-emerald-500/10 border border-emerald-500/20 text-white rounded-tr-sm"
-                  : "bg-white/[0.04] border border-white/5 text-white/85 rounded-tl-sm"
+                  ? "bg-emerald-500/10 border border-emerald-500/20 text-[var(--color-rai-text)] rounded-tr-sm"
+                  : "bg-[var(--color-rai-text)]/[0.04] border border-[var(--color-rai-text)]/5 text-[var(--color-rai-text)]/85 rounded-tl-sm"
               }`}
             >
               {msg.content}
@@ -195,9 +195,9 @@ export function AIAssistantTab() {
             <div className="w-8 h-8 rounded-xl bg-emerald-500/20 flex items-center justify-center">
               <Bot className="w-4 h-4 text-emerald-400 animate-pulse" />
             </div>
-            <div className="bg-white/[0.04] border border-white/5 rounded-2xl rounded-tl-sm px-4 py-3 flex items-center gap-2">
+            <div className="bg-[var(--color-rai-text)]/[0.04] border border-[var(--color-rai-text)]/5 rounded-2xl rounded-tl-sm px-4 py-3 flex items-center gap-2">
               <Loader2 className="w-3.5 h-3.5 text-emerald-400 animate-spin" />
-              <span className="text-white/40 text-xs">AURA is thinking…</span>
+              <span className="text-[var(--color-rai-text)]/40 text-xs">AURA is thinking…</span>
             </div>
           </div>
         )}
@@ -212,13 +212,13 @@ export function AIAssistantTab() {
       </div>
 
       {/* Input bar */}
-      <div className="flex-shrink-0 flex gap-2 bg-white/[0.03] border border-white/5 rounded-2xl p-2">
+      <div className="flex-shrink-0 flex gap-2 bg-[var(--color-rai-text)]/[0.03] border border-[var(--color-rai-text)]/5 rounded-2xl p-2">
         <button
           onClick={toggleListen}
           className={`p-2.5 rounded-xl transition-all ${
             isListening
               ? "bg-red-500/20 text-red-400 animate-pulse"
-              : "text-white/30 hover:text-white hover:bg-white/5"
+              : "text-[var(--color-rai-text)]/30 hover:text-[var(--color-rai-text)] hover:bg-[var(--color-rai-text)]/5"
           }`}
           title="Voice input"
         >
@@ -231,14 +231,14 @@ export function AIAssistantTab() {
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && !e.shiftKey && sendMessage()}
           placeholder={isListening ? "Listening…" : "Ask about risks, pricing, cities, strategies…"}
-          className="flex-1 bg-transparent outline-none text-white placeholder-white/20 text-sm"
+          className="flex-1 bg-transparent outline-none text-[var(--color-rai-text)] placeholder-white/20 text-sm"
           disabled={loading}
         />
 
         <button
           onClick={() => sendMessage()}
           disabled={!input.trim() || loading}
-          className="p-2.5 rounded-xl bg-emerald-500 text-black hover:bg-emerald-400 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+          className="p-2.5 rounded-xl bg-emerald-500 text-[var(--color-rai-obsidian)] hover:bg-emerald-400 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
         >
           <Send className="w-5 h-5" />
         </button>

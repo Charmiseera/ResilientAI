@@ -151,13 +151,13 @@ export function SimulatorTab() {
     <div className="card-glass p-4">
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
-          <Icon className="w-4 h-4" style={{ color:"rgba(187,202,191,0.4)" }}/>
-          <span className="text-xs" style={{ color:"rgba(187,202,191,0.6)" }}>{label}</span>
+          <Icon className="w-4 h-4" style={{ color: "var(--color-glass-text-dim)" }}/>
+          <span className="text-xs" style={{ color: "var(--color-glass-text-dim)" }}>{label}</span>
         </div>
-        <span className="font-bold text-sm" style={{ color:"#e4e1ec" }}>{fmt(value)}</span>
+        <span className="font-bold text-sm" style={{ color: "var(--color-rai-text)" }}>{fmt(value)}</span>
       </div>
       <div className="relative h-2">
-        <div className="absolute inset-0 rounded-full" style={{ background:"rgba(255,255,255,0.08)" }}/>
+        <div className="absolute inset-0 rounded-full" style={{ background: "var(--color-glass-border)" }}/>
         <div className={`absolute left-0 top-0 h-full rounded-full bg-gradient-to-r ${grad}`}
              style={{ width:`${((value-min)/(max-min))*100}%`}}/>
         <input type="range" min={min} max={max} step={step} value={value}
@@ -173,7 +173,7 @@ export function SimulatorTab() {
       <div>
         <p className="section-label mb-1">Scenario Modeling</p>
         <h1 className="section-headline">Profit Simulator</h1>
-        <p className="text-sm mt-1" style={{ color:"rgba(187,202,191,0.5)" }}>
+        <p className="text-sm mt-1" style={{ color: "var(--color-glass-text-dim)" }}>
           Test strategies before committing — see exact ₹ impact in real-time as you move sliders.
         </p>
       </div>
@@ -182,7 +182,7 @@ export function SimulatorTab() {
       <div className="grid lg:grid-cols-2 gap-6">
         {/* Left: Business Parameters */}
         <div className="space-y-3">
-          <p className="text-xs uppercase tracking-widest text-white/40 font-semibold">
+          <p className="text-xs uppercase tracking-widest text-[var(--color-rai-text)]/40 font-semibold">
             📊 Business Parameters
           </p>
           {BUSINESS_SLIDERS.map(s => (
@@ -203,7 +203,7 @@ export function SimulatorTab() {
 
         {/* Right: Strategy Parameters */}
         <div className="space-y-3">
-          <p className="text-xs uppercase tracking-widest font-semibold" style={{ color:"rgba(187,202,191,0.4)" }}>
+          <p className="text-xs uppercase tracking-widest font-semibold" style={{ color: "var(--color-glass-text-dim)" }}>
             Strategy Parameters
           </p>
           {STRATEGY_SLIDERS.map(s => (
@@ -233,15 +233,15 @@ export function SimulatorTab() {
       {result && (
         <div className="space-y-6">
           <div className="flex items-center gap-3">
-            <div className="flex-1 h-px" style={{ background:"rgba(255,255,255,0.05)" }}/>
-            <span className="text-xs uppercase tracking-widest" style={{ color:"rgba(187,202,191,0.25)" }}>Results</span>
-            <div className="flex-1 h-px" style={{ background:"rgba(255,255,255,0.05)" }}/>
+            <div className="flex-1 h-px" style={{ background: "var(--color-glass-border)" }}/>
+            <span className="text-xs uppercase tracking-widest" style={{ color: "var(--color-glass-text-dim)" }}>Results</span>
+            <div className="flex-1 h-px" style={{ background: "var(--color-glass-border)" }}/>
           </div>
 
           {/* KPI metrics */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
             {[
-              { label:"Base Profit",      value:`₹${Math.round(result.baseProfit).toLocaleString()}`,    color:"#e4e1ec",   delta:null },
+              { label:"Base Profit",      value:`₹${Math.round(result.baseProfit).toLocaleString()}`,    color: "var(--color-rai-text)",   delta:null },
               { label:"Shock Hit",        value:`-₹${Math.round(result.costHit).toLocaleString()}`,      color:"#fc7c78",   delta:null },
               { label:"Projected Profit", value:`₹${Math.round(result.projected).toLocaleString()}`,     color:"#4edea3",  delta:`${result.projected>=result.baseProfit?"+":""}${Math.round(result.projected-result.baseProfit).toLocaleString()} vs baseline` },
               { label:"New Margin",       value:`${(result.projected/revenue*100).toFixed(1)}%`,          color:"#ffb95f",  delta:null },
@@ -249,7 +249,7 @@ export function SimulatorTab() {
               <div key={m.label} className="card-glass p-4 text-center">
                 <p className="section-label mb-1">{m.label}</p>
                 <p className="font-bold text-lg" style={{ color:m.color }}>{m.value}</p>
-                {m.delta && <p className="text-[10px] mt-1" style={{ color:"rgba(187,202,191,0.3)" }}>{m.delta}</p>}
+                {m.delta && <p className="text-[10px] mt-1" style={{ color: "var(--color-glass-text-dim)" }}>{m.delta}</p>}
               </div>
             ))}
           </div>
@@ -271,7 +271,7 @@ export function SimulatorTab() {
                   axisLine={false} tickLine={false}
                 />
                 <Tooltip
-                  contentStyle={{ background: "#111", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8 }}
+                  contentStyle={{ background: "#111", border: "1px solid var(--color-glass-border)", borderRadius: 8 }}
                   formatter={(v: any) => [`₹${Number(v).toLocaleString()}`, "Profit"]}
                 />
                 <Bar dataKey="profit" radius={[4, 4, 0, 0]}>

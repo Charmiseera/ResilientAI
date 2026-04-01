@@ -138,7 +138,7 @@ export function ProfileTab() {
       <div>
         <p className="section-label mb-1">Configuration</p>
         <h1 className="section-headline">🏪 My Business Profile</h1>
-        <p className="text-sm mt-1" style={{ color:"rgba(187,202,191,0.5)" }}>Set up once — get personalized alerts forever.</p>
+        <p className="text-sm mt-1" style={{ color: "var(--color-glass-text-dim)" }}>Set up once — get personalized alerts forever.</p>
       </div>
 
       {/* ── Two-column layout ── */}
@@ -149,14 +149,14 @@ export function ProfileTab() {
 
           {/* ── Step 1 + 2 merged in a horizontal grid ── */}
           <div className="card-glass p-6 space-y-5">
-            <p className="text-[11px] uppercase tracking-widest font-semibold" style={{ color:"rgba(187,202,191,0.35)" }}>
+            <p className="text-[11px] uppercase tracking-widest font-semibold" style={{ color: "var(--color-glass-text-dim)" }}>
               About You
             </p>
 
             {/* Name + Phone side by side */}
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="space-y-1.5">
-                <label className="flex items-center gap-2 text-xs" style={{ color:"rgba(187,202,191,0.5)" }}>
+                <label className="flex items-center gap-2 text-xs" style={{ color: "var(--color-glass-text-dim)" }}>
                   <User className="w-3.5 h-3.5" /> Full Name <span style={{ color:"#fc7c78" }}>*</span>
                 </label>
                 <input
@@ -165,11 +165,11 @@ export function ProfileTab() {
                   onChange={e => setForm({ ...form, name: e.target.value })}
                   placeholder="Ramesh Sharma"
                   className="w-full rounded-xl px-4 py-2.5 text-sm transition-all focus:outline-none"
-                  style={{ background:"rgba(255,255,255,0.04)", border:"1px solid rgba(255,255,255,0.1)", color:"#e4e1ec" }}
+                  style={{ background: "var(--color-glass-border)", border: "1px solid var(--color-glass-border)", color: "var(--color-rai-text)" }}
                 />
               </div>
               <div className="space-y-1.5">
-                <label className="flex items-center gap-2 text-xs" style={{ color:"rgba(187,202,191,0.5)" }}>
+                <label className="flex items-center gap-2 text-xs" style={{ color: "var(--color-glass-text-dim)" }}>
                   <Phone className="w-3.5 h-3.5" /> WhatsApp Number
                 </label>
                 <input
@@ -178,7 +178,7 @@ export function ProfileTab() {
                   onChange={e => setForm({ ...form, phone: e.target.value })}
                   placeholder="+919876543210"
                   className="w-full rounded-xl px-4 py-2.5 text-sm transition-all focus:outline-none"
-                  style={{ background:"rgba(255,255,255,0.04)", border:"1px solid rgba(255,255,255,0.1)", color:"#e4e1ec" }}
+                  style={{ background: "var(--color-glass-border)", border: "1px solid var(--color-glass-border)", color: "var(--color-rai-text)" }}
                 />
               </div>
             </div>
@@ -186,7 +186,7 @@ export function ProfileTab() {
             {/* City + Language side by side */}
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="space-y-1.5">
-                <label className="flex items-center gap-2 text-xs" style={{ color:"rgba(187,202,191,0.5)" }}>
+                <label className="flex items-center gap-2 text-xs" style={{ color: "var(--color-glass-text-dim)" }}>
                   <MapPin className="w-3.5 h-3.5" /> City <span style={{ color:"#fc7c78" }}>*</span>
                 </label>
                 <CitySearch
@@ -196,7 +196,7 @@ export function ProfileTab() {
                 />
               </div>
               <div className="space-y-1.5">
-                <label className="flex items-center gap-2 text-xs" style={{ color:"rgba(187,202,191,0.5)" }}>
+                <label className="flex items-center gap-2 text-xs" style={{ color: "var(--color-glass-text-dim)" }}>
                   <Globe className="w-3.5 h-3.5" /> Preferred Language
                 </label>
                 <div className="flex gap-2 h-[42px]">
@@ -221,13 +221,13 @@ export function ProfileTab() {
 
           {/* ── Business section ── */}
           <div className="card-glass p-6 space-y-5">
-            <p className="text-[11px] uppercase tracking-widest font-semibold" style={{ color:"rgba(187,202,191,0.35)" }}>
+            <p className="text-[11px] uppercase tracking-widest font-semibold" style={{ color: "var(--color-glass-text-dim)" }}>
               Your Business
             </p>
 
             {/* Business type as pill selector */}
             <div className="space-y-1.5">
-              <label className="flex items-center gap-2 text-xs" style={{ color:"rgba(187,202,191,0.5)" }}>
+              <label className="flex items-center gap-2 text-xs" style={{ color: "var(--color-glass-text-dim)" }}>
                 <Briefcase className="w-3.5 h-3.5" /> Business Type <span style={{ color:"#fc7c78" }}>*</span>
               </label>
               <div className="flex flex-wrap gap-2">
@@ -251,13 +251,13 @@ export function ProfileTab() {
             {/* Revenue slider */}
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <label className="flex items-center gap-2 text-xs" style={{ color:"rgba(187,202,191,0.5)" }}>
+                <label className="flex items-center gap-2 text-xs" style={{ color: "var(--color-glass-text-dim)" }}>
                   <Building2 className="w-3.5 h-3.5" /> Weekly Revenue
                 </label>
-                <span className="font-bold text-sm" style={{ color:"#e4e1ec" }}>₹{form.weekly_revenue.toLocaleString()}</span>
+                <span className="font-bold text-sm" style={{ color: "var(--color-rai-text)" }}>₹{form.weekly_revenue.toLocaleString()}</span>
               </div>
               <div className="relative h-2">
-                <div className="absolute inset-0 rounded-full" style={{ background:"rgba(255,255,255,0.1)" }} />
+                <div className="absolute inset-0 rounded-full" style={{ background: "var(--color-glass-border)" }} />
                 <div
                   className="absolute left-0 top-0 h-full rounded-full"
                   style={{ width: `${((form.weekly_revenue - 5000) / 995000) * 100}%`, background:"#4edea3" }}
@@ -269,7 +269,7 @@ export function ProfileTab() {
                   className="absolute inset-0 w-full opacity-0 cursor-pointer"
                 />
               </div>
-              <div className="flex justify-between text-[10px]" style={{ color:"rgba(187,202,191,0.2)" }}>
+              <div className="flex justify-between text-[10px]" style={{ color: "var(--color-glass-text-dim)" }}>
                 <span>₹5K</span><span>₹10L</span>
               </div>
             </div>
@@ -277,12 +277,12 @@ export function ProfileTab() {
 
           {/* ── Alert preferences ── */}
           <div className="card-glass p-6 space-y-4">
-            <p className="text-[11px] uppercase tracking-widest font-semibold" style={{ color:"rgba(187,202,191,0.35)" }}>
+            <p className="text-[11px] uppercase tracking-widest font-semibold" style={{ color: "var(--color-glass-text-dim)" }}>
               Alert Preferences
             </p>
 
             <div className="space-y-2">
-              <label className="flex items-center gap-2 text-xs" style={{ color:"rgba(187,202,191,0.5)" }}>
+              <label className="flex items-center gap-2 text-xs" style={{ color: "var(--color-glass-text-dim)" }}>
                 <Bell className="w-3.5 h-3.5" /> Alert me when risk is at least
               </label>
               <div className="flex gap-2">
@@ -308,8 +308,8 @@ export function ProfileTab() {
                   );
                 })}
               </div>
-              <p className="text-[11px]" style={{ color:"rgba(187,202,191,0.3)" }}>
-                WhatsApp alerts for <strong style={{ color:"rgba(187,202,191,0.6)" }}>{form.alert_level}</strong> and above events.
+              <p className="text-[11px]" style={{ color: "var(--color-glass-text-dim)" }}>
+                WhatsApp alerts for <strong style={{ color: "var(--color-glass-text-dim)" }}>{form.alert_level}</strong> and above events.
               </p>
             </div>
           </div>
@@ -340,7 +340,7 @@ export function ProfileTab() {
 
           {/* Live Profile Card */}
           <div className="card-glass p-5 space-y-4">
-            <p className="text-[11px] uppercase tracking-widest font-semibold" style={{ color:"rgba(187,202,191,0.35)" }}>
+            <p className="text-[11px] uppercase tracking-widest font-semibold" style={{ color: "var(--color-glass-text-dim)" }}>
               Your Profile Preview
             </p>
 
@@ -351,8 +351,8 @@ export function ProfileTab() {
                 {form.name?.[0]?.toUpperCase() || "?"}
               </div>
               <div>
-                <p className="font-semibold" style={{ color:"#e4e1ec" }}>{form.name || <span style={{ color:"rgba(187,202,191,0.2)" }}>Your Name</span>}</p>
-                <p className="text-xs" style={{ color:"rgba(187,202,191,0.4)" }}>{form.city || <span style={{ color:"rgba(187,202,191,0.2)" }}>City</span>}</p>
+                <p className="font-semibold" style={{ color: "var(--color-rai-text)" }}>{form.name || <span style={{ color: "var(--color-glass-text-dim)" }}>Your Name</span>}</p>
+                <p className="text-xs" style={{ color: "var(--color-glass-text-dim)" }}>{form.city || <span style={{ color: "var(--color-glass-text-dim)" }}>City</span>}</p>
               </div>
             </div>
 
@@ -364,12 +364,12 @@ export function ProfileTab() {
                 { icon: Phone,       label: "WhatsApp",  value: form.phone || "Not set" },
                 { icon: Globe,       label: "Language",  value: form.lang === "en" ? "🇬🇧 English" : "🇮🇳 हिंदी" },
               ].map(s => (
-                <div key={s.label} className="rounded-xl p-3 space-y-1" style={{ background:"rgba(255,255,255,0.04)" }}>
-                  <div className="flex items-center gap-1" style={{ color:"rgba(187,202,191,0.3)" }}>
+                <div key={s.label} className="rounded-xl p-3 space-y-1" style={{ background: "var(--color-glass-border)" }}>
+                  <div className="flex items-center gap-1" style={{ color: "var(--color-glass-text-dim)" }}>
                     <s.icon className="w-3 h-3" />
                     <span className="text-[10px]">{s.label}</span>
                   </div>
-                  <p className="text-xs font-medium truncate" style={{ color:"#e4e1ec" }}>{s.value}</p>
+                  <p className="text-xs font-medium truncate" style={{ color: "var(--color-rai-text)" }}>{s.value}</p>
                 </div>
               ))}
             </div>
@@ -414,7 +414,7 @@ export function ProfileTab() {
 
           {/* Registered Users */}
           <div className="space-y-3">
-            <div className="flex items-center gap-2" style={{ color:"rgba(187,202,191,0.3)" }}>
+            <div className="flex items-center gap-2" style={{ color: "var(--color-glass-text-dim)" }}>
               <Users className="w-3.5 h-3.5" />
               <span className="text-[10px] uppercase tracking-widest font-semibold">
                 Registered Users {profiles.length > 0 && `(${profiles.length})`}
@@ -423,7 +423,7 @@ export function ProfileTab() {
             </div>
 
             {profiles.length === 0 && !fetchingUsers && (
-              <p className="text-xs" style={{ color:"rgba(187,202,191,0.2)" }}>No users yet — be first!</p>
+              <p className="text-xs" style={{ color: "var(--color-glass-text-dim)" }}>No users yet — be first!</p>
             )}
 
             <div className="space-y-2 max-h-64 overflow-y-auto pr-1">
@@ -433,15 +433,15 @@ export function ProfileTab() {
                   className="card-glass px-3 py-2.5 flex items-center gap-3"
                 >
                   <div className="w-7 h-7 rounded-full flex items-center justify-center font-bold text-[10px] flex-shrink-0"
-                       style={{ background:"rgba(255,255,255,0.08)", color:"#e4e1ec" }}>
+                       style={{ background: "var(--color-glass-border)", color: "var(--color-rai-text)" }}>
                     {p.name?.[0]?.toUpperCase() || "?"}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs font-semibold truncate" style={{ color:"#e4e1ec" }}>{p.name}</p>
-                    <p className="text-[10px] truncate" style={{ color:"rgba(187,202,191,0.3)" }}>{p.business_type} · {p.city}</p>
+                    <p className="text-xs font-semibold truncate" style={{ color: "var(--color-rai-text)" }}>{p.name}</p>
+                    <p className="text-[10px] truncate" style={{ color: "var(--color-glass-text-dim)" }}>{p.business_type} · {p.city}</p>
                   </div>
                   <div className="text-right flex-shrink-0">
-                    <p className="text-[10px]" style={{ color:"rgba(187,202,191,0.4)" }}>₹{((p.weekly_revenue_inr || 0) / 1000).toFixed(0)}K/wk</p>
+                    <p className="text-[10px]" style={{ color: "var(--color-glass-text-dim)" }}>₹{((p.weekly_revenue_inr || 0) / 1000).toFixed(0)}K/wk</p>
                   </div>
                 </div>
               ))}

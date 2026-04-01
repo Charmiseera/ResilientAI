@@ -57,45 +57,43 @@ export function Sidebar({ activeTab, setActiveTab }: SidebarProps) {
         onClick={() => setActiveTab(id)}
         className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium transition-all duration-150 relative group"
         style={{
-          color:      isActive ? "#4edea3"    : "rgba(187,202,191,0.6)",
-          background: isActive ? "rgba(78,222,163,0.06)" : "transparent",
-          borderLeft: isActive ? "2px solid #4edea3" : "2px solid transparent",
+          color:      isActive ? "var(--color-rai-acid)"    : "var(--color-glass-text-dim)",
+          background: isActive ? "var(--color-glass-highlight)" : "transparent",
+          borderLeft: isActive ? "2px solid var(--color-rai-acid)" : "2px solid transparent",
         }}
       >
         <Icon
           className="w-[18px] h-[18px] flex-shrink-0 transition-colors"
-          style={{ color: isActive ? "#4edea3" : "rgba(187,202,191,0.45)" }}
+          style={{ color: isActive ? "var(--color-rai-acid)" : "var(--color-glass-text-dim)" }}
         />
-        <span style={{ color: isActive ? "#e4e1ec" : "rgba(187,202,191,0.6)" }}>{label}</span>
+        <span style={{ color: isActive ? "var(--color-rai-text)" : "var(--color-glass-text-dim)" }}>{label}</span>
       </button>
     );
   }
 
   return (
     <aside
-      className="fixed top-0 left-0 h-full z-40 flex flex-col"
-      style={{ width: 220, background: "#1b1b23" }}
+      className="fixed top-0 left-0 h-full z-40 flex flex-col bg-[var(--color-glass-bg)] border-r border-[var(--color-glass-border)]"
+      style={{ width: 220 }}
     >
       {/* Logo */}
       <div className="px-5 pt-6 pb-4 flex-shrink-0">
         <div className="flex items-center gap-2.5 mb-0.5">
           {/* Hexagon icon */}
           <div
-            className="w-8 h-8 flex items-center justify-center rounded-lg flex-shrink-0"
-            style={{ background: "rgba(78,222,163,0.15)", border: "1px solid rgba(78,222,163,0.3)" }}
+            className="w-8 h-8 flex items-center justify-center rounded-lg flex-shrink-0 bg-[var(--color-glass-highlight)] border border-[var(--color-rai-acid)]/30"
           >
-            <Zap className="w-4 h-4" style={{ color: "#4edea3" }} />
+            <Zap className="w-4 h-4 text-[var(--color-rai-acid)]" />
           </div>
-          <span className="font-bold text-white text-[15px] tracking-tight">ResilientAI</span>
+          <span className="font-bold text-[var(--color-rai-text)] text-[15px] tracking-tight">ResilientAI</span>
         </div>
-        <p className="text-[9px] font-medium tracking-[0.12em] uppercase ml-[42px]"
-           style={{ color: "rgba(187,202,191,0.35)" }}>
+        <p className="text-[9px] font-medium tracking-[0.12em] uppercase ml-[42px] text-[var(--color-glass-text-dim)]/70">
           Editorial Intelligence
         </p>
       </div>
 
       {/* Separator */}
-      <div style={{ height: 1, background: "rgba(255,255,255,0.05)", margin: "0 20px 12px" }} />
+      <div className="h-px bg-[var(--color-glass-border)] mx-5 mb-3" />
 
       {/* Nav */}
       <nav className="flex-1 overflow-y-auto">
@@ -105,42 +103,39 @@ export function Sidebar({ activeTab, setActiveTab }: SidebarProps) {
       {/* Bottom section */}
       <div>
         {/* Separator */}
-        <div style={{ height: 1, background: "rgba(255,255,255,0.05)", margin: "8px 0" }} />
+        <div className="h-px bg-[var(--color-glass-border)] my-2" />
 
         {BOTTOM_ITEMS.map(item => <NavItem key={item.id} {...item} />)}
 
         <button
           onClick={handleSignOut}
-          className="w-full flex items-center gap-3 px-4 py-2.5 text-sm transition-all group"
-          style={{ color: "rgba(187,202,191,0.45)", borderLeft: "2px solid transparent" }}
-          onMouseEnter={e => (e.currentTarget.style.color = "#ffb3af")}
-          onMouseLeave={e => (e.currentTarget.style.color = "rgba(187,202,191,0.45)")}
+          className="w-full flex items-center gap-3 px-4 py-2.5 text-sm transition-all group text-[var(--color-glass-text-dim)] border-l-2 border-transparent hover:text-[var(--color-rai-orange)] hover:bg-[var(--color-glass-highlight)]"
         >
           <LogOut className="w-[18px] h-[18px] flex-shrink-0" />
           <span>Logout</span>
         </button>
 
         {/* Separator */}
-        <div style={{ height: 1, background: "rgba(255,255,255,0.05)", margin: "8px 0" }} />
+        <div className="h-px bg-[var(--color-glass-border)] my-2" />
 
         {/* User chip */}
         {userEmail && (
           <div className="px-4 py-4 flex items-center gap-3">
             {userAvatar ? (
               <img src={userAvatar} alt="avatar"
-                className="w-8 h-8 rounded-full flex-shrink-0 ring-2"
-                style={{ boxShadow: "0 0 0 2px rgba(78,222,163,0.3)" }} />
+                className="w-8 h-8 rounded-full flex-shrink-0 ring-2 ring-[var(--color-rai-acid)]/30 shadow-[0_0_0_2px_var(--color-rai-acid)]/30"
+              />
             ) : (
               <div
-                className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0"
-                style={{ background: "linear-gradient(135deg, #10b981, #4edea3)" }}
+                className="w-8 h-8 rounded-full flex items-center justify-center text-[var(--color-rai-obsidian)] text-xs font-bold flex-shrink-0"
+                style={{ background: "linear-gradient(135deg, var(--color-rai-acid), var(--color-rai-acid))" }}
               >
-                {(userName || userEmail)[0].toUpperCase()}
+                {(userName || userEmail || "U")[0].toUpperCase()}
               </div>
             )}
             <div className="min-w-0">
-              <p className="text-white text-xs font-semibold truncate">{userName || userEmail?.split("@")[0]}</p>
-              <p className="text-[10px] truncate" style={{ color: "rgba(187,202,191,0.4)" }}>
+              <p className="text-[var(--color-rai-text)] text-xs font-semibold truncate">{userName || userEmail?.split("@")[0]}</p>
+              <p className="text-[10px] truncate text-[var(--color-glass-text-dim)]">
                 Operations Lead
               </p>
             </div>

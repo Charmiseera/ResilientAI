@@ -197,7 +197,7 @@ export function VoiceAssistant() {
       {/* ── Floating Popup Panel ── */}
       {open && (
         <div
-          className="fixed bottom-24 right-6 w-84 z-50 rounded-2xl overflow-hidden border border-white/10"
+          className="fixed bottom-24 right-6 w-84 z-50 rounded-2xl overflow-hidden border border-[var(--color-rai-text)]/10"
           style={{
             width: "22rem",
             background: "rgba(8,8,18,0.96)",
@@ -207,7 +207,7 @@ export function VoiceAssistant() {
           }}
         >
           {/* ── Header ── */}
-          <div className="flex items-center justify-between px-4 py-3 border-b border-white/[0.07] bg-white/[0.02]">
+          <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--color-rai-text)]/[0.07] bg-[var(--color-rai-text)]/[0.02]">
             <div className="flex items-center gap-2">
               <div className={`w-2 h-2 rounded-full transition-colors ${
                 state === "listening" ? "bg-red-400 animate-pulse" :
@@ -216,27 +216,27 @@ export function VoiceAssistant() {
                 state === "answer"    ? "bg-emerald-400" :
                 "bg-cyan-400/60"
               }`} />
-              <span className="text-white text-sm font-semibold tracking-tight">🎤 ResilientAI Voice</span>
+              <span className="text-[var(--color-rai-text)] text-sm font-semibold tracking-tight">🎤 ResilientAI Voice</span>
             </div>
             <div className="flex items-center gap-1.5">
               {/* Mute toggle */}
               <button
                 onClick={() => { setMuted(m => !m); window.speechSynthesis?.cancel(); }}
                 title={muted ? "Unmute voice" : "Mute voice"}
-                className="p-1.5 rounded-lg text-white/30 hover:text-white hover:bg-white/5 transition-all"
+                className="p-1.5 rounded-lg text-[var(--color-rai-text)]/30 hover:text-[var(--color-rai-text)] hover:bg-[var(--color-rai-text)]/5 transition-all"
               >
                 {muted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
               </button>
               {/* Lang toggle */}
               <button
                 onClick={() => setLang(l => l === "en" ? "hi" : "en")}
-                className="text-[10px] font-bold px-2 py-1 rounded-md bg-white/5 border border-white/10 text-white/50 hover:text-white transition-all"
+                className="text-[10px] font-bold px-2 py-1 rounded-md bg-[var(--color-rai-text)]/5 border border-[var(--color-rai-text)]/10 text-[var(--color-rai-text)]/50 hover:text-[var(--color-rai-text)] transition-all"
               >
                 {lang === "en" ? "EN" : "हि"}
               </button>
               <button
                 onClick={() => { setOpen(false); stopListening(); stopSpeaking(); }}
-                className="p-1.5 rounded-lg text-white/25 hover:text-white hover:bg-white/5 transition-all"
+                className="p-1.5 rounded-lg text-[var(--color-rai-text)]/25 hover:text-[var(--color-rai-text)] hover:bg-[var(--color-rai-text)]/5 transition-all"
               >
                 <X className="w-3.5 h-3.5" />
               </button>
@@ -250,10 +250,10 @@ export function VoiceAssistant() {
             {state === "idle" && !message && (
               <div className="text-center py-6">
                 <div className="text-4xl mb-3">🎙️</div>
-                <p className="text-white/50 text-sm font-medium">
+                <p className="text-[var(--color-rai-text)]/50 text-sm font-medium">
                   {lang === "hi" ? "माइक बटन दबाएं और बोलें" : "Press mic and speak your question"}
                 </p>
-                <p className="text-white/20 text-[11px] mt-1.5">
+                <p className="text-[var(--color-rai-text)]/20 text-[11px] mt-1.5">
                   {lang === "hi"
                     ? "LPG, गेहूं, डीजल कीमतों के बारे में पूछें"
                     : "Ask about LPG, wheat, diesel, freight prices…"}
@@ -275,7 +275,7 @@ export function VoiceAssistant() {
                 </div>
                 <p className="text-red-300 text-sm font-semibold">🔴 {lang === "hi" ? "सुन रहा हूँ…" : "Listening…"}</p>
                 {heard && (
-                  <p className="text-white/50 text-xs mt-2 italic px-2">"{heard}"</p>
+                  <p className="text-[var(--color-rai-text)]/50 text-xs mt-2 italic px-2">"{heard}"</p>
                 )}
               </div>
             )}
@@ -320,7 +320,7 @@ export function VoiceAssistant() {
                 <p>⚠️ {errorMsg}</p>
                 <button
                   onClick={() => setState("idle")}
-                  className="text-white/50 hover:text-white underline text-[10px]"
+                  className="text-[var(--color-rai-text)]/50 hover:text-[var(--color-rai-text)] underline text-[10px]"
                 >
                   Dismiss
                 </button>
@@ -341,14 +341,14 @@ export function VoiceAssistant() {
                   <div className="w-6 h-6 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-[10px] flex-shrink-0 mt-0.5">
                     🤖
                   </div>
-                  <div className="bg-white/[0.05] border border-white/8 rounded-2xl rounded-tl-sm px-3 py-2 max-w-[88%]">
-                    <p className="text-white/85 text-xs leading-relaxed">{message.reply}</p>
+                  <div className="bg-[var(--color-rai-text)]/[0.05] border border-[var(--color-rai-text)]/8 rounded-2xl rounded-tl-sm px-3 py-2 max-w-[88%]">
+                    <p className="text-[var(--color-rai-text)]/85 text-xs leading-relaxed">{message.reply}</p>
                     {/* Replay / mute controls */}
                     <div className="flex items-center gap-2 mt-2">
                       {!muted && (
                         <button
                           onClick={() => speak(message.reply, message.lang)}
-                          className="flex items-center gap-1 text-[10px] text-white/25 hover:text-cyan-400 transition-colors"
+                          className="flex items-center gap-1 text-[10px] text-[var(--color-rai-text)]/25 hover:text-cyan-400 transition-colors"
                         >
                           <Volume2 className="w-3 h-3" />
                           {lang === "hi" ? "दोबारा सुनें" : "Replay"}
@@ -363,15 +363,15 @@ export function VoiceAssistant() {
             {/* History */}
             {history.length > 1 && (
               <details className="group">
-                <summary className="text-[10px] text-white/20 cursor-pointer hover:text-white/40 flex items-center gap-1 list-none mt-1">
+                <summary className="text-[10px] text-[var(--color-rai-text)]/20 cursor-pointer hover:text-[var(--color-rai-text)]/40 flex items-center gap-1 list-none mt-1">
                   <ChevronDown className="w-3 h-3 group-open:rotate-180 transition-transform" />
                   {history.length - 1} prev question{history.length > 2 ? "s" : ""}
                 </summary>
-                <div className="mt-2 space-y-2 border-t border-white/5 pt-2">
+                <div className="mt-2 space-y-2 border-t border-[var(--color-rai-text)]/5 pt-2">
                   {history.slice(1).map((h, i) => (
                     <div key={i} className="text-[10px] space-y-0.5">
                       <p className="text-cyan-400/40">Q: {h.query}</p>
-                      <p className="text-white/20 line-clamp-2">{h.reply}</p>
+                      <p className="text-[var(--color-rai-text)]/20 line-clamp-2">{h.reply}</p>
                     </div>
                   ))}
                 </div>
@@ -380,7 +380,7 @@ export function VoiceAssistant() {
           </div>
 
           {/* ── Bottom action bar ── */}
-          <div className="border-t border-white/[0.07] px-4 py-3 flex items-center gap-2 bg-white/[0.01]">
+          <div className="border-t border-[var(--color-rai-text)]/[0.07] px-4 py-3 flex items-center gap-2 bg-[var(--color-rai-text)]/[0.01]">
             <button
               onClick={handleFabClick}
               disabled={state === "thinking"}
@@ -391,7 +391,7 @@ export function VoiceAssistant() {
                   ? "bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 hover:bg-emerald-500/30"
                   : state === "thinking"
                   ? "bg-violet-500/10 border border-violet-500/20 text-violet-300 cursor-wait"
-                  : "bg-white/5 border border-white/10 text-white/70 hover:bg-white/10 hover:text-white"
+                  : "bg-[var(--color-rai-text)]/5 border border-[var(--color-rai-text)]/10 text-[var(--color-rai-text)]/70 hover:bg-[var(--color-rai-text)]/10 hover:text-[var(--color-rai-text)]"
               }`}
             >
               {state === "thinking" ? (
@@ -406,7 +406,7 @@ export function VoiceAssistant() {
             {(state === "answer" || state === "error") && (
               <button
                 onClick={() => { setMessage(null); setState("idle"); setHeard(""); }}
-                className="px-3 py-2.5 rounded-xl text-[11px] text-white/30 hover:text-white bg-white/[0.03] border border-white/8 hover:bg-white/[0.06] transition-all"
+                className="px-3 py-2.5 rounded-xl text-[11px] text-[var(--color-rai-text)]/30 hover:text-[var(--color-rai-text)] bg-[var(--color-rai-text)]/[0.03] border border-[var(--color-rai-text)]/8 hover:bg-[var(--color-rai-text)]/[0.06] transition-all"
               >
                 {lang === "hi" ? "नया" : "Clear"}
               </button>
@@ -419,7 +419,7 @@ export function VoiceAssistant() {
       <button
         onClick={handleFabClick}
         title="Voice Assistant"
-        className={`fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full flex items-center justify-center text-white
+        className={`fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full flex items-center justify-center text-[var(--color-rai-text)]
           bg-gradient-to-br ${fabGrad[state]}
           transition-all duration-300 active:scale-95 hover:scale-105`}
         style={{

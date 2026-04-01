@@ -227,9 +227,10 @@ const Map = forwardRef<MapRef, MapProps>(function Map(
       attributionControl: {
         compact: true,
       },
+      projection, // Pass initial projection to constructor (MapLibre GL v5 idiomatic)
       ...props,
       ...viewport,
-    });
+    } as any);
 
     const styleDataHandler = () => {
       clearStyleTimeout();
@@ -241,11 +242,9 @@ const Map = forwardRef<MapRef, MapProps>(function Map(
       }, 100);
     };
 
-    // Set projection after style fully loads (required by MapLibre GL v5)
+    // Handle style load events (clean up stale projection here)
     const styleLoadHandler = () => {
-      if (projection) {
-        try { map.setProjection(projection); } catch { /* ignore if unsupported */ }
-      }
+      // Re-application of projection is now handled by dedicated effect below
     };
     const loadHandler = () => setIsLoaded(true);
 
@@ -316,8 +315,19 @@ const Map = forwardRef<MapRef, MapProps>(function Map(
     currentStyleRef.current = newStyle;
     setIsStyleLoaded(false);
 
-    mapInstance.setStyle(newStyle, { diff: true });
+    // Disable diff: true for theme-driven style changes to avoid v5 projection migration crashes
+    mapInstance.setStyle(newStyle, { diff: false });
   }, [mapInstance, resolvedTheme, mapStyles, clearStyleTimeout]);
+
+  // Reactive Projection updates for MapLibre GL v5
+  useEffect(() => {
+    if (!mapInstance || !projection) return;
+    try {
+      mapInstance.setProjection(projection);
+    } catch (e) {
+      console.warn("Failed to set map projection:", e);
+    }
+  }, [mapInstance, projection]);
 
   const contextValue = useMemo(
     () => ({
@@ -520,7 +530,7 @@ function MarkerContent({ children, className }: MarkerContentProps) {
 
 function DefaultMarkerIcon() {
   return (
-    <div className="relative h-4 w-4 rounded-full border-2 border-white bg-blue-500 shadow-lg" />
+    <div className="relative h-4 w-4 rounded-full border-2 border-[var(--color-rai-text)] bg-blue-500 shadow-lg" />
   );
 }
 
