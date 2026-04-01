@@ -15,6 +15,7 @@ const NAV_ITEMS: { id: TabId; label: string; icon: React.ElementType }[] = [
   { id: "history",     label: "History",           icon: History },
   { id: "cities",      label: "Cities",            icon: MapPin },
   { id: "assistant",   label: "AI Assistant",      icon: Bot },
+  { id: "reactor",     label: "Reactor",           icon: Zap },
 ];
 
 const BOTTOM_ITEMS: { id: TabId; label: string; icon: React.ElementType }[] = [

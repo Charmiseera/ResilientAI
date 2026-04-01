@@ -101,7 +101,7 @@ ResilientAI is a Decision Intelligence platform that converts global supply chai
 | **Database** | Supabase (PostgreSQL) |
 | **Messaging** | Meta WhatsApp Business API |
 | **Data Sources** | NewsAPI · Custom commodity CSV baselines |
-| **Deployment** | Railway |
+| **Deployment** | Vercel |
 
 ---
 
@@ -110,9 +110,7 @@ ResilientAI is a Decision Intelligence platform that converts global supply chai
 ```
 ResilientAI/
 ├── .env.example            # Environment variable template
-├── .env.railway            # Railway-specific deployment config
-├── Procfile                # Process definition for Railway deployment
-├── railway.json            # Railway project configuration
+├── vercel.json             # Vercel deployment configuration
 ├── requirements.txt        # Python dependencies
 ├── pytest.ini              # Pytest configuration
 │
@@ -373,14 +371,27 @@ pytest tests/test_meta_whatsapp.py -v
 
 ## ☁️ Deployment
 
-This project is configured for one-click deployment on **[Railway](https://railway.app/)**.
+This project is configured for deployment on **[Vercel](https://vercel.com/)**.
 
-The repository includes:
-- `Procfile` — defines the web process (`uvicorn api.main:app --host 0.0.0.0 --port $PORT`)
-- `railway.json` — Railway project configuration
-- `.env.railway` — Railway-specific environment variable template
+Both the FastAPI backend and Next.js frontend deploy to Vercel:
+- **Backend:** `vercel.json` at project root configures the FastAPI app (`app.py`) as a serverless function
+- **Frontend:** Deploy the `frontend/` directory as a separate Vercel project (Next.js is natively supported)
 
-The Next.js frontend can be deployed independently to **Vercel** (a `vercel.json` is included in the `frontend/` directory).
+### Deploy Backend
+
+1. Push your code to GitHub
+2. Import the repo in Vercel — it will auto-detect the FastAPI app via `vercel.json`
+3. Add environment variables in Vercel dashboard (see [Environment Variables](#-environment-variables))
+4. Deploy — your API will be live at `https://your-project.vercel.app`
+
+### Deploy Frontend
+
+1. In Vercel, create a new project from the same repo
+2. Set the **Root Directory** to `frontend`
+3. Add environment variables (`NEXT_PUBLIC_API_URL`, `NEXT_PUBLIC_SUPABASE_URL`, etc.)
+4. Deploy — your dashboard will be live at `https://your-frontend.vercel.app`
+
+> **Tip:** Set `NEXT_PUBLIC_API_URL` in the frontend project to point to your deployed backend URL.
 
 ---
 

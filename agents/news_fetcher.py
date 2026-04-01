@@ -6,6 +6,7 @@ from __future__ import annotations
 import os
 import json
 import hashlib
+import tempfile
 import logging
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
@@ -15,10 +16,9 @@ import requests
 logger = logging.getLogger(__name__)
 
 _NEWS_API_KEY = os.getenv("NEWS_API_KEY", "")
-_CACHE_FILE = Path(__file__).parent.parent / "data" / "news_cache.json"
+_CACHE_FILE = Path(tempfile.gettempdir()) / "resilientai_news_cache.json"
 _CACHE_TTL_MINUTES = 30
 
-# Keywords that indicate supply chain disruptions
 _QUERY = (
     "(supply chain OR commodity OR shipping OR LPG OR crude oil OR wheat OR "
     "inflation OR port OR Hormuz OR Suez OR sanctions) AND "
@@ -40,12 +40,14 @@ def _load_cache() -> list[dict]:
 
 
 def _save_cache(articles: list[dict]) -> None:
-    _CACHE_FILE.parent.mkdir(parents=True, exist_ok=True)
-    _CACHE_FILE.write_text(
-        json.dumps({"cached_at": datetime.now(timezone.utc).isoformat(), "articles": articles},
-                   ensure_ascii=False, indent=2),
-        encoding="utf-8",
-    )
+    try:
+        _CACHE_FILE.write_text(
+            json.dumps({"cached_at": datetime.now(timezone.utc).isoformat(), "articles": articles},
+                       ensure_ascii=False, indent=2),
+            encoding="utf-8",
+        )
+    except Exception as e:
+        logger.warning("Failed to save news cache: %s", e)
 
 
 def _make_event_id(url: str) -> str:

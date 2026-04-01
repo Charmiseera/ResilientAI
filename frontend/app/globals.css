@@ -11,16 +11,21 @@
   --radius-lg: 1rem;
   --radius-xl: 1.5rem;
   --radius-2xl: 2rem;
+
+  --color-rai-obsidian: var(--color-rai-obsidian);
+  --color-rai-text: var(--color-rai-text);
+  --color-rai-acid: var(--color-rai-acid);
+  --color-rai-dim: var(--color-rai-dim);
 }
 
 @layer base {
   :root {
-    /* Soft Alabaster Background (Slate 50) */
-    --color-rai-obsidian: #f8fafc;
+    /* Softened Background for better eye comfort in light mode */
+    --color-rai-obsidian: #f5f5f7;
     /* Deep Charcoal Text (Slate 900) */
     --color-rai-text: #0f172a;
     /* Soft Pure White Cards */
-    --color-glass-bg: #ffffff;
+    --color-glass-bg: #f9fafb;
     /* Barely visible border */
     --color-glass-border: rgba(15, 23, 42, 0.06);
     --color-glass-text: #0f172a;
@@ -29,11 +34,12 @@
     /* Very delicate emerald wash */
     --color-glass-highlight: rgba(16, 185, 129, 0.04);
 
-    --color-rai-acid: #059669; /* Slightly deeper emerald for contrast on white */
+    --color-rai-acid: #059669;
+    /* Slightly deeper emerald for contrast on white */
     --color-rai-orange: #f97316;
     --color-rai-crimson: #dc2626;
     --color-rai-gray: rgba(15, 23, 42, 0.1);
-    --color-rai-black: #ffffff; /* Inverting black meaning contextually */
+    --color-rai-black: #000000;
 
     --shadow-soft: 0px 8px 30px rgba(15, 23, 42, 0.05), 0px 2px 8px rgba(15, 23, 42, 0.02);
     --border: oklch(0.92 0 0);
@@ -42,20 +48,22 @@
 
   .dark {
     /* ── Dark Theme (Obsidian Sentinel) ── */
-    --background: oklch(0.145 0 0); /* #13131a */
-    --foreground: oklch(0.985 0 0); /* #e4e1ec */
-    
+    --background: oklch(0.145 0 0);
+    /* #13131a */
+    --foreground: oklch(0.985 0 0);
+    /* #e4e1ec */
+
     --color-rai-obsidian: #13131a;
     --color-rai-text: #e4e1ec;
     --color-rai-dim: #bbcabf;
-    
+
     --color-rai-acid: #4edea3;
     --color-rai-orange: #ffb95f;
     --color-rai-crimson: #ffb3af;
-    
+
     --color-rai-gray: rgba(255, 255, 255, 0.12);
     --color-rai-black: #000000;
-    
+
     /* City UI replacements */
     --color-glass-bg: rgba(255, 255, 255, 0.03);
     --color-glass-border: rgba(255, 255, 255, 0.05);
@@ -64,7 +72,7 @@
     --color-glass-highlight: rgba(78, 222, 163, 0.1);
 
     --shadow-soft: 4px 4px 0px 0px var(--color-rai-acid);
-    
+
     --border: oklch(0.27 0 0);
     --ring: oklch(0.44 0 0);
   }
@@ -104,10 +112,11 @@
   }
 
   .maplibregl-popup-content {
-    @apply bg-transparent! shadow-none! p-0! rounded-none!;
+    @apply !bg-transparent !shadow-none !p-0 !rounded-none;
   }
+
   .maplibregl-popup-tip {
-    @apply hidden!;
+    @apply !hidden;
   }
 }
 

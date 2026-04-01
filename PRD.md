@@ -34,9 +34,9 @@
 ## 1. Executive Summary
 
 ResilientAI is a decision intelligence platform that converts global supply chain disruptions into real-time, actionable recommendations for small and micro businesses (MSMEs). The system monitors global events, predicts local business impact, and recommends optimal decisions using Agentic AI and quantum-inspired optimization — all surfaced through a simple dashboard that any kirana store owner can use in under 60 seconds.
-wwhha
+
 **Built for:** 36-hour hackathon sprint → production hardening over 4 weeks
-**Core Stack:** Python · LangChain / CrewAI · Qiskit · Streamlit · FastAPI
+**Core Stack:** Python · LangChain · Qiskit · Next.js · FastAPI
 **Target Users:** Kirana stores, small retailers, pharmacies, restaurants
 
 > "We are not building a chatbot. We are building a decision intelligence system for resilient businesses."
@@ -353,14 +353,14 @@ Step 5: Explain "AI + Quantum decided this together"
 
 | Layer | Technology |
 |-------|-----------|
-| UI | Streamlit |
+| UI | Next.js 16 (React 19) |
 | Backend | FastAPI (Python) |
 | AI Agent | LangChain / CrewAI |
 | NLP | spaCy / HuggingFace Transformers |
 | Optimization | Qiskit (IBM), classical NumPy fallback |
 | Voice | SpeechRecognition + gTTS |
 | Data | NewsAPI, custom CSV commodity baselines |
-| Infra | Render / Streamlit Cloud |
+| Infra | Vercel |
 
 ---
 
@@ -577,8 +577,8 @@ Response 200:
 
 ### Component Library
 
-- Streamlit `st.metric`, `st.alert`, `st.columns`, `st.plotly_chart`
-- Custom CSS for brand tokens (no raw hex values in Python files)
+- Next.js / React components with Tailwind CSS and shadcn/ui
+- Custom CSS for brand tokens (no raw hex values in source files)
 
 ---
 
@@ -611,7 +611,7 @@ Response 200:
 
 ### Phase 1 — Closed Beta (Weeks 1–4)
 
-- Deploy to Streamlit Cloud
+- Deploy backend and frontend to Vercel
 - Onboard 20 kirana stores manually
 - Collect feedback; fix P0 bugs
 
@@ -687,7 +687,7 @@ Response 200:
 MVP (Now)        v1.5 (Month 3)      v2.0 (Month 6)      v3.0 (Year 2)
 ─────────────    ──────────────────  ──────────────────  ─────────────────
 Kirana stores    + Pharma stores     + Agri / logistics  Global expansion
-Streamlit UI     + WhatsApp alerts   + Native mobile app Multi-country data
+Next.js dashboard + WhatsApp alerts   + Native mobile app Multi-country data
 Qiskit sim       + Real-time pricing + Real quantum HW   Enterprise SaaS
 3 decisions      + Supplier directory+ Predictive trends  Platform API
 ```

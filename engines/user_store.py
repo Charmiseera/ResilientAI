@@ -19,9 +19,10 @@ def _resolve_user_id(user_id: str) -> str:
     """Map 'demo' to a valid UUID and ensure the demo user exists in DB to prevent FK constraint failures."""
     if user_id != "demo":
         return user_id
-        
+
     db = get_db()
-    # Check if demo user exists
+    if db is None:
+        return DEMO_USER_ID
     existing = db.table("users").select("id").eq("id", DEMO_USER_ID).execute()
     if not existing.data:
         try:
@@ -30,14 +31,14 @@ def _resolve_user_id(user_id: str) -> str:
                 "name": "Demo User",
                 "business_type": "kirana",
                 "city": "Demo City",
-                "phone": "demo", 
+                "phone": "demo",
                 "lang": "en",
                 "weekly_revenue_inr": 50000.0,
                 "created_at": _now(),
                 "updated_at": _now()
             }).execute()
         except Exception:
-            pass # ignore, it might already exist
+            pass
     return DEMO_USER_ID
 
 
@@ -163,7 +164,7 @@ def log_strategy_adoption(
         "price_delta": float(price_delta),
         "extra_units": int(extra_units),
         "projected_profit": float(projected_profit),
-        "snapshot_json": snapshot,
+        "snapshot_json": snapshot_json,
         "timestamp": _now()
     }
     

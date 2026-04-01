@@ -175,9 +175,9 @@ export function VoiceAssistant() {
 
   // ── FAB gradient per state ─────────────────────────────────────────────────
   const fabGrad: Record<State, string> = {
-    idle:     "from-cyan-500 to-blue-600",
+    idle:     "from-emerald-500 to-teal-600",
     listening:"from-red-500 to-rose-600",
-    thinking: "from-violet-500 to-purple-600",
+    thinking: "from-zinc-800 to-zinc-900",
     speaking: "from-emerald-400 to-teal-500",
     answer:   "from-emerald-500 to-teal-600",
     error:    "from-orange-500 to-amber-600",
@@ -197,46 +197,40 @@ export function VoiceAssistant() {
       {/* ── Floating Popup Panel ── */}
       {open && (
         <div
-          className="fixed bottom-24 right-6 w-84 z-50 rounded-2xl overflow-hidden border border-[var(--color-rai-text)]/10"
-          style={{
-            width: "22rem",
-            background: "rgba(8,8,18,0.96)",
-            backdropFilter: "blur(24px)",
-            WebkitBackdropFilter: "blur(24px)",
-            boxShadow: "0 24px 80px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.06)",
-          }}
+          className="fixed bottom-24 right-6 w-84 z-50 rounded-2xl overflow-hidden border border-slate-200 dark:border-white/10 bg-white/95 dark:bg-[#0d0d12]/96 backdrop-blur-2xl shadow-2xl dark:shadow-[0_24px_80px_rgba(0,0,0,0.8)]"
+          style={{ width: "22rem" }}
         >
           {/* ── Header ── */}
-          <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--color-rai-text)]/[0.07] bg-[var(--color-rai-text)]/[0.02]">
+          <div className="flex items-center justify-between px-4 py-3 border-b border-slate-200 dark:border-white/[0.07] bg-slate-50/50 dark:bg-white/[0.02]">
             <div className="flex items-center gap-2">
               <div className={`w-2 h-2 rounded-full transition-colors ${
                 state === "listening" ? "bg-red-400 animate-pulse" :
                 state === "thinking"  ? "bg-violet-400 animate-pulse" :
                 state === "speaking"  ? "bg-emerald-400 animate-pulse" :
                 state === "answer"    ? "bg-emerald-400" :
-                "bg-cyan-400/60"
+                "bg-emerald-400/60"
               }`} />
-              <span className="text-[var(--color-rai-text)] text-sm font-semibold tracking-tight">🎤 ResilientAI Voice</span>
+              <span className="text-slate-900 dark:text-slate-50 text-sm font-semibold tracking-tight">🎤 ResilientAI Voice</span>
             </div>
             <div className="flex items-center gap-1.5">
               {/* Mute toggle */}
               <button
                 onClick={() => { setMuted(m => !m); window.speechSynthesis?.cancel(); }}
                 title={muted ? "Unmute voice" : "Mute voice"}
-                className="p-1.5 rounded-lg text-[var(--color-rai-text)]/30 hover:text-[var(--color-rai-text)] hover:bg-[var(--color-rai-text)]/5 transition-all"
+                className="p-1.5 rounded-lg text-slate-400 dark:text-rai-text/30 hover:text-slate-900 dark:hover:text-rai-text hover:bg-slate-100 dark:hover:bg-white/5 transition-all"
               >
                 {muted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
               </button>
               {/* Lang toggle */}
               <button
                 onClick={() => setLang(l => l === "en" ? "hi" : "en")}
-                className="text-[10px] font-bold px-2 py-1 rounded-md bg-[var(--color-rai-text)]/5 border border-[var(--color-rai-text)]/10 text-[var(--color-rai-text)]/50 hover:text-[var(--color-rai-text)] transition-all"
+                className="text-[10px] font-bold px-2 py-1 rounded-md bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-500 dark:text-rai-text/50 hover:text-slate-900 dark:hover:text-rai-text transition-all"
               >
                 {lang === "en" ? "EN" : "हि"}
               </button>
               <button
                 onClick={() => { setOpen(false); stopListening(); stopSpeaking(); }}
-                className="p-1.5 rounded-lg text-[var(--color-rai-text)]/25 hover:text-[var(--color-rai-text)] hover:bg-[var(--color-rai-text)]/5 transition-all"
+                className="p-1.5 rounded-lg text-slate-400 dark:text-rai-text/25 hover:text-slate-900 dark:hover:text-rai-text hover:bg-slate-100 dark:hover:bg-white/5 transition-all"
               >
                 <X className="w-3.5 h-3.5" />
               </button>
@@ -250,10 +244,10 @@ export function VoiceAssistant() {
             {state === "idle" && !message && (
               <div className="text-center py-6">
                 <div className="text-4xl mb-3">🎙️</div>
-                <p className="text-[var(--color-rai-text)]/50 text-sm font-medium">
+                <p className="text-slate-600 dark:text-rai-text/50 text-sm font-medium">
                   {lang === "hi" ? "माइक बटन दबाएं और बोलें" : "Press mic and speak your question"}
                 </p>
-                <p className="text-[var(--color-rai-text)]/20 text-[11px] mt-1.5">
+                <p className="text-slate-400 dark:text-rai-text/20 text-[11px] mt-1.5">
                   {lang === "hi"
                     ? "LPG, गेहूं, डीजल कीमतों के बारे में पूछें"
                     : "Ask about LPG, wheat, diesel, freight prices…"}
@@ -275,7 +269,7 @@ export function VoiceAssistant() {
                 </div>
                 <p className="text-red-300 text-sm font-semibold">🔴 {lang === "hi" ? "सुन रहा हूँ…" : "Listening…"}</p>
                 {heard && (
-                  <p className="text-[var(--color-rai-text)]/50 text-xs mt-2 italic px-2">"{heard}"</p>
+                  <p className="text-slate-500 dark:text-rai-text/50 text-xs mt-2 italic px-2">"{heard}"</p>
                 )}
               </div>
             )}
@@ -316,11 +310,11 @@ export function VoiceAssistant() {
 
             {/* Error */}
             {state === "error" && (
-              <div className="bg-orange-500/10 border border-orange-500/20 rounded-xl p-3 text-orange-300 text-xs text-center space-y-2">
+              <div className="bg-orange-500/10 border border-orange-500/20 rounded-xl p-3 text-orange-600 dark:text-orange-300 text-xs text-center space-y-2">
                 <p>⚠️ {errorMsg}</p>
                 <button
                   onClick={() => setState("idle")}
-                  className="text-[var(--color-rai-text)]/50 hover:text-[var(--color-rai-text)] underline text-[10px]"
+                  className="text-slate-400 dark:text-rai-text/50 hover:text-slate-900 dark:hover:text-rai-text underline text-[10px]"
                 >
                   Dismiss
                 </button>
@@ -332,23 +326,23 @@ export function VoiceAssistant() {
               <div className="space-y-2">
                 {/* User query */}
                 <div className="flex justify-end">
-                  <div className="bg-cyan-500/15 border border-cyan-500/20 rounded-2xl rounded-tr-sm px-3 py-2 max-w-[88%]">
-                    <p className="text-cyan-200 text-xs leading-relaxed">{message.query}</p>
+                  <div className="bg-red-500/15 border border-red-500/20 rounded-2xl rounded-tr-sm px-3 py-2 max-w-[88%]">
+                    <p className="text-red-200 text-xs leading-relaxed">{message.query}</p>
                   </div>
                 </div>
                 {/* AI reply */}
                 <div className="flex justify-start gap-2">
-                  <div className="w-6 h-6 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-[10px] flex-shrink-0 mt-0.5">
+                  <div className="w-6 h-6 rounded-full bg-gradient-to-br from-red-500 to-rose-600 flex items-center justify-center text-[10px] flex-shrink-0 mt-0.5">
                     🤖
                   </div>
-                  <div className="bg-[var(--color-rai-text)]/[0.05] border border-[var(--color-rai-text)]/8 rounded-2xl rounded-tl-sm px-3 py-2 max-w-[88%]">
-                    <p className="text-[var(--color-rai-text)]/85 text-xs leading-relaxed">{message.reply}</p>
+                  <div className="bg-slate-100 dark:bg-white/[0.05] border border-slate-200 dark:border-white/10 rounded-2xl rounded-tl-sm px-3 py-2 max-w-[88%] shadow-sm dark:shadow-none">
+                    <p className="text-slate-800 dark:text-rai-text/85 text-xs leading-relaxed">{message.reply}</p>
                     {/* Replay / mute controls */}
                     <div className="flex items-center gap-2 mt-2">
                       {!muted && (
                         <button
                           onClick={() => speak(message.reply, message.lang)}
-                          className="flex items-center gap-1 text-[10px] text-[var(--color-rai-text)]/25 hover:text-cyan-400 transition-colors"
+                          className="flex items-center gap-1 text-[10px] text-slate-400 dark:text-rai-text/25 hover:text-red-500 transition-colors"
                         >
                           <Volume2 className="w-3 h-3" />
                           {lang === "hi" ? "दोबारा सुनें" : "Replay"}
@@ -363,15 +357,15 @@ export function VoiceAssistant() {
             {/* History */}
             {history.length > 1 && (
               <details className="group">
-                <summary className="text-[10px] text-[var(--color-rai-text)]/20 cursor-pointer hover:text-[var(--color-rai-text)]/40 flex items-center gap-1 list-none mt-1">
+                <summary className="text-[10px] text-slate-400 dark:text-rai-text/20 cursor-pointer hover:text-slate-900 dark:hover:text-rai-text/40 flex items-center gap-1 list-none mt-1">
                   <ChevronDown className="w-3 h-3 group-open:rotate-180 transition-transform" />
                   {history.length - 1} prev question{history.length > 2 ? "s" : ""}
                 </summary>
-                <div className="mt-2 space-y-2 border-t border-[var(--color-rai-text)]/5 pt-2">
+                <div className="mt-2 space-y-2 border-t border-slate-100 dark:border-white/5 pt-2">
                   {history.slice(1).map((h, i) => (
                     <div key={i} className="text-[10px] space-y-0.5">
-                      <p className="text-cyan-400/40">Q: {h.query}</p>
-                      <p className="text-[var(--color-rai-text)]/20 line-clamp-2">{h.reply}</p>
+                      <p className="text-red-400/60 dark:text-red-400/40 font-medium">Q: {h.query}</p>
+                      <p className="text-slate-400 dark:text-rai-text/20 line-clamp-2">{h.reply}</p>
                     </div>
                   ))}
                 </div>
@@ -380,7 +374,7 @@ export function VoiceAssistant() {
           </div>
 
           {/* ── Bottom action bar ── */}
-          <div className="border-t border-[var(--color-rai-text)]/[0.07] px-4 py-3 flex items-center gap-2 bg-[var(--color-rai-text)]/[0.01]">
+          <div className="border-t border-slate-200 dark:border-white/[0.07] px-4 py-3 flex items-center gap-2 bg-slate-50/50 dark:bg-white/[0.01]">
             <button
               onClick={handleFabClick}
               disabled={state === "thinking"}
@@ -390,8 +384,8 @@ export function VoiceAssistant() {
                   : state === "speaking"
                   ? "bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 hover:bg-emerald-500/30"
                   : state === "thinking"
-                  ? "bg-violet-500/10 border border-violet-500/20 text-violet-300 cursor-wait"
-                  : "bg-[var(--color-rai-text)]/5 border border-[var(--color-rai-text)]/10 text-[var(--color-rai-text)]/70 hover:bg-[var(--color-rai-text)]/10 hover:text-[var(--color-rai-text)]"
+                  ? "bg-violet-500/10 border border-violet-500/20 text-violet-600 dark:text-violet-300 cursor-wait"
+                  : "bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-600 dark:text-rai-text/70 hover:bg-slate-200 dark:hover:bg-white/10 hover:text-slate-900 dark:hover:text-rai-text"
               }`}
             >
               {state === "thinking" ? (
@@ -399,14 +393,14 @@ export function VoiceAssistant() {
               ) : state === "listening" ? (
                 <><MicOff className="w-4 h-4" />{stateLabel.listening}</>
               ) : (
-                <><Mic className={`w-4 h-4 ${state === "speaking" ? "text-emerald-400" : "text-cyan-400"}`} />
+                <><Mic className={`w-4 h-4 ${state === "speaking" ? "text-emerald-400" : "text-red-400"}`} />
                   {stateLabel[state]}</>
               )}
             </button>
             {(state === "answer" || state === "error") && (
               <button
                 onClick={() => { setMessage(null); setState("idle"); setHeard(""); }}
-                className="px-3 py-2.5 rounded-xl text-[11px] text-[var(--color-rai-text)]/30 hover:text-[var(--color-rai-text)] bg-[var(--color-rai-text)]/[0.03] border border-[var(--color-rai-text)]/8 hover:bg-[var(--color-rai-text)]/[0.06] transition-all"
+                className="px-3 py-2.5 rounded-xl text-[11px] text-slate-400 dark:text-rai-text/30 hover:text-slate-900 dark:hover:text-rai-text bg-slate-100/50 dark:bg-white/[0.03] border border-slate-200 dark:border-white/8 hover:bg-slate-200 dark:hover:bg-white/[0.06] transition-all"
               >
                 {lang === "hi" ? "नया" : "Clear"}
               </button>

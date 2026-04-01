@@ -9,10 +9,7 @@ import uuid
 from datetime import datetime, timezone
 from pathlib import Path
 
-from dotenv import load_dotenv
 from agents.nlp_classifier import classify
-
-load_dotenv()
 
 _DATA_DIR = Path(__file__).parent.parent / "data"
 _SEED_FILE = _DATA_DIR / "seed_events.json"

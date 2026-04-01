@@ -12,10 +12,11 @@ import { DecisionHistoryTab } from "@/components/tabs/DecisionHistoryTab";
 import { CityComparisonsTab } from "@/components/tabs/CityComparisonsTab";
 import { AIAssistantTab } from "@/components/tabs/AIAssistantTab";
 import { VoiceAssistant } from "@/components/ui/VoiceAssistant";
+import { ReactorTab } from "@/components/tabs/ReactorTab";
 import { Search, Bell, Settings, Sun, Moon } from "lucide-react";
 import { useTheme } from "next-themes";
 
-export type TabId = "intelligence" | "simulator" | "analytics" | "history" | "cities" | "profile" | "assistant";
+export type TabId = "intelligence" | "simulator" | "analytics" | "history" | "cities" | "profile" | "assistant" | "reactor";
 
 const TAB_LABELS: Record<TabId, { label: string; section: string }> = {
   intelligence: { label: "Intelligence Dashboard", section: "Live Risk Events" },
@@ -25,6 +26,7 @@ const TAB_LABELS: Record<TabId, { label: string; section: string }> = {
   cities:       { label: "City Comparisons",        section: "Regional Monitor" },
   profile:      { label: "Profile",                 section: "Account Settings" },
   assistant:    { label: "AI Assistant",            section: "AURA Intelligence" },
+  reactor:      { label: "Quantum Reactor",         section: "Core Engine" },
 };
 
 export default function Dashboard() {
@@ -118,6 +120,7 @@ export default function Dashboard() {
             {activeTab === "cities"       && <CityComparisonsTab />}
             {activeTab === "profile"      && <ProfileTab />}
             {activeTab === "assistant"    && <AIAssistantTab />}
+            {activeTab === "reactor"      && <ReactorTab />}
           </div>
         </main>
       </div>

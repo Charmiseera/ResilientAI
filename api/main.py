@@ -1,7 +1,6 @@
 """
 FastAPI application entry point.
-Run with: uvicorn api.main:app --reload --port 8000
-# Updated WHATSAPP_TOKEN in .env
+Run locally with: uvicorn api.main:app --reload --port 8000
 """
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -14,7 +13,6 @@ app = FastAPI(
     version="1.0.0",
 )
 
-# Allow Streamlit dashboard (localhost:8501) to call the API
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],

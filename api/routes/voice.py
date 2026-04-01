@@ -13,9 +13,6 @@ import logging
 
 from fastapi import APIRouter
 from api.models import VoiceRequest, VoiceResponse
-from dotenv import load_dotenv
-
-load_dotenv()
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
@@ -189,7 +186,6 @@ def voice_query(req: VoiceRequest):
     AI prompt so repeat recommendations reflect what worked before.
     """
     from engines.user_store import get_user_behavior_summary
-    from fastapi import Query as QParam
 
     news_context = _get_news_context()
 

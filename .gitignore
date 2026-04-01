@@ -58,6 +58,9 @@ data/user_store.json
 *.cache
 *.log
 
+# ── Vercel ─────────────────────────────────────────────────────────────────────
+.vercel/
+
 # ── Qiskit / IBM Quantum ───────────────────────────────────────────────────────
 qiskit_ibm_*.json
 ibm_quantum_credentials
