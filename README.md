@@ -371,27 +371,30 @@ pytest tests/test_meta_whatsapp.py -v
 
 ## ☁️ Deployment
 
-This project is configured for deployment on **[Vercel](https://vercel.com/)**.
+ResilientAI is a full-stack application with a Python backend and a Next.js frontend. For the best performance and reliability:
+- **Backend (API):** Deployed on **[Render](https://render.com/)** (Web Service).
+- **Frontend (Dashboard):** Deployed on **[Vercel](https://vercel.com/)** (Next.js).
 
-Both the FastAPI backend and Next.js frontend deploy to Vercel:
-- **Backend:** `vercel.json` at project root configures the FastAPI app (`app.py`) as a serverless function
-- **Frontend:** Deploy the `frontend/` directory as a separate Vercel project (Next.js is natively supported)
+### 1. Deploy Backend (Render)
 
-### Deploy Backend
+1. **Connect Repository:** Create a new **Web Service** on Render and connect it to your GitHub repository.
+2. **Blueprint (Recommended):** Render will automatically detect the `render.yaml` file and configure the service.
+3. **Manual Configuration (If not using Blueprint):**
+   - **Runtime:** `Python`
+   - **Build Command:** `pip install -r requirements.txt && python -m spacy download en_core_web_sm`
+   - **Start Command:** `gunicorn -k uvicorn.workers.UvicornWorker app:app`
+4. **Environment Variables:** Add all required keys from `.env.example` in the Render dashboard.
+5. **Health Check:** Your API will be live at `https://your-backend.onrender.com`. Verify by visiting `https://your-backend.onrender.com/health`.
 
-1. Push your code to GitHub
-2. Import the repo in Vercel — it will auto-detect the FastAPI app via `vercel.json`
-3. Add environment variables in Vercel dashboard (see [Environment Variables](#-environment-variables))
-4. Deploy — your API will be live at `https://your-project.vercel.app`
+### 2. Deploy Frontend (Vercel)
 
-### Deploy Frontend
+1. **Import Project:** In Vercel, create a new project and select the `frontend` directory as the **Root Directory**.
+2. **Environment Variables:**
+   - Set `NEXT_PUBLIC_API_URL` to your Render backend URL (e.g., `https://your-backend.onrender.com/api/v1`).
+   - Add Supabase and other frontend-specific keys.
+3. **Deploy:** Vercel will build and deploy the Next.js app natively.
 
-1. In Vercel, create a new project from the same repo
-2. Set the **Root Directory** to `frontend`
-3. Add environment variables (`NEXT_PUBLIC_API_URL`, `NEXT_PUBLIC_SUPABASE_URL`, etc.)
-4. Deploy — your dashboard will be live at `https://your-frontend.vercel.app`
-
-> **Tip:** Set `NEXT_PUBLIC_API_URL` in the frontend project to point to your deployed backend URL.
+> **Tip:** Ensure `NEXT_PUBLIC_API_URL` ends with `/api/v1` to match the backend routes.
 
 ---
 
