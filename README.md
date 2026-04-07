@@ -1,6 +1,6 @@
 # ResilientAI 🚀
 
-> **Autonomous Supply Intelligence for MSMEs — Global events → Local decisions, instantly.**
+> **Autonomous Supply Intelligence for MSMEs — Global events → Local decisions,instantly .**
 
 ResilientAI is a Decision Intelligence platform that converts global supply chain disruptions into real-time, actionable recommendations for small and micro businesses (MSMEs). If the Strait of Hormuz closes today, a kirana owner in Pune shouldn't have to wait 3 weeks to see prices spike — ResilientAI predicts the cost impact immediately and surfaces the single best action to take.
 
@@ -18,7 +18,7 @@ ResilientAI is a Decision Intelligence platform that converts global supply chai
 6. [Quick Start Guide](#-quick-start-guide)
 7. [Environment Variables](#-environment-variables)
 8. [Running Tests](#-running-tests)
-9. [Typical Demo Flow](#-typical-demo-flow)
+9. [Typical Demo ](#-typical-demo-flow)
 10. [Deployment](#-deployment)
 11. [Roadmap](#-roadmap)
 12. [License](#-license)
